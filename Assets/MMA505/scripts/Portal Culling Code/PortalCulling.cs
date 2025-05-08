@@ -17,6 +17,9 @@ public class PortalCulling : MonoBehaviour
     // An array of all the regions which exist in our scene
     public Region[] regions;
 
+    // the outside regenon
+    public Region outsideRegion;
+
     // The game objects which are within all frustums at any given frame
     public List<GameObject> gameObjectsInFrustum = new List<GameObject>();
 
@@ -74,6 +77,19 @@ public class PortalCulling : MonoBehaviour
             if (region.containsPoint(portalCamera.transform.position))
                 cameraRegion = region;
         }
+
+
+        // code for outside region
+        // Reset the visibility spheres for outside region to "not visible"
+        outsideRegion.ResetVisibilitySpheres();
+        // Reset outside  portals to hide their frustums
+        outsideRegion.ResetPortals(this);
+        if (cameraRegion == null && outsideRegion.containsPoint(portalCamera.transform.position))
+        {
+            // If the camera is not in a region, return
+            cameraRegion = outsideRegion;
+        }
+
 
         // If the camera is inside a region
         if (cameraRegion != null)
