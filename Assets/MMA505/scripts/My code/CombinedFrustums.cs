@@ -233,14 +233,9 @@ namespace MMA505
             //         gameObjectsNotOccluded.Add(gameObjectsToTestForOcclusion[i].gameObject);
             //     }
             // }
-            foreach (SphereCollider SphereCollider in visibleObjects)
-            {
-                gameObjectsNotOccluded = GetComponentInParent<Transform>().SphereCollider;
-            }
-            gameObjectsNotOccluded = GetComponentInParent<SphereCollider>().SphereCollider;
 
+            gameObjectsNotOccluded.AddRange(visibleObjects);
             return gameObjectsNotOccluded;
-            
         }
 
 
