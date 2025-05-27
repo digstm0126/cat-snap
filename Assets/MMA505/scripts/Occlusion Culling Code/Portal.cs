@@ -11,15 +11,14 @@ using UnityEngine;
 
  namespace MMA505
 {
-        
     public class Portal : MonoBehaviour
     {
         // The region that this portal links to
         public Region nextRegion;
 
-        // A Dictionary of FrustumGameObjects for each PortalCulling Object
+        // A Dictionary of FrustumGameObjects for each CombinedFrustums Object
         [HideInInspector]
-        public Dictionary<PortalCulling, GameObject> frustumGameObjects = new Dictionary<PortalCulling, GameObject>();
+        public Dictionary<CombinedFrustums, GameObject> frustumGameObjects = new Dictionary<CombinedFrustums, GameObject>();
 
         // The colour of this portals frustum
         public Color portalFrustumColour;
@@ -55,44 +54,44 @@ using UnityEngine;
                 vertices.Reverse();
         }
 
-        void CreateFrustumGameObject(PortalCulling portalCulling)
+        void CreateFrustumGameObject(CombinedFrustums CombinedFrustums)
         {
             // Create the frustum for this portal
             GameObject frustumGO = new GameObject("Portal Frustum : " + transform.parent.name + " - " + nextRegion.name);
             // Put it under the frustum container defined by the portal culling script
-            frustumGO.transform.SetParent(portalCulling.frustumContainer, false);
+            frustumGO.transform.SetParent(CombinedFrustums.frustumContainer, false);
             // Set it's render layer to the render laying of the portal culling gameobject
-            frustumGO.layer = portalCulling.gameObject.layer;
+            frustumGO.layer = CombinedFrustums.gameObject.layer;
             // Set it's position and rotation to the identity
             frustumGO.transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
 
             // Add this frustum to the dictionary
-            frustumGameObjects.Add(portalCulling, frustumGO);
+            frustumGameObjects.Add(CombinedFrustums, frustumGO);
         }
 
         // Called if we want to hide the frustum
-        public void HideFrustum(PortalCulling portalCulling)
+        public void HideFrustum(CombinedFrustums CombinedFrustums)
         {
-            if (frustumGameObjects.ContainsKey(portalCulling))
+            if (frustumGameObjects.ContainsKey(CombinedFrustums))
             {
                 // Get our frustum's mesh renderer
-                MeshRenderer mr = frustumGameObjects[portalCulling].GetComponent<MeshRenderer>();
+                MeshRenderer mr = frustumGameObjects[CombinedFrustums].GetComponent<MeshRenderer>();
                 // If it exists, disable it
                 if (mr != null) mr.enabled = false;
             }
         }
 
         // Get an updated frustum for this portal
-        public Frustum GetUpdatedFrustum(PortalCulling portalCulling, Camera c)
+        public Frustum GetUpdatedFrustum(CombinedFrustums CombinedFrustums, Camera c)
         {
             // Get our portal culling script
-            if (!frustumGameObjects.ContainsKey(portalCulling))
-                CreateFrustumGameObject(portalCulling);
+            if (!frustumGameObjects.ContainsKey(CombinedFrustums))
+                CreateFrustumGameObject(CombinedFrustums);
 
             // Create a frustum from this portal, using the cameras position,
             // our frustum game object, the material defined in the portal culling script
             // and the colour of this portal's frustum
-            return Frustum.CreateFrustumFromPortal(this, c, frustumGameObjects[portalCulling], portalCulling.frustumMaterial, portalFrustumColour);
+            return Frustum.CreateFrustumFromPortal(this, c, frustumGameObjects[CombinedFrustums], CombinedFrustums.frustumMaterial, portalFrustumColour);
         }
     }
 }

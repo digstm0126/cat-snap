@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using MMA505;
+using UnityEngine.Pool;
 
 
 /* This class represents a "region" for portal culling
@@ -33,7 +34,13 @@ namespace MMA505
         void Start()
         {
             // Get the portal culling script
-            PortalCulling portalCulling = FindObjectOfType<PortalCulling>();
+            CombinedFrustums CombinedFrustums = FindObjectOfType<CombinedFrustums>();
+
+            //popluate gameObjectsToTestForVisibility with all game objects inside of it
+            gameObjectsToTestForVisibility = populatObjects();
+
+            //poplulat portals
+            portals = popluatePortals();
 
             // Instantiate the visibility spheres list based on the number of game
             // objects to test for visibility
@@ -64,13 +71,63 @@ namespace MMA505
                     visibilitySphere.transform.localScale = Vector3.one * gameObjectsToTestForVisibility[i].localBounds.extents.magnitude * 2;
                     // Get the sphere's Renderer and update the material to our visibility sphere material, and turn off shadows
                     Renderer renderer = visibilitySphere.GetComponent<Renderer>();
-                    renderer.material = portalCulling.visibilitySphereMaterial;
+                    renderer.material = CombinedFrustums.visibilitySphereMaterial;
                     renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
                     renderer.receiveShadows = false;
                     // Store the collider for the sphere into the visibility spheres array
                     visibilitySpheres[i] = visibilitySphere.GetComponent<SphereCollider>();
                 }
             }
+        }
+
+        public Portal[] popluatePortals()
+        {
+            List<Portal> portals = new List<Portal>();
+
+            GameObject[] portalsObj = GameObject.FindGameObjectsWithTag("portal");
+
+            // Add their renderers to the list
+            foreach (GameObject obj in portalsObj)
+            {
+                Portal portal = obj.GetComponent<Portal>();
+                if (portal != null && containsPoint(obj.transform.position))
+                {
+                    portals.Add(portal);
+                }
+            }
+
+            return portals.ToArray();
+        }
+
+        public Renderer[] populatObjects()
+        {
+            List<Renderer> renderers = new List<Renderer>();
+
+            // Find all game objects with the tag "Player" or "Cat"
+            GameObject[] playerObjects = GameObject.FindGameObjectsWithTag("Player");
+            GameObject[] catObjects = GameObject.FindGameObjectsWithTag("Cat");
+
+            // Add their renderers to the list
+            foreach (GameObject obj in playerObjects)
+            {
+                Renderer renderer = obj.GetComponent<Renderer>();
+                if (renderer != null && containsPoint(obj.transform.position))
+                {
+                    renderers.Add(renderer);
+                }
+            }
+
+            foreach (GameObject obj in catObjects)
+            {
+                Renderer renderer = obj.GetComponent<Renderer>();
+                if (renderer != null && containsPoint(obj.transform.position))
+                {
+                    renderers.Add(renderer);
+                }
+            }
+
+            // Return the array of renderers
+            return renderers.ToArray();
         }
 
         // Returns true if this region contains a point
@@ -97,12 +154,12 @@ namespace MMA505
         }
 
         // Reset all our portal frustums
-        public void ResetPortals(PortalCulling portalCulling)
+        public void ResetPortals(CombinedFrustums CombinedFrustums)
         {
             // Loop through all the portals
             foreach (Portal p in portals)
                 // Hide the frustum
-                p.HideFrustum(portalCulling);
+                p.HideFrustum(CombinedFrustums);
         }
     }
 }

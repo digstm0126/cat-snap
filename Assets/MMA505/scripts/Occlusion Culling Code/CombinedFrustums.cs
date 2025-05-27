@@ -10,9 +10,9 @@ using MMA505;
  * Written by Adrian Clark
  */
  
- namespace MMA505
+namespace MMA505
 {
-    public class PortalCulling : MonoBehaviour
+    public class CombinedFrustums : MonoBehaviour
     {
         // The camera we will be generating portal frustums from
         public Camera portalCamera;
@@ -27,13 +27,10 @@ using MMA505;
         public List<GameObject> gameObjectsInFrustum = new List<GameObject>();
 
 
-        // An array of game objects to test for occulusion
+        // An array of game objects to test for site
         public Renderer[] gameObjectsToTestForOcclusion;
         // A list of the occlusion frustums we will create for the objects above
         List<OcclusionFrustum> occlusionFrustums = new List<OcclusionFrustum>();
-
-
-
 
         // The material to use for our debug frustum volume
         public Material frustumMaterial;
@@ -55,15 +52,16 @@ using MMA505;
             if (portalCamera == null)
                 portalCamera = Camera.main;
 
+
             //fills regeins with all the regens it can find
             regions = FindObjectsOfType<Region>();
             List<Region> regionsList = new List<Region>(regions);
-
             // Remove the outside region if found
             regionsList.Remove(outsideRegion);
-
             // Convert back to array
             regions = regionsList.ToArray();
+
+            occlusionFrustums.AddRange(FindObjectsOfType<OcclusionFrustum>());
 
             // Create a new GameObject for our camera frustum
             GameObject cameraFrustumGO = new GameObject("Camera Frustum");
