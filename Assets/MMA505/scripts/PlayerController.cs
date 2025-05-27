@@ -11,18 +11,12 @@ public class PlayerController : MonoBehaviour
 {
     public CharacterController controller;
     public Transform cam;
-    public float speed = 6;
-    public float gravity = -9.81f;
-    public float jumpHeight = 3;
-    Vector3 velocity;
-    bool isGrounded;
-
-    public Transform groundCheck;
-    public float groundDistance = 0.4f;
-    public LayerMask groundMask;
-
+    public float walkSpeed = 6;
+    public Animator animatorController;
     float turnSmoothVelocity;
     public float turnSmoothTime = 0.1f;
+
+    public ThirdPersonControllerAbstractBehaviour[] thirdPersonControllerBehaviours;
 
     // Update is called once per frame
     void Update()
