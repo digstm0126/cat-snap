@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "prod321 323.sln"
+    "dotnet.defaultSolution": "CatSnapPod321-323.sln"
 }
