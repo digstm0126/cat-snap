@@ -21,44 +21,53 @@ namespace MMA505
     public class Region : MonoBehaviour
     {
         // An array of game objects to test for visibility
-        public Renderer[] gameObjectsToTestForVisibility;
+        public GameObject[] gameObjectsToTestForVisibility;
 
         // An array of visibility spheres for these game objects
         [HideInInspector]
-        public SphereCollider[] visibilitySpheres;
+        public GameObject[] visibGameObjects;
 
         // An array of portals leading out of this region
         public Portal[] portals;
 
+        // Get the portal culling script
+        CombinedFrustums CombinedFrustums;
+
+
         // Start is called before the first frame update
         void Start()
         {
+            //change to manager script
             // Get the portal culling script
-            CombinedFrustums CombinedFrustums = FindObjectOfType<CombinedFrustums>();
+            CombinedFrustums = FindObjectOfType<CombinedFrustums>();
 
             //popluate gameObjectsToTestForVisibility with all game objects inside of it
-            gameObjectsToTestForVisibility = populatObjects();
+            gameObjectsToTestForVisibility = populatObjectsToTest();
 
             //poplulat portals
             portals = popluatePortals();
 
             // Instantiate the visibility spheres list based on the number of game
             // objects to test for visibility
-            visibilitySpheres = new SphereCollider[gameObjectsToTestForVisibility.Length];
+            visibGameObjects = new GameObject[gameObjectsToTestForVisibility.Length];
 
-            // Loop through each game object to test for visibility
+            //each gameobject is 
+            addVisibilitySphere();
+
+
+        }
+
+        //adda sphere site colider to each object in objToTest for visablity
+        public void addVisibilitySphere()
+        {
+            
+            // Loop through each game object to add a visablity sphere
             for (int i = 0; i < gameObjectsToTestForVisibility.Length; i++)
             {
-                // If the game object already has a visibility sphere
-                if (gameObjectsToTestForVisibility[i].transform.Find("VisibilitySphere") != null)
-                {
-                    // Lets just get use that one instead
-                    GameObject visibilitySphere = gameObjectsToTestForVisibility[i].transform.Find("VisibilitySphere").gameObject;
 
-                    // Store the collider for the sphere into the visibility spheres array
-                    visibilitySpheres[i] = visibilitySphere.GetComponent<SphereCollider>();
-                }
-                else
+                //dont need this part as i just wat refrince to the game object
+                // If the game object already has a visibility sphere
+                if (gameObjectsToTestForVisibility[i].transform.Find("VisibilitySphere") == null)
                 {
                     // Create a new sphere
                     GameObject visibilitySphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
@@ -68,14 +77,14 @@ namespace MMA505
                     visibilitySphere.transform.SetParent(gameObjectsToTestForVisibility[i].transform, false);
                     // Set it's size to the the game objects bounding box's extent magnitude * 2
                     // (the magnitude is the half the size)
-                    visibilitySphere.transform.localScale = Vector3.one * gameObjectsToTestForVisibility[i].localBounds.extents.magnitude * 2;
+                    Renderer renderer = gameObjectsToTestForVisibility[i].GetComponent<Renderer>();
+                    Vector3 boundsExtents = renderer.bounds.extents;
+                    visibilitySphere.transform.localScale = Vector3.one * boundsExtents.magnitude * 2;
                     // Get the sphere's Renderer and update the material to our visibility sphere material, and turn off shadows
-                    Renderer renderer = visibilitySphere.GetComponent<Renderer>();
+                    Renderer rendererSphere = visibilitySphere.GetComponent<Renderer>();
                     renderer.material = CombinedFrustums.visibilitySphereMaterial;
-                    renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
-                    renderer.receiveShadows = false;
-                    // Store the collider for the sphere into the visibility spheres array
-                    visibilitySpheres[i] = visibilitySphere.GetComponent<SphereCollider>();
+                    rendererSphere.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+                    rendererSphere.receiveShadows = false;
                 }
             }
         }
@@ -99,35 +108,35 @@ namespace MMA505
             return portals.ToArray();
         }
 
-        public Renderer[] populatObjects()
+        public GameObject[] populatObjectsToTest()
         {
-            List<Renderer> renderers = new List<Renderer>();
+            List<GameObject> objToTest = new List<GameObject>();
 
             // Find all game objects with the tag "Player" or "Cat"
             GameObject[] playerObjects = GameObject.FindGameObjectsWithTag("Player");
             GameObject[] catObjects = GameObject.FindGameObjectsWithTag("Cat");
 
-            // Add their renderers to the list
+            // adds all players to list
             foreach (GameObject obj in playerObjects)
             {
-                Renderer renderer = obj.GetComponent<Renderer>();
-                if (renderer != null && containsPoint(obj.transform.position))
+
+                if (containsPoint(obj.transform.position))
                 {
-                    renderers.Add(renderer);
+                    objToTest.Add(obj);
                 }
             }
 
+            // adds all cats to list
             foreach (GameObject obj in catObjects)
             {
-                Renderer renderer = obj.GetComponent<Renderer>();
-                if (renderer != null && containsPoint(obj.transform.position))
+                if (containsPoint(obj.transform.position))
                 {
-                    renderers.Add(renderer);
+                    objToTest.Add(obj);
                 }
             }
 
             // Return the array of renderers
-            return renderers.ToArray();
+            return objToTest.ToArray();
         }
 
         // Returns true if this region contains a point
@@ -140,18 +149,19 @@ namespace MMA505
             return mf.mesh.bounds.Contains(transform.InverseTransformPoint(worldPoint));
         }
 
+        //not useing visablity spheres as to many camras
         // Reset all our visibility spheres to not visible (red)
-        public void ResetVisibilitySpheres()
-        {
-            // Loop through each visibility sphere
-            foreach (SphereCollider sphereCollider in visibilitySpheres)
-            {
-                // Get it's mesh renderer
-                MeshRenderer mr = sphereCollider.GetComponent<MeshRenderer>();
-                // Set the materials colour to red
-                mr.material.color = new Color(1, 0, 0, .5f);
-            }
-        }
+        // public void ResetVisibilitySpheres()
+        // {
+        //     // Loop through each visibility sphere
+        //     foreach (SphereCollider sphereCollider in visibilitySpheres)
+        //     {
+        //         // Get it's mesh renderer
+        //         MeshRenderer mr = sphereCollider.GetComponent<MeshRenderer>();
+        //         // Set the materials colour to red
+        //         mr.material.color = new Color(1, 0, 0, .5f);
+        //     }
+        // }
 
         // Reset all our portal frustums
         public void ResetPortals(CombinedFrustums CombinedFrustums)
