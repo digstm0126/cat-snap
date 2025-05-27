@@ -39,24 +39,18 @@ public class PlayerController : MonoBehaviour
         foreach (ThirdPersonControllerAbstractBehaviour thirdPersonControllerBehaviour in thirdPersonControllerBehaviours)
             if (thirdPersonControllerBehaviour.ExecuteBehaviourIfRequired(ref CurrentState)) return;
 
-        vector walkVector  =
-        float walkAmount = Input.GetAxis("Vertical") * walkSpeed ;
-        float rotateAmount = Input.GetAxis("Horizontal") * rotateSpeed ;
 
-        transform.Translate(0, 0, walkAmount * Time.deltaTime);
-        transform.Rotate(0, rotateAmount * Time.deltaTime, 0);
+        float walkX = Input.GetAxis("Vertical");
+        float walkY = Input.GetAxis("Horizontal");
 
-        if (!useWalkSpeedMultiplier)
-        {
-            animatorController.SetBool("WalkingF", walkAmount > 0);
-            if (walkAmount > 0) CurrentState = "Walking";
-        }
-        else
-        {
-            animatorController.SetBool("WalkingF", walkAmount != 0);
-            animatorController.SetFloat("WalkSpeedMultiplier", walkAmount);
-            if (walkAmount != 0) CurrentState = "Walking";
-        }
+        float walkMag = new Vector2(walkX, walkY).magnitude;
+
+        transform.Translate(walkY, 0, walkX * Time.deltaTime);
+
+        animatorController.SetFloat("walkX", walkX);
+        animatorController.SetFloat("walkY", walkY);
+        if (walkMag > 0) CurrentState = "Walking";
+    
 
         if (Input.GetKeyDown(KeyCode.Space))
         {

@@ -28,6 +28,11 @@ public class Frustum : MonoBehaviour
     // This function creates a frustum based on a camera c, makes
     // it a child of the GameObject container, uses the material material
     // for the debug rendering, using the color color on the material
+
+    void Start()
+    {
+        gameObject.layer = 6;  
+    }
     public static Frustum CreateFrustumFromCamera(Camera c, GameObject container, Material material, Color color)
     {
         // Get the near plane, far plane, vertical field of view and aspect
@@ -339,3 +344,4 @@ public class Frustum : MonoBehaviour
         if (GetComponent<MeshRenderer>()) Destroy(GetComponent<MeshRenderer>());
     }
 }
+
