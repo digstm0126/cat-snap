@@ -23,7 +23,7 @@ namespace MMA505
         // the outside regenon
         public Region outsideRegion;
 
-        // The game objects which are within all frustums at any given frame
+        //visable objects
         public List<GameObject> gameObjectsInFrustum = new List<GameObject>();
 
 
@@ -50,9 +50,10 @@ namespace MMA505
             // If the occlusion camera hasn't been defined, try get the
             // camera tagged with MainCamera
             if (portalCamera == null)
+            {
                 portalCamera = Camera.main;
-
-
+            }
+            
             //fills regeins with all the regens it can find
             regions = FindObjectsOfType<Region>();
             List<Region> regionsList = new List<Region>(regions);
@@ -87,8 +88,9 @@ namespace MMA505
             // Loop through each region
             foreach (Region region in regions)
             {
-                // Reset the visibility spheres for all regions to "not visible"
-                region.ResetVisibilitySpheres();
+                //deprectated
+                        // Reset the visibility spheres for all regions to "not visible"
+                        //region.ResetVisibilitySpheres();
                 // Reset all the portals to hide their frustums
                 region.ResetPortals(this);
 
@@ -100,9 +102,10 @@ namespace MMA505
 
 
             // code for outside region
-            // Reset the visibility spheres for outside region to "not visible"
-            outsideRegion.ResetVisibilitySpheres();
-            
+                    //deprecated
+                    // Reset the visibility spheres for outside region to "not visible"
+                    //outsideRegion.ResetVisibilitySpheres();
+
             // Reset outside  portals to hide their frustums
             outsideRegion.ResetPortals(this);
             if (cameraRegion == null && outsideRegion.containsPoint(portalCamera.transform.position))
@@ -116,7 +119,7 @@ namespace MMA505
             if (cameraRegion != null)
             {
                 // Determine the visible objects in that region based on the camera frustum
-                List<SphereCollider> visibleObjects = FindVisibleObjects(cameraRegion, cameraFrustum);
+                List<GameObject> visibleObjects = FindVisibleObjects(cameraRegion, cameraFrustum);
 
                 if (visibleObjects != null)
                 {
@@ -129,7 +132,7 @@ namespace MMA505
         }
 
         // finds and retrus gameObjectsNotOccluded
-        List<GameObject> FindGameObjectsNotOccluded(List<SphereCollider> visibilitySpheres)
+        List<GameObject> FindGameObjectsNotOccluded(List<GameObject> visibilityGameObjects)
         {
             // make list of gameObjectsNotOccluded
             List<GameObject> gameObjectsNotOccluded = new List<GameObject>();
@@ -137,9 +140,9 @@ namespace MMA505
             // Create a list of visibile objects, and populate it will all objects
             // to start with (we will remove objects as we determine they are not
             // visible
-            List<SphereCollider> visibleObjects = new List<SphereCollider>(visibilitySpheres);
+            List<GameObject> visibleObjects = new List<GameObject>(visibilityGameObjects);
 
-            // Loop through each occlusion frustum
+            // Loop through each occlusion frustum and
             foreach (OcclusionFrustum occlusionFrustum in occlusionFrustums)
             {
                 // Create lists for the frustum's plane's centers and normals
@@ -154,35 +157,52 @@ namespace MMA505
                 for (int j = 0; j < transformedFrustumCenters.Count; j++)
                     Debug.DrawRay(transformedFrustumCenters[j], transformedFrustumNormals[j] * normalLength, Color.white);
 
-                // Loop through all our visible objects
+                // Loop through all our visible objects and dose a test for visablity
                 for (int i = 0; i < visibleObjects.Count; i++)
                 {
                     // Assume it's in the frustum by default
                     bool inFrustum = true;
 
                     // Get the position of this objects bounding sphere
-                    Vector3 spherePos = visibleObjects[i].transform.position;
+                    Vector3 objPos;
+
+                    //the bounds of the sphere
+                    float bounds;
+
+                    //fuckkkkkkk not to bad. each object should have the sphere atached witch can be found.
                     // Calculate the radius of the object's bounding sphere
-                    float bounds = visibleObjects[i].radius * visibleObjects[i].transform.localScale.x;
-
-                    // Loop through all our transformed frustum planes
-                    for (int j = 0; j < transformedFrustumCenters.Count; j++)
+                    Transform visablityShpere = visibleObjects[i].transform.Find("VisibilitySphere");
+                    if (visablityShpere != null)
                     {
-                        // Calculate the h distance of the point relative to each of the frustum planes
-                        // the formula for h distance is h = (P - P_0) . N
-                        // Where P is the point we are wanting to check what side of the plane it lays on
-                        // P_0 is a point on the plane we're testing, and N is the planes normal
-                        float h = Vector3.Dot((spherePos - transformedFrustumCenters[j]), transformedFrustumNormals[j]);
+                        bounds = visablityShpere.localScale.x;
+                        objPos = visablityShpere.position;
 
-                        // If the h value is greater than the outer bounds limit
-                        if (h > -bounds)
+                        // Loop through all our transformed frustum planes
+                        for (int j = 0; j < transformedFrustumCenters.Count; j++)
                         {
-                            // The object is at least *partly* out of the occlusion volume
-                            // set "inFrustum" to false and break
-                            inFrustum = false;
-                            break;
+                            // Calculate the h distance of the point relative to each of the frustum planes
+                            // the formula for h distance is h = (P - P_0) . N
+                            // Where P is the point we are wanting to check what side of the plane it lays on
+                            // P_0 is a point on the plane we're testing, and N is the planes normal
+                            float h = Vector3.Dot((objPos - transformedFrustumCenters[j]), transformedFrustumNormals[j]);
+
+                            // If the h value is greater than the outer bounds limit
+                            if (h > -bounds)
+                            {
+                                // The object is at least *partly* out of the occlusion volume
+                                // set "inFrustum" to false and break
+                                inFrustum = false;
+                                break;
+                            }
                         }
                     }
+                    else
+                    {
+                        //chat gpt is nice for gening error stuff (if i set up my code to throw an error i can just ask ai to wright it.) so i dont have to and then ill aculy do this stuff.
+                        throw new System.Exception($"VisibilitySphere not found for object: {visibleObjects[i].name}. Ensure each object has a child named 'VisibilitySphere' with appropriate settings.");
+                    }
+
+                    
 
                     // Otherwise, if it was within all the bounds
                     if (inFrustum)
@@ -195,25 +215,29 @@ namespace MMA505
                         i--;
                     }
                 }
-                
             }
 
-            // Loop through each game object we're testing
-            for (int i = 0; i < gameObjectsToTestForOcclusion.Length; i++)
+            // // Loop through each game object we're testing
+            // for (int i = 0; i < gameObjectsToTestForOcclusion.Length; i++)
+            // {
+            //     // Get its visibility sphere
+            //     SphereCollider sphereCollider = visibilitySpheres[i].GetComponent<SphereCollider>();
+
+            //     // Get the visibility sphere's mesh renderer
+            //     MeshRenderer mr = sphereCollider.GetComponent<MeshRenderer>();
+
+            //     // if the visiblity sphere is a visible object
+            //     if (visibleObjects.Contains(sphereCollider))
+            //     {
+            //         // Add this object to the game objects in frustum list
+            //         gameObjectsNotOccluded.Add(gameObjectsToTestForOcclusion[i].gameObject);
+            //     }
+            // }
+            foreach (SphereCollider SphereCollider in visibleObjects)
             {
-                // Get its visibility sphere
-                SphereCollider sphereCollider = visibilitySpheres[i].GetComponent<SphereCollider>();
-
-                // Get the visibility sphere's mesh renderer
-                MeshRenderer mr = sphereCollider.GetComponent<MeshRenderer>();
-
-                // if the visiblity sphere is a visible object
-                if (visibleObjects.Contains(sphereCollider))
-                {
-                    // Add this object to the game objects in frustum list
-                    gameObjectsNotOccluded.Add(gameObjectsToTestForOcclusion[i].gameObject);
-                }
+                gameObjectsNotOccluded = GetComponentInParent<Transform>().SphereCollider;
             }
+            gameObjectsNotOccluded = GetComponentInParent<SphereCollider>().SphereCollider;
 
             return gameObjectsNotOccluded;
             
@@ -221,12 +245,12 @@ namespace MMA505
 
 
        // Find visible objects in a region, based on a frustum
-       List<SphereCollider> FindVisibleObjects(Region region, Frustum frustum)
+       List<GameObject> FindVisibleObjects(Region region, Frustum frustum)
         {
             // Get the list of potentially visible objects in the region
             // (i.e. all the objects in the region which are tested for visibility)
-            List<SphereCollider> potentiallyVisibleObjects = new List<SphereCollider>();
-            potentiallyVisibleObjects.AddRange(region.visibilitySpheres);
+            List<GameObject> potentiallyVisibleObjects = new List<GameObject>();
+            potentiallyVisibleObjects.AddRange(region.visibGameObjects);
 
             // Update the frustum for this frame
             frustum.UpdateFrustum();
