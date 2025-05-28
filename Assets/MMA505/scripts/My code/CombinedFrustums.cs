@@ -32,15 +32,17 @@ namespace MMA505
         // A list of the occlusion frustums we will create for the objects above
         List<OcclusionFrustum> occlusionFrustums = new List<OcclusionFrustum>();
 
+
+
         // The material to use for our debug frustum volume
         public Material frustumMaterial;
         // The material to use for our visibility spheres
         public Material visibilitySphereMaterial;
 
         // The Game Object transform that we will create our debug frustum
-        // renderers as children of
         public Transform frustumContainer;
-
+        //layer for fustums
+        public LayerMask frustumLayer = LayerMask.GetMask("Frustums");
         // The frustum of our camera
         Frustum cameraFrustum;
 

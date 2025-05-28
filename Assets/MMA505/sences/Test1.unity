@@ -1552,6 +1552,7 @@ GameObject:
   - component: {fileID: 1082864194}
   - component: {fileID: 1082864197}
   - component: {fileID: 1082864196}
+  - component: {fileID: 1082864198}
   m_Layer: 0
   m_Name: piller
   m_TagString: Untagged
@@ -1627,6 +1628,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1082864193}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1082864198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1082864193}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73597a3d9cd3947de8f484a217f387af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  occludingObjectMeshFilter: {fileID: 0}
+  frustumRenderer: {fileID: 0}
 --- !u!1 &1111420758
 GameObject:
   m_ObjectHideFlags: 0
@@ -3404,7 +3419,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 307a1d6e882db4c05996dec799f80daa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameObjectsToTestForVisibility: []
   visibGameObjects: []
   portals: []
 --- !u!1 &2130743901
@@ -3662,6 +3676,10 @@ PrefabInstance:
       propertyPath: visibilitySphereMaterial
       value: 
       objectReference: {fileID: 2100000, guid: 69631cea4618f4d41b428fcb4b7a30e3, type: 2}
+    - target: {fileID: 1853225297856446472, guid: 174fbffbd7b67487598e570250c68efb, type: 3}
+      propertyPath: gameObjectsToTestForOcclusion.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7398515596473919552, guid: 174fbffbd7b67487598e570250c68efb, type: 3}
       propertyPath: m_Name
       value: camra
