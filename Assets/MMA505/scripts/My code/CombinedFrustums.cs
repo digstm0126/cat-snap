@@ -269,29 +269,34 @@ namespace MMA505
             // Create a list of objects which are actually visible
             List<GameObject> visibleObjects = new List<GameObject>();
 
-            // Loop through all our potentially visible objects
-            foreach (GameObject visibleObject in potentiallyVisibleObjects)
-            {   
+            if (potentiallyVisibleObjects != null)
+            {
 
-                Transform visablityShpere = visibleObject.transform.Find("VisibilitySphere");
+                // Loop through all our potentially visible objects
+                foreach (GameObject visibleObject in potentiallyVisibleObjects)
+                {
 
-                // Get the position of this objects bounding sphere
-                Vector3 spherePos = visablityShpere.position;
+                    Transform visablityShpere = visibleObject.transform.Find("VisibilitySphere");
 
-                // Calculate the radius of the object's bounding sphere
-                float bounds = visablityShpere.localScale.x;
-                //float bounds = sphereCollider.radius * sphereCollider.transform.localScale.x;
+                    // Get the position of this objects bounding sphere
+                    Vector3 spherePos = visablityShpere.position;
 
-                // If the current frustum contains the object, it must be visible
-                // (any object in a region below this one has already been determined
-                // to be visible to all portal frustums below this)
-                if (frustum.containsPoint(spherePos, bounds))
-                    visibleObjects.Add(visibleObject);
+                    // Calculate the radius of the object's bounding sphere
+                    float bounds = visablityShpere.localScale.x;
+                    //float bounds = sphereCollider.radius * sphereCollider.transform.localScale.x;
+
+                    // If the current frustum contains the object, it must be visible
+                    // (any object in a region below this one has already been determined
+                    // to be visible to all portal frustums below this)
+                    if (frustum.containsPoint(spherePos, bounds))
+                        visibleObjects.Add(visibleObject);
+                }
+
             }
 
             // return the list of visible objects in this region, and all
-            // other portal linked regions
-            return visibleObjects;
+                // other portal linked regions
+                return visibleObjects;
         }
 
     }
