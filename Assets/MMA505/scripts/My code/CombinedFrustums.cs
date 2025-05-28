@@ -26,9 +26,6 @@ namespace MMA505
         //visable objects
         public List<GameObject> gameObjectsInFrustum = new List<GameObject>();
 
-
-        // An array of game objects to test for site
-        public Renderer[] gameObjectsToTestForOcclusion;
         // A list of the occlusion frustums we will create for the objects above
         List<OcclusionFrustum> occlusionFrustums = new List<OcclusionFrustum>();
 

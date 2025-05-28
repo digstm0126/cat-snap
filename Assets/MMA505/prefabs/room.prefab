@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1002090227243044254}
   m_Layer: 0
   m_Name: room
-  m_TagString: Untagged
+  m_TagString: region
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -100,8 +100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 307a1d6e882db4c05996dec799f80daa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameObjectsToTestForVisibility: []
-  visibilitySpheres: []
+  visibGameObjects: []
   portals: []
 --- !u!1001 &1196363318404253489
 PrefabInstance:

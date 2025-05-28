@@ -24,7 +24,7 @@ namespace MMA505
         // public GameObject[] gameObjectsToTestForVisibility;
 
         // An array of visibility spheres for these game objects
-        [HideInInspector]
+        //[HideInInspector]
         public GameObject[] visibGameObjects;
 
         // An array of portals leading out of this region
@@ -42,10 +42,10 @@ namespace MMA505
             CombinedFrustums = FindObjectOfType<CombinedFrustums>();
 
             //popluate visibGameObjects with all game objects inside of it
-            visibGameObjects = populatObjectsToTest();
+            populatObjectsToTest();
 
             //poplulat portals
-            portals = popluatePortals();
+            popluatePortals();
 
             //each gameobject is 
             addVisibilitySphere();
@@ -53,6 +53,7 @@ namespace MMA505
 
         }
 
+    
         public Object[] getVisibGameObjects()
         {
             return visibGameObjects;
@@ -90,9 +91,9 @@ namespace MMA505
             }
         }
 
-        public Portal[] popluatePortals()
+        public void popluatePortals()
         {
-            List<Portal> portals = new List<Portal>();
+            List<Portal> portalsNew = new List<Portal>();
 
             GameObject[] portalsObj = GameObject.FindGameObjectsWithTag("portal");
 
@@ -102,14 +103,14 @@ namespace MMA505
                 Portal portal = obj.GetComponent<Portal>();
                 if (portal != null && containsPoint(obj.transform.position))
                 {
-                    portals.Add(portal);
+                    portalsNew.Add(portal);
                 }
             }
 
-            return portals.ToArray();
+            portals = portalsNew.ToArray();
         }
 
-        public GameObject[] populatObjectsToTest()
+        public void populatObjectsToTest()
         {
             List<GameObject> objToTest = new List<GameObject>();
 
@@ -137,7 +138,7 @@ namespace MMA505
             }
 
             // Return the array of renderers
-            return objToTest.ToArray();
+            visibGameObjects = objToTest.ToArray();
         }
 
         // Returns true if this region contains a point
@@ -149,20 +150,6 @@ namespace MMA505
             // the bounds of the mesh attached to the mesh filter
             return mf.mesh.bounds.Contains(transform.InverseTransformPoint(worldPoint));
         }
-
-        //not useing visablity spheres as to many camras
-        // Reset all our visibility spheres to not visible (red)
-        // public void ResetVisibilitySpheres()
-        // {
-        //     // Loop through each visibility sphere
-        //     foreach (SphereCollider sphereCollider in visibilitySpheres)
-        //     {
-        //         // Get it's mesh renderer
-        //         MeshRenderer mr = sphereCollider.GetComponent<MeshRenderer>();
-        //         // Set the materials colour to red
-        //         mr.material.color = new Color(1, 0, 0, .5f);
-        //     }
-        // }
 
         // Reset all our portal frustums
         public void ResetPortals(CombinedFrustums CombinedFrustums)
