@@ -20,7 +20,7 @@ AnimatorStateMachine:
     m_Position: {x: 360, y: 280, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 9188512279116210076}
-    m_Position: {x: -220, y: 330, z: 0}
+    m_Position: {x: -270, y: 270, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -62,26 +62,42 @@ BlendTree:
   m_Name: Blend Tree
   m_Childs:
   - serializedVersion: 2
-    m_Motion: {fileID: -203655887218126122, guid: 827ffecbc46894e3aa4ef14ab2fdf7f8, type: 3}
+    m_Motion: {fileID: 9057722287364031900, guid: 8284ce024b74945a5ae30631141d2396, type: 3}
     m_Threshold: 0
-    m_Position: {x: 0, y: 1}
-    m_TimeScale: 1
-    m_CycleOffset: 0
-    m_DirectBlendParameter: WalkSpeedMultiplier
-    m_Mirror: 0
-  - serializedVersion: 2
-    m_Motion: {fileID: -203655887218126122, guid: 368f082e346fa4d09b609d0708e01160, type: 3}
-    m_Threshold: 0.5
-    m_Position: {x: -1, y: 0}
-    m_TimeScale: 1
-    m_CycleOffset: 0
-    m_DirectBlendParameter: WalkSpeedMultiplier
-    m_Mirror: 0
-  - serializedVersion: 2
-    m_Motion: {fileID: -203655887218126122, guid: 89cc16f7adf034d7596354925ced3bda, type: 3}
-    m_Threshold: 1
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
+    m_CycleOffset: 0
+    m_DirectBlendParameter: WalkSpeedMultiplier
+    m_Mirror: 0
+  - serializedVersion: 2
+    m_Motion: {fileID: 7400000, guid: 598eb16e7a7764add992ae42546d933e, type: 2}
+    m_Threshold: 0.25
+    m_Position: {x: -0.012918284, y: 0.48619232}
+    m_TimeScale: 0.74428934
+    m_CycleOffset: 0
+    m_DirectBlendParameter: WalkSpeedMultiplier
+    m_Mirror: 0
+  - serializedVersion: 2
+    m_Motion: {fileID: 5539868263643865889, guid: 8284ce024b74945a5ae30631141d2396, type: 3}
+    m_Threshold: 0.5
+    m_Position: {x: -0.004079638, y: -0.44190067}
+    m_TimeScale: 0.8191434
+    m_CycleOffset: 0
+    m_DirectBlendParameter: WalkSpeedMultiplier
+    m_Mirror: 0
+  - serializedVersion: 2
+    m_Motion: {fileID: -5215207499719580257, guid: 8284ce024b74945a5ae30631141d2396, type: 3}
+    m_Threshold: 0.75
+    m_Position: {x: -0.45903665, y: 0.009431674}
+    m_TimeScale: 0.78843176
+    m_CycleOffset: 0
+    m_DirectBlendParameter: WalkSpeedMultiplier
+    m_Mirror: 0
+  - serializedVersion: 2
+    m_Motion: {fileID: -2781710075931568964, guid: 8284ce024b74945a5ae30631141d2396, type: 3}
+    m_Threshold: 1
+    m_Position: {x: 0.42205787, y: 0.020600747}
+    m_TimeScale: 0.85667163
     m_CycleOffset: 0
     m_DirectBlendParameter: WalkSpeedMultiplier
     m_Mirror: 0
@@ -89,7 +105,7 @@ BlendTree:
   m_BlendParameterY: walkX
   m_MinThreshold: 0
   m_MaxThreshold: 1
-  m_UseAutomaticThresholds: 1
+  m_UseAutomaticThresholds: 0
   m_NormalizedBlendValues: 0
   m_BlendType: 2
 --- !u!1102 &-4679411885056661092
