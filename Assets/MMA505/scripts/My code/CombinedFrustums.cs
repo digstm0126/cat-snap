@@ -239,7 +239,7 @@ namespace MMA505
         }
 
 
-       // Find visible objects in a region, based on a frustum
+       // Find visible objects in a region, based on a frustum and all portal frustums
        List<GameObject> FindVisibleObjects(Region region, Frustum frustum)
         {
             // Get the list of potentially visible objects in the region
@@ -267,22 +267,26 @@ namespace MMA505
             }
 
             // Create a list of objects which are actually visible
-            List<SphereCollider> visibleObjects = new List<SphereCollider>();
+            List<GameObject> visibleObjects = new List<GameObject>();
 
             // Loop through all our potentially visible objects
-            foreach (SphereCollider sphereCollider in potentiallyVisibleObjects)
-            {
+            foreach (GameObject visibleObject in potentiallyVisibleObjects)
+            {   
+
+                Transform visablityShpere = visibleObject.transform.Find("VisibilitySphere");
+
                 // Get the position of this objects bounding sphere
-                Vector3 spherePos = sphereCollider.transform.position;
+                Vector3 spherePos = visablityShpere.position;
 
                 // Calculate the radius of the object's bounding sphere
-                float bounds = sphereCollider.radius * sphereCollider.transform.localScale.x;
+                float bounds = visablityShpere.localScale.x;
+                //float bounds = sphereCollider.radius * sphereCollider.transform.localScale.x;
 
                 // If the current frustum contains the object, it must be visible
                 // (any object in a region below this one has already been determined
                 // to be visible to all portal frustums below this)
                 if (frustum.containsPoint(spherePos, bounds))
-                    visibleObjects.Add(sphereCollider);
+                    visibleObjects.Add(visibleObject);
             }
 
             // return the list of visible objects in this region, and all
