@@ -88,9 +88,7 @@ namespace MMA505
             // Loop through each region
             foreach (Region region in regions)
             {
-                //deprectated
-                        // Reset the visibility spheres for all regions to "not visible"
-                        //region.ResetVisibilitySpheres();
+
                 // Reset all the portals to hide their frustums
                 region.ResetPortals(this);
 
@@ -99,12 +97,6 @@ namespace MMA505
                 if (region.containsPoint(portalCamera.transform.position))
                     cameraRegion = region;
             }
-
-
-            // code for outside region
-                    //deprecated
-                    // Reset the visibility spheres for outside region to "not visible"
-                    //outsideRegion.ResetVisibilitySpheres();
 
             // Reset outside  portals to hide their frustums
             outsideRegion.ResetPortals(this);
@@ -127,7 +119,6 @@ namespace MMA505
                     gameObjectsInFrustum = FindGameObjectsNotOccluded(visibleObjects);
 
                 }
-                
             }
         }
 
