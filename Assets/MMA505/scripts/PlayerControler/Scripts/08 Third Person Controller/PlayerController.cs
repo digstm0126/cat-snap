@@ -39,7 +39,6 @@ public class PlayerController : MonoBehaviour
         foreach (ThirdPersonControllerAbstractBehaviour thirdPersonControllerBehaviour in thirdPersonControllerBehaviours)
             if (thirdPersonControllerBehaviour.ExecuteBehaviourIfRequired(ref CurrentState)) return;
 
-
         float walkX = Input.GetAxis("Vertical");
         float walkY = Input.GetAxis("Horizontal");
 
@@ -50,12 +49,12 @@ public class PlayerController : MonoBehaviour
         animatorController.SetFloat("walkX", walkX);
         animatorController.SetFloat("walkY", walkY);
         if (walkMag > 0) CurrentState = "Walking";
-    
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
             animatorController.SetTrigger("Jump");
             CurrentState = "Jumping";
         }
+
     }
 }
