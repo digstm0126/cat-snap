@@ -42,13 +42,16 @@ namespace MMA505
         // The Game Object transform that we will create our debug frustum
         public Transform frustumContainer;
         //layer for fustums
-        public LayerMask frustumLayer = LayerMask.GetMask("Frustums");
+        public LayerMask frustumLayer;
         // The frustum of our camera
         Frustum cameraFrustum;
 
         // Start is called before the first frame update
         void Start()
         {
+            //sets frustom layer
+            frustumLayer = LayerMask.GetMask("Frustums");
+
             // If the occlusion camera hasn't been defined, try get the
             // camera tagged with MainCamera
             if (portalCamera == null)
