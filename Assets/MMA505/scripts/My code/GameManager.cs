@@ -6,22 +6,79 @@ namespace MMA505
 {
     public class GameManager : MonoBehaviour
     {
-        public GameObject[] regions;
 
         //timer for updating regions
         private float timer = 0f;
         public float UpdateRegionsTimer = 0.5f;
+        public Material visibilitySphereMaterial;
+        [SerializeField] private GameObject[] _Cats;
+        [SerializeField] private GameObject[] _Players;
+        [SerializeField] private GameObject[] _Portals;
+        [SerializeField] private GameObject[] _OcludingObjects;
+        [SerializeField] private GameObject[] _RegionsIn;
+
+
 
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
+            populatObjects();
+            RegionManager.UpdateVisabl(_Players, _Cats, _RegionsIn);
 
-            PopluateRegions();
+        }
 
-            UpdateRegions();
+        public void populatObjects()
+        {
+            _Players = GameObject.FindGameObjectsWithTag("Player");
+            addVisibilitySphere(_Players);
+            _Cats = GameObject.FindGameObjectsWithTag("Cat");
+            addVisibilitySphere(_Cats);
+            _Portals = GameObject.FindGameObjectsWithTag("portal");
+            _OcludingObjects = GameObject.FindGameObjectsWithTag("ocluding");
 
+            List<GameObject> regions = new List<GameObject>();
+            foreach (GameObject obj in GameObject.FindGameObjectsWithTag("region"))
+            {
+                //going to be determing if its in or out
+                if (obj.GetComponent<Region>() != null)
+                {
+                    regions.Add(obj);
+                }
+            }
+            _RegionsIn = regions.ToArray();
+        }
 
+        //add a sphere site colider to each object in objToTest for visablity
+        public void addVisibilitySphere(GameObject[] siteObjectsToCheck)
+        {
+
+            // Loop through each game object to add a visablity sphere
+            for (int i = 0; i < siteObjectsToCheck.Length; i++)
+            {
+
+                //dont need this part as i just wat refrince to the game object
+                // If the game object already has a visibility sphere
+                if (siteObjectsToCheck[i].transform.Find("VisibilitySphere") == null)
+                {
+                    // Create a new sphere
+                    GameObject visibilitySphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                    // Set the gameobjects name to "VisibilitySphere"
+                    visibilitySphere.name = "VisibilitySphere";
+                    // Set it's parent as the game object
+                    visibilitySphere.transform.SetParent(siteObjectsToCheck[i].transform, false);
+                    // Set it's size to the the game objects bounding box's extent magnitude * 2
+                    // (the magnitude is the half the size)
+                    Renderer renderer = siteObjectsToCheck[i].GetComponent<Renderer>();
+                    Vector3 boundsExtents = renderer.bounds.extents;
+                    visibilitySphere.transform.localScale = Vector3.one * boundsExtents.magnitude * 2;
+                    // Get the sphere's Renderer and update the material to our visibility sphere material, and turn off shadows
+                    Renderer rendererSphere = visibilitySphere.GetComponent<Renderer>();
+                    renderer.material = visibilitySphereMaterial;
+                    rendererSphere.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+                    rendererSphere.receiveShadows = false;
+                }
+            }
         }
 
         // Update is called once per frame
@@ -31,29 +88,10 @@ namespace MMA505
             timer += Time.deltaTime;
             if (timer >= UpdateRegionsTimer)
             {
-                UpdateRegions();
+                RegionManager.UpdateVisabl(_Players, _Cats, _RegionsIn);
                 timer = 0f;
             }
-            
-        }
 
-
-        //popluats with all regions in the sence
-        void PopluateRegions()
-        {
-
-            regions = GameObject.FindGameObjectsWithTag("region");
-
-        }
-
-
-        //update each regeions visable objects
-        void UpdateRegions()
-        {
-            foreach (GameObject region in regions)
-            {
-                region.GetComponent<Region>().populatObjectsToTest();
-            }
         }
     }
 }
