@@ -29,8 +29,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1730973169975169082}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.19411296, y: 0.041770298, z: -0.008273168, w: 0.9800546}
-  m_LocalPosition: {x: -0.45571432, y: 2.2082486, z: -5.3364906}
+  m_LocalRotation: {x: 0.19411305, y: 0.0417704, z: -0.008273192, w: 0.98005456}
+  m_LocalPosition: {x: -0.45571423, y: 2.2082486, z: -5.3364906}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -248,6 +248,7 @@ GameObject:
   - component: {fileID: 5259983368344898409}
   - component: {fileID: 6683694098048103966}
   - component: {fileID: 3493992035314306114}
+  - component: {fileID: 1549021147414942826}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -284,7 +285,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34bcdf1982a5246c2828c98aafa1ce3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controller: {fileID: 8445298104666255751}
+  controller: {fileID: 1549021147414942826}
   animatorController: {fileID: 2831328366865596314}
   cam: {fileID: 1180314878735746306}
   walkSpeed: 200
@@ -337,6 +338,31 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!143 &1549021147414942826
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2469089291262881524}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Height: 2
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1001 &1743896195027164826
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -352,6 +378,10 @@ PrefabInstance:
     - target: {fileID: 7120905726178943424, guid: 013df4460659f4751a2e3e285721a528, type: 3}
       propertyPath: m_Name
       value: Me02
+      objectReference: {fileID: 0}
+    - target: {fileID: 7120905726178943424, guid: 013df4460659f4751a2e3e285721a528, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 7609212735993199482, guid: 013df4460659f4751a2e3e285721a528, type: 3}
       propertyPath: m_LocalPosition.x
@@ -396,10 +426,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7120905726178943424, guid: 013df4460659f4751a2e3e285721a528, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 8445298104666255751}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 013df4460659f4751a2e3e285721a528, type: 3}
 --- !u!95 &2831328366865596314 stripped
 Animator:
@@ -411,33 +438,3 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7609212735993199482, guid: 013df4460659f4751a2e3e285721a528, type: 3}
   m_PrefabInstance: {fileID: 1743896195027164826}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &8854387333723537242 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7120905726178943424, guid: 013df4460659f4751a2e3e285721a528, type: 3}
-  m_PrefabInstance: {fileID: 1743896195027164826}
-  m_PrefabAsset: {fileID: 0}
---- !u!143 &8445298104666255751
-CharacterController:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8854387333723537242}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Height: 2
-  m_Radius: 0.5
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 1, z: 0}

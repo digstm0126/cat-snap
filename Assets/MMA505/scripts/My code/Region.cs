@@ -121,8 +121,7 @@ namespace MMA505
             // adds all players to list
             foreach (GameObject obj in playerObjects)
             {
-                Transform transform = obj.GetComponent<Transform>();
-                if (containsPoint(transform.position))
+                if (containsPoint(obj.transform.position))
                 {
                     objToTest.Add(obj);
                 }
