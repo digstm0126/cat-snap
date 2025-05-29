@@ -238,13 +238,13 @@ namespace MMA505
             // Get the list of potentially visible objects in the region
             // (i.e. all the objects in the region which are tested for visibility)
             List<GameObject> potentiallyVisibleObjects = new List<GameObject>();
-            potentiallyVisibleObjects.AddRange(region.visibGameObjects);
+            potentiallyVisibleObjects.AddRange(region.getVisibGameObjects());
 
             // Update the frustum for this frame
             frustum.UpdateFrustum();
 
             // Loop through each of the portals in this region
-            foreach (Portal p in region.portals)
+            foreach (Portal p in region.getPortals())
             {
                 // If this portal is within this frustum
                 if (frustum.containsPortal(p))

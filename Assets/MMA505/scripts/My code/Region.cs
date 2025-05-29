@@ -21,31 +21,21 @@ namespace MMA505
     public class Region : MonoBehaviour
     {
         // An array of visibility spheres for these game objects
-        //[HideInInspector]
-        public GameObject[] visibGameObjects;
+        [SerializeField] private GameObject[] visibGameObjects;
 
         // An array of portals leading out of this region
-        public Portal[] portals;
+        [SerializeField] private Portal[] portals;
 
-        // Get the portal culling script
-        CombinedFrustums CombinedFrustums;
-
-
-        // Start is called before the first frame update
-        void Start()
-        {
-            //change to manager script
-            // Get the portal culling script
-            CombinedFrustums = FindObjectOfType<CombinedFrustums>();
-
-
-
-        }
 
     
-        public Object[] getVisibGameObjects()
+        public GameObject[] getVisibGameObjects()
         {
             return visibGameObjects;
+        }
+
+        public Portal[] getPortals()
+        {
+            return portals;
         }
 
         public void popluatePortals()
