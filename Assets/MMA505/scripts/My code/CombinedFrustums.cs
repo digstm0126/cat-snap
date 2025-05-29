@@ -18,24 +18,15 @@ namespace MMA505
 
         //game manager
         [SerializeField] private GameManager _GameManager;
+        
         // The camera we will be generating portal frustums from
-        public Camera portalCamera;
-
-        // An array of all the regions which exist in our scene
-        public GameObject[] regions;
+        [SerializeField] private Camera portalCamera;
 
         //camra region
         [SerializeField] private GameObject cameraRegion;
 
         //visable objects
         public List<GameObject> gameObjectsInFrustum = new List<GameObject>();
-
-        // A list of the occlusion frustums we will create for the objects above
-        //List<OcclusionFrustum> occlusionFrustums = new List<OcclusionFrustum>();
-
-
-
-
 
         // The frustum of our camera
         [SerializeField] private Frustum _CameraFrustum;
@@ -44,6 +35,7 @@ namespace MMA505
         // Start is called before the first frame update
         void Start()
         {
+            // this and update are like this if i want to set them up with a manger latter.
             SetupSite(); 
         }
 
@@ -53,8 +45,6 @@ namespace MMA505
 
             _GameManager = FindObjectOfType<GameManager>();
 
-            
-
             // If the occlusion camera hasn't been defined, try get the
             // camera tagged with MainCamera
             if (portalCamera == null)
@@ -62,9 +52,6 @@ namespace MMA505
                 portalCamera = Camera.main;
             }
             
-
-            //occlusionFrustums.AddRange(FindObjectsOfType<OcclusionFrustum>());
-
             // Create a new GameObject for our camera frustum
             GameObject cameraFrustumGO = new GameObject("Camera Frustum");
             // Set it's layer to this layher
@@ -74,8 +61,6 @@ namespace MMA505
             // Create the frustum for this camera
             _CameraFrustum = Frustum.CreateFrustumFromCamera(portalCamera, cameraFrustumGO, _GameManager.getFrustumMaterial() , Color.blue);
 
-            // populats regions
-            regions = _GameManager.getAllRegions();
         }
 
 
@@ -85,6 +70,8 @@ namespace MMA505
         {
             updateVisableObjects();
         }
+
+
 
         //update visable objects
         public void updateVisableObjects()

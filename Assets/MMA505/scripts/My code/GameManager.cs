@@ -11,21 +11,17 @@ namespace MMA505
         //timer for updating regions
         private float timer = 0f;
         public float UpdateRegionsTimer = 0.5f;
-        public Material visibilitySphereMaterial;
+        [SerializeField] private Material visibilitySphereMaterial;
+        [SerializeField] private int _frustumLayer;
+        [SerializeField] private Material _frustumMaterial;
+
+        [SerializeField] private GameObject _frustomTranform;
         [SerializeField] private GameObject[] _Cats;
         [SerializeField] private GameObject[] _Players;
         [SerializeField] private GameObject[] _Portals;
         [SerializeField] private GameObject[] _OcludingObjects;
         [SerializeField] private GameObject[] _RegionsIn;
         [SerializeField] private GameObject _RegionEx;
-
-
-        [SerializeField] public int _frustumLayer;
-        [SerializeField] private Material _frustumMaterial;
-
-        [SerializeField] private GameObject _frustomTranform;
-
-
 
 
 
