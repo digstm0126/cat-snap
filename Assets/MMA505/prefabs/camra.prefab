@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 2643323338559628792}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.11, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -134,7 +134,7 @@ Transform:
   m_GameObject: {fileID: 7398515596473919552}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -21.318851, y: 0.35, z: -15.86}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -156,15 +156,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _GameManager: {fileID: 0}
   portalCamera: {fileID: 772983095039016104}
-  regions: []
   cameraRegion: {fileID: 0}
   gameObjectsInFrustum: []
-  frustumMaterial: {fileID: 2100000, guid: 00d44c6a8eabe4961adff0180c7ad2e8, type: 2}
-  visibilitySphereMaterial: {fileID: 2100000, guid: 69631cea4618f4d41b428fcb4b7a30e3, type: 2}
-  frustumContainer: {fileID: 0}
-  frustumLayer:
-    serializedVersion: 2
-    m_Bits: 0
+  _CameraFrustum: {fileID: 0}
 --- !u!1 &8109502961050500854
 GameObject:
   m_ObjectHideFlags: 0
@@ -192,7 +186,7 @@ Transform:
   m_GameObject: {fileID: 8109502961050500854}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.044, z: 0.228}
+  m_LocalPosition: {x: 0, y: 0, z: 0.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
