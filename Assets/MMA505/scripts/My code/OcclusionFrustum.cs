@@ -126,19 +126,19 @@ namespace MMA505
         void Start()
         {
             // Find our Occlusion Frustum Culling script
-            CombinedFrustums CombinedFrustums = FindObjectOfType<CombinedFrustums>();
+            GameManager gameManager = FindObjectOfType<GameManager>();
 
             // If our frustum renderer hasn't been set, create a new GameObject for it
             if (frustumRenderer == null) frustumRenderer = new GameObject("FrustumRenderer");
             // Set this frustums position and rotation to identity
             frustumRenderer.transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
 
-            frustumRenderer.gameObject.layer = CombinedFrustums.frustumLayer;
+            frustumRenderer.gameObject.layer = gameManager.getFrustumLayer();
 
             // Add a mesh renderer to our frustrum renderer GameObject
             MeshRenderer mr = frustumRenderer.AddComponent<MeshRenderer>();
             // Set it's material to the material defined in our Occlusion Frustum Culling script
-            mr.material = CombinedFrustums.frustumMaterial;
+            mr.material = gameManager.getFrustumMaterial();
 
             // Add a mesh filer to our frustrum renderer GameObject
             frustumMeshFilter = frustumRenderer.AddComponent<MeshFilter>();

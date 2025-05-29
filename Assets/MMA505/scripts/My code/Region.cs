@@ -24,7 +24,7 @@ namespace MMA505
         [SerializeField] private GameObject[] visibGameObjects;
 
         // An array of portals leading out of this region
-        [SerializeField] private Portal[] portals;
+        [SerializeField] private GameObject[] portals;
 
 
     
@@ -33,20 +33,20 @@ namespace MMA505
             return visibGameObjects;
         }
 
-        public Portal[] getPortals()
+        public GameObject[] getPortals()
         {
             return portals;
         }
 
         public void popluatePortals(GameObject[] portalsObj)
         {
-            List<Portal> portalsNew = new List<Portal>();
+            List<GameObject> portalsNew = new List<GameObject>();
 
             // Add their renderers to the list
-            foreach (GameObject obj in portalsObj)
+            foreach (GameObject portal in portalsObj)
             {
-                Portal portal = obj.GetComponent<Portal>();
-                if (portal != null && containsPoint(obj.transform.position))
+                // Portal portal = obj.GetComponent<Portal>();
+                if (portal != null && containsPoint(portal.transform.position))
                 {
                     portalsNew.Add(portal);
                 }
@@ -95,9 +95,8 @@ namespace MMA505
         public void ResetPortals(CombinedFrustums CombinedFrustums)
         {
             // Loop through all the portals
-            foreach (Portal p in portals)
-                // Hide the frustum
-                p.HideFrustum(CombinedFrustums);
+            foreach (GameObject portal in portals)
+                portal.GetComponent<Portal>().HideFrustum(CombinedFrustums);
         }
     }
 }

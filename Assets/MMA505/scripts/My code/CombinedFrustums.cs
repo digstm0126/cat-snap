@@ -247,8 +247,9 @@ namespace MMA505
             frustum.UpdateFrustum();
 
             // Loop through each of the portals in this region
-            foreach (Portal p in region.getPortals())
+            foreach (GameObject PortalOjt in region.getPortals())
             {
+                Portal p = PortalOjt.GetComponent<Portal>();
                 // If this portal is within this frustum
                 if (frustum.containsPortal(p))
                     // Get all the visible objects in the region that portal

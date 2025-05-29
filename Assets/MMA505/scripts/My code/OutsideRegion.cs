@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 
@@ -12,20 +13,20 @@ namespace MMA505
 
         private void Awake()
         {
-            RegionManager.UpdateVisablEx += poplulatItems;
+            RegionManager.UpdateVisablEx += poplulatItemsEx;
             RegionManager.UpdatePortalEx += poplulatPortalsEx;
         }
 
         private void OnDestroy()
         {
-            RegionManager.UpdateVisablEx -= poplulatItems;
+            RegionManager.UpdateVisablEx -= poplulatItemsEx;
             RegionManager.UpdatePortalEx -= poplulatPortalsEx;
 
         }
 
         #endregion
 
-        private void poplulatItems(GameObject[] players, GameObject[] cats, GameObject[] regions)
+        private void poplulatItemsEx(GameObject[] players, GameObject[] cats, GameObject[] regions)
         {
             List<GameObject> visiblePlayers = new List<GameObject>(players);
             List<GameObject> visibleCats = new List<GameObject>(cats);
@@ -49,17 +50,36 @@ namespace MMA505
 
         }
 
-        private void poplulatPortalsEx(GameObject[] portals, GameObject[] regions)
+        private void poplulatPortalsEx(GameObject[] portalsIn, GameObject[] regions)
         {
-            List<GameObject> Portals = new List<GameObject>(portals);
+            List<GameObject> portals = new List<GameObject>(portalsIn);
 
-            foreach (GameObject obj in regions)
+            if (regions != null)
             {
-                if (obj != null)
+                foreach (GameObject region in regions)
                 {
-                    if (Portals != null && Portals.Contains(obj))
+                    if (portals != null)
                     {
-                        Portals.Remove(obj);
+                        // Create a temporary list of portals to remove
+                        List<GameObject> portalsToRemove = new List<GameObject>();
+                        
+                        foreach (GameObject portal in portals)
+                        {
+                            GameObject[] regionsPortals = region.GetComponent<Region>().getPortals();
+                            if (regionsPortals != null)
+                            {
+                                if (portal != null && regionsPortals.Contains(portal))
+                                {
+                                    portalsToRemove.Add(portal);
+                                }
+                            }
+                        }
+
+                        // Remove all marked portals after the foreach loop
+                        foreach (GameObject portal in portalsToRemove)
+                        {
+                            portals.Remove(portal);
+                        }
                     }
                 }
             }

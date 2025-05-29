@@ -3151,13 +3151,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UpdateRegionsTimer: 0.5
-  visibilitySphereMaterial: {fileID: 0}
+  visibilitySphereMaterial: {fileID: 2100000, guid: 69631cea4618f4d41b428fcb4b7a30e3, type: 2}
   _Cats: []
   _Players: []
   _Portals: []
   _OcludingObjects: []
   _RegionsIn: []
   _RegionEx: {fileID: 0}
+  _frustumLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  _frustumMaterial: {fileID: 2100000, guid: 00d44c6a8eabe4961adff0180c7ad2e8, type: 2}
 --- !u!4 &2038968864 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5031269835825225530, guid: 812639769a388465588eb1c1fe43a55d, type: 3}
@@ -3298,6 +3302,14 @@ PrefabInstance:
     - target: {fileID: 1767212850352103485, guid: 812639769a388465588eb1c1fe43a55d, type: 3}
       propertyPath: m_Name
       value: outside
+      objectReference: {fileID: 0}
+    - target: {fileID: 3216592974998651460, guid: 812639769a388465588eb1c1fe43a55d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.0929
+      objectReference: {fileID: 0}
+    - target: {fileID: 3216592974998651460, guid: 812639769a388465588eb1c1fe43a55d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.1133
       objectReference: {fileID: 0}
     - target: {fileID: 5031269835825225530, guid: 812639769a388465588eb1c1fe43a55d, type: 3}
       propertyPath: m_LocalPosition.x

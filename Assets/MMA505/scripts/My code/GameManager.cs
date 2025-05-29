@@ -1,6 +1,7 @@
 using UnityEngine;
 using MMA505;
 using System.Collections.Generic;
+using UnityEditor.UIElements;
 
 namespace MMA505
 {
@@ -19,6 +20,11 @@ namespace MMA505
         [SerializeField] private GameObject _RegionEx;
 
 
+        [SerializeField] public int _frustumLayer;
+        [SerializeField] private Material _frustumMaterial;
+
+
+
 
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -26,8 +32,19 @@ namespace MMA505
         {
             populatObjects();
             RegionManager.UpdateVisabl(_Players, _Cats, _RegionsIn);
-
+            RegionManager.UpdatePortals(_Portals, _RegionsIn);
         }
+
+        public int getFrustumLayer()
+        {
+            return _frustumLayer;
+        }
+
+        public Material getFrustumMaterial()
+        {
+            return _frustumMaterial;
+        }
+
         public void populatObjects()
         {
             _Players = GameObject.FindGameObjectsWithTag("Player");
@@ -54,7 +71,6 @@ namespace MMA505
 
             _RegionsIn = regions.ToArray();
         }
-
 
         public GameObject[] getAllRegions()
         {
