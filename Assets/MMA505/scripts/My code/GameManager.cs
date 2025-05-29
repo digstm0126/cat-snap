@@ -23,6 +23,8 @@ namespace MMA505
         [SerializeField] public int _frustumLayer;
         [SerializeField] private Material _frustumMaterial;
 
+        [SerializeField] private GameObject _frustomTranform;
+
 
 
 
@@ -33,6 +35,11 @@ namespace MMA505
             populatObjects();
             RegionManager.UpdateVisabl(_Players, _Cats, _RegionsIn);
             RegionManager.UpdatePortals(_Portals, _RegionsIn);
+        }
+
+        public GameObject getFrustomTransfom()
+        {
+            return _frustomTranform;
         }
 
         public int getFrustumLayer()
