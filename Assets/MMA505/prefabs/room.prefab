@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3870408916086945043}
   - component: {fileID: 322009233127278404}
   - component: {fileID: 315777752166422211}
-  - component: {fileID: 1002090227243044254}
+  - component: {fileID: 5640081878963329874}
   m_Layer: 0
   m_Name: room
   m_TagString: region
@@ -88,7 +88,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &1002090227243044254
+--- !u!114 &5640081878963329874
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -97,7 +97,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8870863155905665760}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 307a1d6e882db4c05996dec799f80daa, type: 3}
+  m_Script: {fileID: 11500000, guid: 427d3cf1f85b14d06bbec1c978193aca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   visibGameObjects: []

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using MMA505;
+using System;
 
 /* This class implements portal culling
  * 
@@ -9,19 +10,22 @@ using MMA505;
  * Copyright 2021, University of Canterbury
  * Written by Adrian Clark
  */
- 
+
 namespace MMA505
 {
     public class CombinedFrustums : MonoBehaviour
     {
+
+        //game manager
+        [SerializeField] private GameManager _GameManager;
         // The camera we will be generating portal frustums from
         public Camera portalCamera;
 
         // An array of all the regions which exist in our scene
-        public Region[] regions;
+        public GameObject[] regions;
 
-        // the outside regenon
-        public Region outsideRegion;
+        //camra region
+        public Region cameraRegion;
 
         //visable objects
         public List<GameObject> gameObjectsInFrustum = new List<GameObject>();
@@ -46,8 +50,16 @@ namespace MMA505
         // Start is called before the first frame update
         void Start()
         {
-            //sets frustom layer
-            frustumLayer = LayerMask.GetMask("Frustums");
+            SetupSite(); 
+        }
+
+
+        void SetupSite()
+        {
+
+            _GameManager = FindObjectOfType<GameManager>();
+            //sets frustum layer
+            frustumLayer = LayerMask.GetMask("frustumLayer");
 
             // If the occlusion camera hasn't been defined, try get the
             // camera tagged with MainCamera
@@ -56,13 +68,6 @@ namespace MMA505
                 portalCamera = Camera.main;
             }
             
-            //fills regeins with all the regens it can find
-            regions = FindObjectsOfType<Region>();
-            List<Region> regionsList = new List<Region>(regions);
-            // Remove the outside region if found
-            regionsList.Remove(outsideRegion);
-            // Convert back to array
-            regions = regionsList.ToArray();
 
             occlusionFrustums.AddRange(FindObjectsOfType<OcclusionFrustum>());
 
@@ -74,6 +79,9 @@ namespace MMA505
             cameraFrustumGO.transform.SetParent(transform, false);
             // Create the frustum for this camera
             cameraFrustum = Frustum.CreateFrustumFromCamera(portalCamera, cameraFrustumGO, frustumMaterial, Color.blue);
+
+            // populats regions
+            regions = _GameManager.getAllRegions();
         }
 
 
@@ -85,27 +93,22 @@ namespace MMA505
             gameObjectsInFrustum.Clear();
 
             // Calculate what region the camera is in
-            Region cameraRegion = null;
+            cameraRegion = null;
 
             // Loop through each region
-            foreach (Region region in regions)
+            foreach (GameObject region in regions)
             {
-
+                Region objRegion = region.GetComponent<Region>();
                 // Reset all the portals to hide their frustums
-                region.ResetPortals(this);
+                objRegion.ResetPortals(this);
 
                 // If the camera is inside a region, set that region as the
                 // camera region
-                if (region.containsPoint(portalCamera.transform.position))
-                    cameraRegion = region;
-            }
-
-            // Reset outside  portals to hide their frustums
-            outsideRegion.ResetPortals(this);
-            if (cameraRegion == null && outsideRegion.containsPoint(portalCamera.transform.position))
-            {
-                // If the camera is not in a region, return
-                cameraRegion = outsideRegion;
+                if (objRegion.containsPoint(portalCamera.transform.position))
+                {
+                    cameraRegion = objRegion;
+                    break;
+                }
             }
 
 

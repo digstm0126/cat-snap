@@ -16,6 +16,7 @@ namespace MMA505
         [SerializeField] private GameObject[] _Portals;
         [SerializeField] private GameObject[] _OcludingObjects;
         [SerializeField] private GameObject[] _RegionsIn;
+        [SerializeField] private GameObject _RegionEx;
 
 
 
@@ -27,7 +28,6 @@ namespace MMA505
             RegionManager.UpdateVisabl(_Players, _Cats, _RegionsIn);
 
         }
-
         public void populatObjects()
         {
             _Players = GameObject.FindGameObjectsWithTag("Player");
@@ -41,12 +41,26 @@ namespace MMA505
             foreach (GameObject obj in GameObject.FindGameObjectsWithTag("region"))
             {
                 //going to be determing if its in or out
-                if (obj.GetComponent<Region>() != null)
+                if (obj.GetComponent<InsideRegion>() != null)
                 {
                     regions.Add(obj);
                 }
+                else
+                {
+                    _RegionEx = obj;
+                }
             }
+
+
             _RegionsIn = regions.ToArray();
+        }
+
+
+        public GameObject[] getAllRegions()
+        {
+            List<GameObject> allRegions = new List<GameObject>(_RegionsIn);
+            allRegions.Add(_RegionEx);
+            return allRegions.ToArray();
         }
 
         //add a sphere site colider to each object in objToTest for visablity

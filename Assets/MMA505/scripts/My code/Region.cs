@@ -38,11 +38,9 @@ namespace MMA505
             return portals;
         }
 
-        public void popluatePortals()
+        public void popluatePortals(GameObject[] portalsObj)
         {
             List<Portal> portalsNew = new List<Portal>();
-
-            GameObject[] portalsObj = GameObject.FindGameObjectsWithTag("portal");
 
             // Add their renderers to the list
             foreach (GameObject obj in portalsObj)

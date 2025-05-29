@@ -9,15 +9,18 @@ namespace MMA505
     {
 
         #region Initialisation & Destruction
-        
+
         private void Awake()
         {
             RegionManager.UpdateVisablEx += poplulatItems;
+            RegionManager.UpdatePortalEx += poplulatPortalsEx;
         }
-        
+
         private void OnDestroy()
         {
             RegionManager.UpdateVisablEx -= poplulatItems;
+            RegionManager.UpdatePortalEx -= poplulatPortalsEx;
+
         }
 
         #endregion
@@ -43,7 +46,30 @@ namespace MMA505
             }
 
             populatObjectsToTest(players.ToArray(), cats.ToArray());
-            
+
         }
+
+        private void poplulatPortalsEx(GameObject[] portals, GameObject[] regions)
+        {
+            List<GameObject> Portals = new List<GameObject>(portals);
+
+            foreach (GameObject obj in regions)
+            {
+                if (obj != null)
+                {
+                    if (Portals != null && Portals.Contains(obj))
+                    {
+                        Portals.Remove(obj);
+                    }
+                }
+            }
+
+            popluatePortals(portals.ToArray());
+
+        }
+
+        
+        
+
     }
 }

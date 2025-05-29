@@ -10,11 +10,13 @@ namespace MMA505
         private void Awake()
         {
             RegionManager.UpdateVisablIn += populatObjectsToTest;
+            RegionManager.UpdatePortalIn += popluatePortals;
         }
 
         private void OnDestroy()
         {
-            RegionManager.UpdateVisablIn += populatObjectsToTest;
+            RegionManager.UpdateVisablIn -= populatObjectsToTest;
+            RegionManager.UpdatePortalIn -= popluatePortals;
         }
 
         #endregion
