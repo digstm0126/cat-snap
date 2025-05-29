@@ -56,10 +56,11 @@ using UnityEngine;
 
         void CreateFrustumGameObject(CombinedFrustums CombinedFrustums)
         {
+            GameManager _GameManager = FindAnyObjectByType<GameManager>();
             // Create the frustum for this portal
             GameObject frustumGO = new GameObject("Portal Frustum : " + transform.parent.name + " - " + nextRegion.name);
             // Put it under the frustum container defined by the portal culling script
-            frustumGO.transform.SetParent(CombinedFrustums.frustumContainer, false);
+            frustumGO.transform.SetParent(_GameManager.getFrustomTransfom().transform, false);
             // Set it's render layer to the render laying of the portal culling gameobject
             frustumGO.layer = CombinedFrustums.gameObject.layer;
             // Set it's position and rotation to the identity
@@ -84,6 +85,9 @@ using UnityEngine;
         // Get an updated frustum for this portal
         public Frustum GetUpdatedFrustum(CombinedFrustums CombinedFrustums, Camera c)
         {
+
+            GameManager _GameManager = FindAnyObjectByType<GameManager>();
+
             // Get our portal culling script
             if (!frustumGameObjects.ContainsKey(CombinedFrustums))
                 CreateFrustumGameObject(CombinedFrustums);
@@ -91,7 +95,7 @@ using UnityEngine;
             // Create a frustum from this portal, using the cameras position,
             // our frustum game object, the material defined in the portal culling script
             // and the colour of this portal's frustum
-            return Frustum.CreateFrustumFromPortal(this, c, frustumGameObjects[CombinedFrustums], CombinedFrustums.frustumMaterial, portalFrustumColour);
+            return Frustum.CreateFrustumFromPortal(this, c, frustumGameObjects[CombinedFrustums], _GameManager.getFrustumMaterial(), portalFrustumColour);
         }
     }
 }

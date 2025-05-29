@@ -25,27 +25,21 @@ namespace MMA505
         public GameObject[] regions;
 
         //camra region
-        public Region cameraRegion;
+        [SerializeField] private GameObject cameraRegion;
 
         //visable objects
         public List<GameObject> gameObjectsInFrustum = new List<GameObject>();
 
         // A list of the occlusion frustums we will create for the objects above
-        List<OcclusionFrustum> occlusionFrustums = new List<OcclusionFrustum>();
+        //List<OcclusionFrustum> occlusionFrustums = new List<OcclusionFrustum>();
 
 
 
-        // The material to use for our debug frustum volume
-        public Material frustumMaterial;
-        // The material to use for our visibility spheres
-        public Material visibilitySphereMaterial;
 
-        // The Game Object transform that we will create our debug frustum
-        public Transform frustumContainer;
-        //layer for fustums
-        public LayerMask frustumLayer;
+
         // The frustum of our camera
-        Frustum cameraFrustum;
+        [SerializeField] private Frustum _CameraFrustum;
+
 
         // Start is called before the first frame update
         void Start()
@@ -58,8 +52,8 @@ namespace MMA505
         {
 
             _GameManager = FindObjectOfType<GameManager>();
-            //sets frustum layer
-            frustumLayer = LayerMask.GetMask("frustumLayer");
+
+            
 
             // If the occlusion camera hasn't been defined, try get the
             // camera tagged with MainCamera
@@ -69,7 +63,7 @@ namespace MMA505
             }
             
 
-            occlusionFrustums.AddRange(FindObjectsOfType<OcclusionFrustum>());
+            //occlusionFrustums.AddRange(FindObjectsOfType<OcclusionFrustum>());
 
             // Create a new GameObject for our camera frustum
             GameObject cameraFrustumGO = new GameObject("Camera Frustum");
@@ -78,7 +72,7 @@ namespace MMA505
             // Set it's parent to this gameobject (so it updates with the camera)
             cameraFrustumGO.transform.SetParent(transform, false);
             // Create the frustum for this camera
-            cameraFrustum = Frustum.CreateFrustumFromCamera(portalCamera, cameraFrustumGO, frustumMaterial, Color.blue);
+            _CameraFrustum = Frustum.CreateFrustumFromCamera(portalCamera, cameraFrustumGO, _GameManager.getFrustumMaterial() , Color.blue);
 
             // populats regions
             regions = _GameManager.getAllRegions();
@@ -89,14 +83,42 @@ namespace MMA505
         // Update is called once per frame
         void Update()
         {
+            updateVisableObjects();
+        }
+
+        //update visable objects
+        public void updateVisableObjects()
+        {
             // Clear the list of game objects in the frustum
             gameObjectsInFrustum.Clear();
+
+
+            findCurrentRegion(_GameManager.getAllRegions());
+
+
+            // If the camera is inside a region
+            if (cameraRegion != null)
+            {
+                // Determine the visible objects in that region based on the camera frustum
+                List<GameObject> visibleObjects = FindVisibleObjects(cameraRegion.GetComponent<Region>(), _CameraFrustum);
+
+                if (visibleObjects != null)
+                {
+                    //check if it is in the frustom of any ocuding objects
+                    gameObjectsInFrustum = FindGameObjectsNotOccluded(visibleObjects);
+                }
+            }
+        }
+
+
+        public void findCurrentRegion(GameObject[] regionsIn)
+        {
 
             // Calculate what region the camera is in
             cameraRegion = null;
 
-            // Loop through each region
-            foreach (GameObject region in regions)
+            // Loop through each region reset
+            foreach (GameObject region in regionsIn)
             {
                 Region objRegion = region.GetComponent<Region>();
                 // Reset all the portals to hide their frustums
@@ -106,29 +128,14 @@ namespace MMA505
                 // camera region
                 if (objRegion.containsPoint(portalCamera.transform.position))
                 {
-                    cameraRegion = objRegion;
+                    cameraRegion = region;
                     break;
-                }
-            }
-
-
-            // If the camera is inside a region
-            if (cameraRegion != null)
-            {
-                // Determine the visible objects in that region based on the camera frustum
-                List<GameObject> visibleObjects = FindVisibleObjects(cameraRegion, cameraFrustum);
-
-                if (visibleObjects != null)
-                {
-                    //check if it is in the frustom of any ocuding objects
-                    gameObjectsInFrustum = FindGameObjectsNotOccluded(visibleObjects);
-
                 }
             }
         }
 
         // finds and retrus gameObjectsNotOccluded
-        List<GameObject> FindGameObjectsNotOccluded(List<GameObject> visibilityGameObjects)
+        public List<GameObject> FindGameObjectsNotOccluded(List<GameObject> visibilityGameObjects)
         {
             // make list of gameObjectsNotOccluded
             List<GameObject> gameObjectsNotOccluded = new List<GameObject>();
@@ -139,14 +146,14 @@ namespace MMA505
             List<GameObject> visibleObjects = new List<GameObject>(visibilityGameObjects);
 
             // Loop through each occlusion frustum and
-            foreach (OcclusionFrustum occlusionFrustum in occlusionFrustums)
+            foreach (GameObject occlusionObj in _GameManager.getOcludingObjects())
             {
                 // Create lists for the frustum's plane's centers and normals
                 List<Vector3> transformedFrustumCenters = new List<Vector3>();
                 List<Vector3> transformedFrustumNormals = new List<Vector3>();
 
                 // Get the frustum plane's centers and normals and store them in our lists
-                occlusionFrustum.CalcFrustum(portalCamera, ref transformedFrustumCenters, ref transformedFrustumNormals);
+                occlusionObj.GetComponent<OcclusionFrustum>().CalcFrustum(portalCamera, ref transformedFrustumCenters, ref transformedFrustumNormals);
 
                 float normalLength = 5;
                 // Draw the normals for our occlusion frustum planes
@@ -198,7 +205,7 @@ namespace MMA505
                         throw new System.Exception($"VisibilitySphere not found for object: {visibleObjects[i].name}. Ensure each object has a child named 'VisibilitySphere' with appropriate settings.");
                     }
 
-                    
+
 
                     // Otherwise, if it was within all the bounds
                     if (inFrustum)

@@ -52,6 +52,11 @@ namespace MMA505
             return _frustumMaterial;
         }
 
+        public GameObject[] getOcludingObjects()
+        {
+            return _OcludingObjects;
+        }
+
         public void populatObjects()
         {
             _Players = GameObject.FindGameObjectsWithTag("Player");

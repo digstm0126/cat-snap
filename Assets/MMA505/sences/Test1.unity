@@ -3158,10 +3158,9 @@ MonoBehaviour:
   _OcludingObjects: []
   _RegionsIn: []
   _RegionEx: {fileID: 0}
-  _frustumLayer:
-    serializedVersion: 2
-    m_Bits: 64
+  _frustumLayer: 0
   _frustumMaterial: {fileID: 2100000, guid: 00d44c6a8eabe4961adff0180c7ad2e8, type: 2}
+  _frustomTranform: {fileID: 0}
 --- !u!4 &2038968864 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5031269835825225530, guid: 812639769a388465588eb1c1fe43a55d, type: 3}
@@ -3487,40 +3486,24 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1853225297856446472, guid: 174fbffbd7b67487598e570250c68efb, type: 3}
-      propertyPath: outsideRegion
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1853225297856446472, guid: 174fbffbd7b67487598e570250c68efb, type: 3}
-      propertyPath: frustumMaterial
-      value: 
-      objectReference: {fileID: 2100000, guid: 00d44c6a8eabe4961adff0180c7ad2e8, type: 2}
-    - target: {fileID: 1853225297856446472, guid: 174fbffbd7b67487598e570250c68efb, type: 3}
       propertyPath: frustumContainer
       value: 
       objectReference: {fileID: 329168532}
-    - target: {fileID: 1853225297856446472, guid: 174fbffbd7b67487598e570250c68efb, type: 3}
-      propertyPath: visibilitySphereMaterial
-      value: 
-      objectReference: {fileID: 2100000, guid: 69631cea4618f4d41b428fcb4b7a30e3, type: 2}
-    - target: {fileID: 1853225297856446472, guid: 174fbffbd7b67487598e570250c68efb, type: 3}
-      propertyPath: gameObjectsToTestForOcclusion.Array.size
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7398515596473919552, guid: 174fbffbd7b67487598e570250c68efb, type: 3}
       propertyPath: m_Name
       value: camra
       objectReference: {fileID: 0}
     - target: {fileID: 7738327832739057209, guid: 174fbffbd7b67487598e570250c68efb, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -21.318851
+      value: -33.42
       objectReference: {fileID: 0}
     - target: {fileID: 7738327832739057209, guid: 174fbffbd7b67487598e570250c68efb, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.35
+      value: 2.43
       objectReference: {fileID: 0}
     - target: {fileID: 7738327832739057209, guid: 174fbffbd7b67487598e570250c68efb, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -15.86
+      value: -23.18
       objectReference: {fileID: 0}
     - target: {fileID: 7738327832739057209, guid: 174fbffbd7b67487598e570250c68efb, type: 3}
       propertyPath: m_LocalRotation.w
@@ -3550,7 +3533,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7588885938139232925, guid: 174fbffbd7b67487598e570250c68efb, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

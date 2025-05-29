@@ -154,14 +154,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17a313f486ac047c9bb1f167cf24ac29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _GameManager: {fileID: 0}
   portalCamera: {fileID: 772983095039016104}
   regions: []
-  outsideRegion: {fileID: 0}
+  cameraRegion: {fileID: 0}
   gameObjectsInFrustum: []
-  gameObjectsToTestForOcclusion: []
-  frustumMaterial: {fileID: 0}
-  visibilitySphereMaterial: {fileID: 0}
+  frustumMaterial: {fileID: 2100000, guid: 00d44c6a8eabe4961adff0180c7ad2e8, type: 2}
+  visibilitySphereMaterial: {fileID: 2100000, guid: 69631cea4618f4d41b428fcb4b7a30e3, type: 2}
   frustumContainer: {fileID: 0}
+  frustumLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &8109502961050500854
 GameObject:
   m_ObjectHideFlags: 0
@@ -172,7 +175,6 @@ GameObject:
   m_Component:
   - component: {fileID: 9075664837437697391}
   - component: {fileID: 772983095039016104}
-  - component: {fileID: 7588885938139232925}
   - component: {fileID: 5539386194903495850}
   m_Layer: 0
   m_Name: Camera
@@ -247,14 +249,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &7588885938139232925
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8109502961050500854}
-  m_Enabled: 1
 --- !u!114 &5539386194903495850
 MonoBehaviour:
   m_ObjectHideFlags: 0
