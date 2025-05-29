@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using MMA505;
 
 /* This class represents a one directional portal
  * 
@@ -9,7 +10,7 @@ using UnityEngine;
  * Written by Adrian Clark
  */
 
- namespace MMA505
+namespace MMA505
 {
     public class Portal : MonoBehaviour
     {
