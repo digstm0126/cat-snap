@@ -24,35 +24,7 @@ AnimatorStateMachine:
   m_EntryPosition: {x: 50, y: 120, z: 0}
   m_ExitPosition: {x: 800, y: 120, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
-  m_DefaultState: {fileID: 4585128195915566971}
---- !u!1101 &-7860432046224743116
-AnimatorStateTransition:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  m_Conditions:
-  - m_ConditionMode: 3
-    m_ConditionEvent: walkX
-    m_EventTreshold: 0.1
-  - m_ConditionMode: 3
-    m_ConditionEvent: walkY
-    m_EventTreshold: 0.1
-  m_DstStateMachine: {fileID: 0}
-  m_DstState: {fileID: 4585128195915566971}
-  m_Solo: 0
-  m_Mute: 0
-  m_IsExit: 0
-  serializedVersion: 3
-  m_TransitionDuration: 0.25
-  m_TransitionOffset: 0
-  m_ExitTime: 0.9674249
-  m_HasExitTime: 1
-  m_HasFixedDuration: 1
-  m_InterruptionSource: 0
-  m_OrderedInterruption: 1
-  m_CanTransitionToSelf: 1
+  m_DefaultState: {fileID: 9188512279116210076}
 --- !u!206 &-4760456608933089459
 BlendTree:
   m_ObjectHideFlags: 1
@@ -62,7 +34,7 @@ BlendTree:
   m_Name: Blend Tree
   m_Childs:
   - serializedVersion: 2
-    m_Motion: {fileID: 9057722287364031900, guid: 8284ce024b74945a5ae30631141d2396, type: 3}
+    m_Motion: {fileID: 7400000, guid: 6f2de58a683774b6fb86d37a90d9fd6b, type: 2}
     m_Threshold: 0
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
@@ -72,32 +44,32 @@ BlendTree:
   - serializedVersion: 2
     m_Motion: {fileID: 7400000, guid: 598eb16e7a7764add992ae42546d933e, type: 2}
     m_Threshold: 0.25
-    m_Position: {x: -0.012918284, y: 0.48619232}
-    m_TimeScale: 0.74428934
+    m_Position: {x: 0, y: 1}
+    m_TimeScale: 1
     m_CycleOffset: 0
     m_DirectBlendParameter: WalkSpeedMultiplier
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: 5539868263643865889, guid: 8284ce024b74945a5ae30631141d2396, type: 3}
+    m_Motion: {fileID: 7400000, guid: 5c9924485cc2a4866a9bcf49158ce35f, type: 2}
     m_Threshold: 0.5
-    m_Position: {x: -0.004079638, y: -0.44190067}
-    m_TimeScale: 0.8191434
+    m_Position: {x: 0, y: -1}
+    m_TimeScale: 1
     m_CycleOffset: 0
     m_DirectBlendParameter: WalkSpeedMultiplier
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: -5215207499719580257, guid: 8284ce024b74945a5ae30631141d2396, type: 3}
+    m_Motion: {fileID: 7400000, guid: 5af71a3fbc95d4015ab40dda4c7cbed8, type: 2}
     m_Threshold: 0.75
-    m_Position: {x: -0.45903665, y: 0.009431674}
-    m_TimeScale: 0.78843176
+    m_Position: {x: -1, y: 0}
+    m_TimeScale: 1
     m_CycleOffset: 0
     m_DirectBlendParameter: WalkSpeedMultiplier
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: -2781710075931568964, guid: 8284ce024b74945a5ae30631141d2396, type: 3}
+    m_Motion: {fileID: 7400000, guid: 1d84f1e143a324fef826f477de052ef3, type: 2}
     m_Threshold: 1
-    m_Position: {x: 0.42205787, y: 0.020600747}
-    m_TimeScale: 0.85667163
+    m_Position: {x: 1, y: 0}
+    m_TimeScale: 1
     m_CycleOffset: 0
     m_DirectBlendParameter: WalkSpeedMultiplier
     m_Mirror: 0
@@ -160,34 +132,6 @@ AnimatorController:
     m_IKPass: 0
     m_SyncedLayerAffectsTiming: 0
     m_Controller: {fileID: 9100000}
---- !u!1101 &3020053742989350369
-AnimatorStateTransition:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  m_Conditions:
-  - m_ConditionMode: 3
-    m_ConditionEvent: walkX
-    m_EventTreshold: 0.1
-  - m_ConditionMode: 3
-    m_ConditionEvent: walkY
-    m_EventTreshold: 0.1
-  m_DstStateMachine: {fileID: 0}
-  m_DstState: {fileID: 9188512279116210076}
-  m_Solo: 0
-  m_Mute: 0
-  m_IsExit: 0
-  serializedVersion: 3
-  m_TransitionDuration: 0.25
-  m_TransitionOffset: 0
-  m_ExitTime: 0.97
-  m_HasExitTime: 1
-  m_HasFixedDuration: 1
-  m_InterruptionSource: 0
-  m_OrderedInterruption: 1
-  m_CanTransitionToSelf: 1
 --- !u!1102 &4585128195915566971
 AnimatorState:
   serializedVersion: 6
@@ -198,8 +142,7 @@ AnimatorState:
   m_Name: Idle
   m_Speed: 1
   m_CycleOffset: 0
-  m_Transitions:
-  - {fileID: 3020053742989350369}
+  m_Transitions: []
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
@@ -225,8 +168,7 @@ AnimatorState:
   m_Name: walk
   m_Speed: 1
   m_CycleOffset: 0
-  m_Transitions:
-  - {fileID: -7860432046224743116}
+  m_Transitions: []
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
