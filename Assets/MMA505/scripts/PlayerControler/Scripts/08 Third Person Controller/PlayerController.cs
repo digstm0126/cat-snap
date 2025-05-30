@@ -40,11 +40,11 @@ public class PlayerController : MonoBehaviour
             if (thirdPersonControllerBehaviour.ExecuteBehaviourIfRequired(ref CurrentState)) return;
 
         float walkZ = Input.GetAxis("Vertical");
-        float walkX = Input.GetAxis("Horizontal");
+        float walkX = 1 + Input.GetAxis("Horizontal");
 
         float walkMag = new Vector2(walkZ, walkX).magnitude;
 
-        transform.Translate(walkX * Time.deltaTime, 0, walkZ * Time.deltaTime);
+        transform.Translate(walkX * walkSpeed * Time.deltaTime, 0, walkZ * walkSpeed * Time.deltaTime);
 
         animatorController.SetFloat("walkZ", walkZ);
         animatorController.SetFloat("walkX", walkX);

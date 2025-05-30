@@ -248,7 +248,8 @@ GameObject:
   - component: {fileID: 5259983368344898409}
   - component: {fileID: 6683694098048103966}
   - component: {fileID: 3493992035314306114}
-  - component: {fileID: 1549021147414942826}
+  - component: {fileID: 3456769024463380}
+  - component: {fileID: 2014249400189877372}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -285,10 +286,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34bcdf1982a5246c2828c98aafa1ce3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controller: {fileID: 1549021147414942826}
+  controller: {fileID: 0}
   animatorController: {fileID: 2831328366865596314}
   cam: {fileID: 1180314878735746306}
-  walkSpeed: 200
+  walkSpeed: 2
   rotateSpeed: 180
   useWalkSpeedMultiplier: 0
   thirdPersonControllerBehaviours: []
@@ -338,8 +339,35 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!143 &1549021147414942826
-CharacterController:
+--- !u!54 &3456769024463380
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2469089291262881524}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 80
+  m_CollisionDetection: 0
+--- !u!136 &2014249400189877372
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -353,15 +381,13 @@ CharacterController:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Height: 2
+  serializedVersion: 2
   m_Radius: 0.5
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
+  m_Height: 2
+  m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
 --- !u!1001 &1743896195027164826
 PrefabInstance:
@@ -375,6 +401,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 5050f36739f854e4eaab59540b8da536, type: 2}
+    - target: {fileID: 4573817186555879680, guid: 013df4460659f4751a2e3e285721a528, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7120905726178943424, guid: 013df4460659f4751a2e3e285721a528, type: 3}
       propertyPath: m_Name
       value: Me02

@@ -16,6 +16,7 @@ namespace MMA505
     public class CombinedFrustums : MonoBehaviour
     {
 
+
         //game manager
         [SerializeField] private GameManager _GameManager;
         
