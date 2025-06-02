@@ -286,14 +286,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34bcdf1982a5246c2828c98aafa1ce3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controller: {fileID: 0}
-  animatorController: {fileID: 2831328366865596314}
-  cam: {fileID: 1180314878735746306}
-  walkSpeed: 2
-  rotateSpeed: 180
-  useWalkSpeedMultiplier: 0
-  thirdPersonControllerBehaviours: []
-  CurrentState: 
+  _animatorController: {fileID: 2831328366865596314}
+  _cam: {fileID: 1180314878735746306}
+  _Speed: 2
+  _Jump: 0
+  _Run: 0
+  _CurrentState: 
+  _rb: {fileID: 3456769024463380}
+  _turnSmoothTime: 0
+  _turnSmothVelocity: 0
 --- !u!23 &3493992035314306114
 MeshRenderer:
   m_ObjectHideFlags: 0
