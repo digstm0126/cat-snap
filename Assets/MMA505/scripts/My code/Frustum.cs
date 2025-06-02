@@ -32,6 +32,7 @@ namespace MMA505
 
         void Start()
         {
+            //sets layer to fustom layer
             gameObject.layer = 6;  
         }
         public static Frustum CreateFrustumFromCamera(Camera c, GameObject container, Material material, Color color)

@@ -56,7 +56,7 @@ namespace MMA505
             // Create a new GameObject for our camera frustum
             GameObject cameraFrustumGO = new GameObject("Camera Frustum");
             // Set it's layer to this layher
-            cameraFrustumGO.layer = gameObject.layer;
+            cameraFrustumGO.layer = _GameManager.getFrustumLayer();
             // Set it's parent to this gameobject (so it updates with the camera)
             cameraFrustumGO.transform.SetParent(transform, false);
             // Create the frustum for this camera
