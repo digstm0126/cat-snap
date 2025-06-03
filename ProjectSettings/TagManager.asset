@@ -8,6 +8,7 @@ TagManager:
   - portal
   - region
   - ocluding
+  - subCam
   layers:
   - Default
   - TransparentFX
