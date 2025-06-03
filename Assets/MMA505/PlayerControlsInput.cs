@@ -452,7 +452,7 @@ namespace MMA505
                 {
                     ""name"": """",
                     ""id"": ""8cbb2f4b-a784-49cc-8d5e-c010b8c7f4e6"",
-                    ""path"": ""<Gamepad>/leftStickPress"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
@@ -577,6 +577,17 @@ namespace MMA505
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""action1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""324f07ed-338a-4be0-805c-dbea9b382383"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
                     ""action"": ""action1"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false

@@ -84,6 +84,7 @@ namespace MMA505
             _Jump.Disable();
 
         }
+
         void Start()
         {
 
@@ -93,12 +94,12 @@ namespace MMA505
         void Update()
         {
 
-            
             Move();
-            
 
         }
 
+#region inputActions
+ 
         private void Jump(InputAction.CallbackContext context)
         {
             if (_currentState != PlayerState.fight)
@@ -148,7 +149,6 @@ namespace MMA505
                 _currentState = PlayerState.fight;
             }
         }
-
         private void Fps(InputAction.CallbackContext context)
         {
             if (_currentState == PlayerState.walk)
@@ -167,7 +167,10 @@ namespace MMA505
             }
         }
 
+        #endregion
         
+
+
         private void Move()
         {
             switch (_currentState)
@@ -186,8 +189,6 @@ namespace MMA505
                     break;
             }
         }
-
-    
 
         private void Fight()
         {
