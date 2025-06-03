@@ -1239,6 +1239,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6683694098048103966, guid: 1017a065d1b9945b480e4316142ef279, type: 3}
+      propertyPath: _Jump.m_Name
+      value: Jump
+      objectReference: {fileID: 0}
+    - target: {fileID: 6683694098048103966, guid: 1017a065d1b9945b480e4316142ef279, type: 3}
       propertyPath: _fight.m_Name
       value: Fight
       objectReference: {fileID: 0}

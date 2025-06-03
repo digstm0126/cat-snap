@@ -24,13 +24,11 @@ namespace MMA505
         [SerializeField] private  PlayerControlsInput _playerInputs;
         [SerializeField] private InputAction _Sprint;
         [SerializeField] private InputAction _fight;
+        [SerializeField] private InputAction _Jump;
         [SerializeField] private InputAction _action1;
         [SerializeField] private InputAction _Move;
         [SerializeField] private InputAction _Look;
         [SerializeField] private float _Speed = 2.0f;
-        [SerializeField] private bool _Jump;
-        [SerializeField] private bool _FightState;
-        //[SerializeField] private bool _Run;
         [SerializeField] public enum PlayerState {run, walk, fight, fps};
         [SerializeField] private PlayerState _currentState;
         [SerializeField] private Rigidbody _rb;
@@ -63,6 +61,10 @@ namespace MMA505
             _action1.Enable();
             _action1.performed += Action1;
 
+            _Jump = _playerInputs.Player.Jump;
+            _Jump.Enable();
+            _Jump.performed += Jump;
+
         }
 
         private void ODisable()
@@ -72,6 +74,7 @@ namespace MMA505
             _Sprint.Disable();
             _Look.Disable();
             _action1.Disable();
+            _Jump.Disable();
         }
         void Start()
         {
@@ -88,15 +91,20 @@ namespace MMA505
 
         }
 
+        private void Jump(InputAction.CallbackContext context)
+        {
+            if (_currentState != PlayerState.fight)
+            {
+                _animatorController.SetTrigger("Jump");
+            }
+        }
         private void Action1(InputAction.CallbackContext context)
         {
             if (_currentState == PlayerState.fight)
             {
-                Debug.Log("hit ");
                 _animatorController.SetTrigger("uperAtack");
             }
         }
-
         private void Sprint(InputAction.CallbackContext context)
         {
             if (_currentState == PlayerState.walk)
@@ -106,7 +114,6 @@ namespace MMA505
                 _currentState = PlayerState.run;
             }
         }
-
         private void SprintCanceled(InputAction.CallbackContext context)
         {
             if (_currentState == PlayerState.run)
