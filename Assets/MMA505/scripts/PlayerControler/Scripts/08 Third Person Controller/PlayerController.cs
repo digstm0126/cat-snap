@@ -22,10 +22,12 @@ namespace MMA505
         [SerializeField] public CinemachineCamera _camRun;
 
         [SerializeField] private InputAction _Sprint;
+        [SerializeField] private InputAction _Fight;
         [SerializeField] private InputAction _Move;
         [SerializeField] private InputAction _Look;
         [SerializeField] private float _Speed = 2.0f;
         [SerializeField] private bool _Jump;
+        [SerializeField] private bool _FightState;
         //[SerializeField] private bool _Run;
         [SerializeField] public enum PlayerState {run, walk, fight, fps};
         [SerializeField] private PlayerState _currentState;
@@ -40,6 +42,7 @@ namespace MMA505
             _Move = InputSystem.actions.FindAction("Move");
             _Sprint = InputSystem.actions.FindAction("Sprint");
             _Look = InputSystem.actions.FindAction("Look");
+            _Fight = InputSystem.actions.FindAction("fight");
 
         }
 
@@ -51,6 +54,7 @@ namespace MMA505
             float walkX = _Move.ReadValue<Vector2>().x;
             float _mag = new Vector2(walkZ, walkX).magnitude;
 
+            
 
             if (_Sprint.ReadValue<float>() == 1)
             {
@@ -61,6 +65,19 @@ namespace MMA505
             {
                 _currentState = PlayerState.walk;
             }
+
+            if (_Fight.ReadValue<float>() == 1)
+            {
+                _FightState = true;
+                _animatorController.SetBool("fight", true);
+            }
+
+            if (_FightState)
+            {
+                _currentState = PlayerState.fight;
+            }
+
+
 
             SetCams();
 
@@ -77,6 +94,7 @@ namespace MMA505
 
         }
 
+        
         private void Move()
         {
             switch (_currentState)
@@ -86,6 +104,9 @@ namespace MMA505
                     break;
                 case PlayerState.walk:
                     Walk();
+                    break;
+                case PlayerState.fight:
+                    Fight();
                     break;
             }
         }
@@ -102,9 +123,24 @@ namespace MMA505
                     _camRun.enabled = false;
                     _camWalk.enabled = true;
                     break;
+                case PlayerState.fight:
+                    _camRun.enabled = true;
+                    _camWalk.enabled = false;
+                    break;
             }
         }
 
+
+        private void Fight()
+        {
+
+            float walkZ = _Move.ReadValue<Vector2>().y;
+            float walkX = _Move.ReadValue<Vector2>().x;
+
+            _animatorController.SetFloat("walkZ", walkZ);
+            _animatorController.SetFloat("walkX", walkX);
+
+        }
 
 
         private void Run()
