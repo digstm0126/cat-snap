@@ -19,13 +19,15 @@ namespace MMA505
     {
         [SerializeField] private Animator _animatorController;
         [SerializeField] private CinemachineCamera _camWalk;
-        [SerializeField] public CinemachineCamera _camRun;
+        [SerializeField] private CinemachineCamera _camRun;
+        [SerializeField] private CinemachineCamera _camFps;
 
         [SerializeField] private  PlayerControlsInput _playerInputs;
         [SerializeField] private InputAction _Sprint;
         [SerializeField] private InputAction _fight;
         [SerializeField] private InputAction _Jump;
         [SerializeField] private InputAction _action1;
+        [SerializeField] private InputAction _Fps;
         [SerializeField] private InputAction _Move;
         [SerializeField] private InputAction _Look;
         [SerializeField] private float _Speed = 2.0f;
@@ -52,6 +54,10 @@ namespace MMA505
             _fight.Enable();
             _fight.performed += Fight;
 
+            _Fps = _playerInputs.Player.Fps;
+            _Fps.Enable();
+            _Fps.performed += Fps;
+
             _Sprint = _playerInputs.Player.Sprint;
             _Sprint.Enable();
             _Sprint.performed += Sprint;
@@ -71,10 +77,12 @@ namespace MMA505
         {
             _Move.Disable();
             _fight.Disable();
+            _Fps.Disable();
             _Sprint.Disable();
             _Look.Disable();
             _action1.Disable();
             _Jump.Disable();
+
         }
         void Start()
         {
@@ -141,6 +149,24 @@ namespace MMA505
             }
         }
 
+        private void Fps(InputAction.CallbackContext context)
+        {
+            if (_currentState == PlayerState.walk)
+            {
+                _animatorController.SetBool("fps", true);
+                _camFps.enabled = true;
+                _camWalk.enabled = false;
+                _currentState = PlayerState.fps;
+            }
+            else if (_currentState == PlayerState.fps)
+            {
+                _animatorController.SetBool("fps", false);
+                _camWalk.enabled = true;
+                _camFps.enabled = false;
+                _currentState = PlayerState.walk;
+            }
+        }
+
         
         private void Move()
         {
@@ -155,9 +181,13 @@ namespace MMA505
                 case PlayerState.fight:
                     Fight();
                     break;
+                case PlayerState.fps:
+                    Fpsmove();
+                    break;
             }
         }
 
+    
 
         private void Fight()
         {
@@ -172,8 +202,26 @@ namespace MMA505
 
             _rb.MovePosition(_rb.position + _rb.transform.forward * walkZ * _SpeedFight * Time.deltaTime);
             _rb.MovePosition(_rb.position + _rb.transform.right * walkX * _SpeedFight * Time.deltaTime);
-            
 
+
+        }
+
+        private void Fpsmove()
+        {
+            float walkZ = _Move.ReadValue<Vector2>().y;
+            float walkX = _Move.ReadValue<Vector2>().x;
+
+            _animatorController.SetFloat("walkZ", walkZ);
+            _animatorController.SetFloat("walkX", walkX);
+
+            float _SpeedFps = 2f;
+
+            //rotate to camra
+            float _mouseX = _Look.ReadValue<Vector2>().x;
+            transform.Rotate(Vector3.up, _mouseX);
+
+            _rb.MovePosition(_rb.position + _rb.transform.forward * walkZ * _SpeedFps * Time.deltaTime);
+            _rb.MovePosition(_rb.position + _rb.transform.right * walkX * _SpeedFps * Time.deltaTime);
         }
 
 

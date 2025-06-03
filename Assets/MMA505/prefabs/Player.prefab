@@ -383,6 +383,7 @@ Transform:
   - {fileID: 2397322344852800601}
   - {fileID: 8190582015356003808}
   - {fileID: 1180314878735746306}
+  - {fileID: 4236931287538861171}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6683694098048103966
@@ -400,6 +401,7 @@ MonoBehaviour:
   _animatorController: {fileID: 2831328366865596314}
   _camWalk: {fileID: 6566499930435462267}
   _camRun: {fileID: 1577585227654644167}
+  _camFps: {fileID: 4729228039966628376}
   _Sprint:
     m_Name: Sprint
     m_Type: 0
@@ -409,11 +411,20 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
-  _Fight:
+  _fight:
     m_Name: Fight
     m_Type: 0
     m_ExpectedControlType: 
-    m_Id: 39fcb9da-a043-4bab-9be7-7fe159f7b396
+    m_Id: afc53891-9404-4a20-8dd5-8d0b8164c068
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  _Jump:
+    m_Name: Jump
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: f53c6d4f-438a-4a2a-a88c-809fb65c2436
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings: []
@@ -423,6 +434,15 @@ MonoBehaviour:
     m_Type: 0
     m_ExpectedControlType: 
     m_Id: 15d351a6-7c4c-43a9-83d7-8fa37c3b66c2
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  _Fps:
+    m_Name: Fps
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: c90376ff-d5a0-45d6-9e86-e94c8f7cbbff
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings: []
@@ -446,8 +466,6 @@ MonoBehaviour:
     m_SingletonActionBindings: []
     m_Flags: 0
   _Speed: 10
-  _Jump: 0
-  _FightState: 0
   _currentState: 1
   _rb: {fileID: 3456769024463380}
   _turnSmoothTime: 0.1
@@ -547,6 +565,81 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!1 &5109764354463173262
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4236931287538861171}
+  - component: {fileID: 4729228039966628376}
+  m_Layer: 0
+  m_Name: CamFps
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4236931287538861171
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5109764354463173262}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.729, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5259983368344898409}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4729228039966628376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5109764354463173262}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9dfa5b682dcd46bda6128250e975f58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Priority:
+    Enabled: 1
+    m_Value: 3
+  OutputChannel: 1
+  StandbyUpdate: 2
+  m_StreamingVersion: 20241001
+  m_LegacyPriority: 0
+  Target:
+    TrackingTarget: {fileID: 0}
+    LookAtTarget: {fileID: 0}
+    CustomLookAtTarget: 0
+  Lens:
+    FieldOfView: 60.000004
+    OrthographicSize: 10
+    NearClipPlane: 0.1
+    FarClipPlane: 5000
+    Dutch: 0
+    ModeOverride: 0
+    PhysicalProperties:
+      GateFit: 2
+      SensorSize: {x: 21.946, y: 16.002}
+      LensShift: {x: 0, y: 0}
+      FocusDistance: 10
+      Iso: 200
+      ShutterSpeed: 0.005
+      Aperture: 16
+      BladeCount: 5
+      Curvature: {x: 2, y: 11}
+      BarrelClipping: 0.25
+      Anamorphism: 0
+  BlendHint: 0
 --- !u!1001 &1743896195027164826
 PrefabInstance:
   m_ObjectHideFlags: 0

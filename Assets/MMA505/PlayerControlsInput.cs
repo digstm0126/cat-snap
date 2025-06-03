@@ -130,7 +130,7 @@ namespace MMA505
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Crouch"",
+                    ""name"": ""Fps"",
                     ""type"": ""Button"",
                     ""id"": ""27c5f898-bc57-4ee1-8800-db469aca5fe3"",
                     ""expectedControlType"": """",
@@ -555,7 +555,7 @@ namespace MMA505
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""Crouch"",
+                    ""action"": ""Fps"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -566,7 +566,7 @@ namespace MMA505
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Crouch"",
+                    ""action"": ""Fps"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -1169,7 +1169,7 @@ namespace MMA505
             m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
             m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
             m_Player_fight = m_Player.FindAction("fight", throwIfNotFound: true);
-            m_Player_Crouch = m_Player.FindAction("Crouch", throwIfNotFound: true);
+            m_Player_Fps = m_Player.FindAction("Fps", throwIfNotFound: true);
             m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
             m_Player_Previous = m_Player.FindAction("Previous", throwIfNotFound: true);
             m_Player_Next = m_Player.FindAction("Next", throwIfNotFound: true);
@@ -1272,7 +1272,7 @@ namespace MMA505
         private readonly InputAction m_Player_Look;
         private readonly InputAction m_Player_Attack;
         private readonly InputAction m_Player_fight;
-        private readonly InputAction m_Player_Crouch;
+        private readonly InputAction m_Player_Fps;
         private readonly InputAction m_Player_Jump;
         private readonly InputAction m_Player_Previous;
         private readonly InputAction m_Player_Next;
@@ -1306,9 +1306,9 @@ namespace MMA505
             /// </summary>
             public InputAction @fight => m_Wrapper.m_Player_fight;
             /// <summary>
-            /// Provides access to the underlying input action "Player/Crouch".
+            /// Provides access to the underlying input action "Player/Fps".
             /// </summary>
-            public InputAction @Crouch => m_Wrapper.m_Player_Crouch;
+            public InputAction @Fps => m_Wrapper.m_Player_Fps;
             /// <summary>
             /// Provides access to the underlying input action "Player/Jump".
             /// </summary>
@@ -1367,9 +1367,9 @@ namespace MMA505
                 @fight.started += instance.OnFight;
                 @fight.performed += instance.OnFight;
                 @fight.canceled += instance.OnFight;
-                @Crouch.started += instance.OnCrouch;
-                @Crouch.performed += instance.OnCrouch;
-                @Crouch.canceled += instance.OnCrouch;
+                @Fps.started += instance.OnFps;
+                @Fps.performed += instance.OnFps;
+                @Fps.canceled += instance.OnFps;
                 @Jump.started += instance.OnJump;
                 @Jump.performed += instance.OnJump;
                 @Jump.canceled += instance.OnJump;
@@ -1408,9 +1408,9 @@ namespace MMA505
                 @fight.started -= instance.OnFight;
                 @fight.performed -= instance.OnFight;
                 @fight.canceled -= instance.OnFight;
-                @Crouch.started -= instance.OnCrouch;
-                @Crouch.performed -= instance.OnCrouch;
-                @Crouch.canceled -= instance.OnCrouch;
+                @Fps.started -= instance.OnFps;
+                @Fps.performed -= instance.OnFps;
+                @Fps.canceled -= instance.OnFps;
                 @Jump.started -= instance.OnJump;
                 @Jump.performed -= instance.OnJump;
                 @Jump.canceled -= instance.OnJump;
@@ -1755,12 +1755,12 @@ namespace MMA505
             /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
             void OnFight(InputAction.CallbackContext context);
             /// <summary>
-            /// Method invoked when associated input action "Crouch" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// Method invoked when associated input action "Fps" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
             /// </summary>
             /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-            void OnCrouch(InputAction.CallbackContext context);
+            void OnFps(InputAction.CallbackContext context);
             /// <summary>
             /// Method invoked when associated input action "Jump" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
             /// </summary>
