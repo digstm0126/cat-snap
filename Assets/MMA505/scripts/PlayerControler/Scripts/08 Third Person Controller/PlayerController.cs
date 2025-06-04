@@ -22,6 +22,10 @@ namespace MMA505
         [SerializeField] private CinemachineCamera _camRun;
         [SerializeField] private CinemachineCamera _camFps;
 
+        [SerializeField] private GameObject _PhotoCam;
+        [SerializeField] private GameObject _CamHolder;
+        [SerializeField] private float _PhotoCamDist;
+
         [SerializeField] private  PlayerControlsInput _playerInputs;
         [SerializeField] private InputAction _Sprint;
         [SerializeField] private InputAction _fight;
@@ -95,6 +99,7 @@ namespace MMA505
         {
 
             Move();
+            UpdatePhotoCam();
 
         }
 
@@ -153,8 +158,14 @@ namespace MMA505
         {
             if (_currentState == PlayerState.walk)
             {
-                _animatorController.SetBool("fps", true);
+
+                //turns it into an agle from the perspective of the camra
+                float targetAngle = _camWalk.transform.rotation.eulerAngles.y;
+                transform.eulerAngles = new Vector3(0f, targetAngle, 0f);
+                _camFps.GetComponent<CinemachinePanTilt>().PanAxis.Value = targetAngle;
                 _camFps.enabled = true;
+            
+                _animatorController.SetBool("fps", true);
                 _camWalk.enabled = false;
                 _currentState = PlayerState.fps;
             }
@@ -169,6 +180,7 @@ namespace MMA505
 
         #endregion
         
+
 
 
         private void Move()
@@ -188,6 +200,16 @@ namespace MMA505
                     Fpsmove();
                     break;
             }
+        }
+
+        private void UpdatePhotoCam()
+        {
+            //at wright posinon
+            //_PhotoCam.transform.position = _camFps.transform.position + _rb.transform.forward.normalized * _PhotoCamDist;
+            //same but with angle form fps cam
+
+            //_CamHolder.transform.rotation = transform.rotation = Quaternion.Euler(0f, _camFps.transform.rotation.y, 0f);
+
         }
 
         private void Fight()
@@ -219,6 +241,12 @@ namespace MMA505
             //rotate camra left to right pan
             float targetAngle = _camFps.transform.eulerAngles.y;
             //transform.rotation = Quaternion.Euler(0f, targetAngle, 0f);
+
+            //at wright posinon
+            //_PhotoCam.transform.position = _camFps.transform.position + _rb.transform.forward.normalized * _PhotoCamDist;
+            //same but with angle form fps cam
+
+            //_CamHolder.transform.localRotation = Quaternion.Euler(0f, _camFps.GetComponent<CinemachinePanTilt>().TiltAxis.Value, 0f);
             
             //with smoth turning
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _turnSmothVelocity, _turnSmoothTime);
@@ -266,10 +294,10 @@ namespace MMA505
             if (_mag > 0.1f)
             {
                 //gets direction of input
-                Vector3 lookDirections = new Vector3(walkX, 0, walkZ).normalized;
+                Vector3 _moveDirections = new Vector3(walkX, 0, walkZ).normalized;
 
                 //turns it into an agle from the perspective of the camra
-                float targetAngle = MathF.Atan2(lookDirections.x, lookDirections.z) * Mathf.Rad2Deg + _camWalk.transform.eulerAngles.y;
+                float targetAngle = MathF.Atan2(_moveDirections.x, _moveDirections.z) * Mathf.Rad2Deg + _camWalk.transform.eulerAngles.y;
                 //gives you the agile with nice smoth truning dampaning that the player needs to 
                 float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _turnSmothVelocity, _turnSmoothTime);
                 transform.rotation = Quaternion.Euler(0f, angle, 0f);
