@@ -204,7 +204,6 @@ namespace MMA505
             _rb.MovePosition(_rb.position + _rb.transform.forward * walkZ * _SpeedFight * Time.deltaTime);
             _rb.MovePosition(_rb.position + _rb.transform.right * walkX * _SpeedFight * Time.deltaTime);
 
-
         }
 
         private void Fpsmove()
@@ -217,9 +216,15 @@ namespace MMA505
 
             float _SpeedFps = 2f;
 
-            //rotate to camra
-            float _mouseX = _Look.ReadValue<Vector2>().x;
-            transform.Rotate(Vector3.up, _mouseX);
+            //rotate camra left to right pan
+            float targetAngle = _camFps.transform.eulerAngles.y;
+            //transform.rotation = Quaternion.Euler(0f, targetAngle, 0f);
+            
+            //with smoth turning
+            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _turnSmothVelocity, _turnSmoothTime);
+            transform.rotation = Quaternion.Euler(0f, angle, 0f);
+
+
 
             _rb.MovePosition(_rb.position + _rb.transform.forward * walkZ * _SpeedFps * Time.deltaTime);
             _rb.MovePosition(_rb.position + _rb.transform.right * walkX * _SpeedFps * Time.deltaTime);
@@ -241,6 +246,8 @@ namespace MMA505
             //rotate to camra
             float _mouseX = _Look.ReadValue<Vector2>().x;
             transform.Rotate(Vector3.up, _mouseX);
+
+            
 
             _rb.MovePosition(_rb.position + _rb.transform.forward * walkZ * _Speed * Time.deltaTime);
             //move along left and wright
