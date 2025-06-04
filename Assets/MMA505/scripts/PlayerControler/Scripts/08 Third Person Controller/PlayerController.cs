@@ -26,7 +26,7 @@ namespace MMA505
         [SerializeField] private GameObject _CamHolder;
         [SerializeField] private float _PhotoCamDist;
 
-        [SerializeField] private  PlayerControlsInput _playerInputs;
+        [SerializeField] private PlayerControlsInput _playerInputs;
         [SerializeField] private InputAction _Sprint;
         [SerializeField] private InputAction _fight;
         [SerializeField] private InputAction _Jump;
@@ -35,7 +35,8 @@ namespace MMA505
         [SerializeField] private InputAction _Move;
         [SerializeField] private InputAction _Look;
         [SerializeField] private float _Speed = 2.0f;
-        [SerializeField] public enum PlayerState {run, walk, fight, fps};
+        [SerializeField] private float _runMult = 2.0f;
+        [SerializeField] public enum PlayerState { run, walk, fight, fps };
         [SerializeField] private PlayerState _currentState;
         [SerializeField] private Rigidbody _rb;
 
@@ -89,22 +90,15 @@ namespace MMA505
 
         }
 
-        void Start()
-        {
-
-        }
-
         // Update is called once per frame
         void Update()
         {
 
             Move();
-            UpdatePhotoCam();
-
         }
 
-#region inputActions
- 
+        #region inputActions
+
         private void Jump(InputAction.CallbackContext context)
         {
             if (_currentState != PlayerState.fight)
@@ -123,8 +117,6 @@ namespace MMA505
         {
             if (_currentState == PlayerState.walk)
             {
-                _camRun.enabled = true;
-                _camWalk.enabled = false;
                 _currentState = PlayerState.run;
             }
         }
@@ -132,8 +124,6 @@ namespace MMA505
         {
             if (_currentState == PlayerState.run)
             {
-                _camWalk.enabled = true;
-                _camRun.enabled = false;
                 _currentState = PlayerState.walk;
             }
         }
@@ -186,16 +176,15 @@ namespace MMA505
         }
 
         #endregion
-        
 
-
+        #region movemnts
 
         private void Move()
         {
             switch (_currentState)
             {
                 case PlayerState.run:
-                    Run();
+                    Walk();
                     break;
                 case PlayerState.walk:
                     Walk();
@@ -207,16 +196,6 @@ namespace MMA505
                     Fpsmove();
                     break;
             }
-        }
-
-        private void UpdatePhotoCam()
-        {
-            //at wright posinon
-            //_PhotoCam.transform.position = _camFps.transform.position + _rb.transform.forward.normalized * _PhotoCamDist;
-            //same but with angle form fps cam
-
-            //_CamHolder.transform.rotation = transform.rotation = Quaternion.Euler(0f, _camFps.transform.rotation.y, 0f);
-
         }
 
         private void Fight()
@@ -243,68 +222,52 @@ namespace MMA505
             _animatorController.SetFloat("walkZ", walkZ);
             _animatorController.SetFloat("walkX", walkX);
 
-            float _SpeedFps = 2f;
+            float _SpeedFps = 3f;
 
             //rotate camra left to right pan
             float targetAngle = _camFps.transform.eulerAngles.y;
-            //transform.rotation = Quaternion.Euler(0f, targetAngle, 0f);
 
-            //at wright posinon
-            //_PhotoCam.transform.position = _camFps.transform.position + _rb.transform.forward.normalized * _PhotoCamDist;
-            //same but with angle form fps cam
-
-            _CamHolder.transform.eulerAngles = new Vector3(_camFps.GetComponent<CinemachinePanTilt>().TiltAxis.Value, _CamHolder.transform.eulerAngles.y, _CamHolder.transform.eulerAngles.z);
-            
             //with smoth turning
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _turnSmothVelocity, _turnSmoothTime);
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
 
+            _CamHolder.transform.eulerAngles = new Vector3(_camFps.GetComponent<CinemachinePanTilt>().TiltAxis.Value, _CamHolder.transform.eulerAngles.y, _CamHolder.transform.eulerAngles.z);
 
 
             _rb.MovePosition(_rb.position + _rb.transform.forward * walkZ * _SpeedFps * Time.deltaTime);
             _rb.MovePosition(_rb.position + _rb.transform.right * walkX * _SpeedFps * Time.deltaTime);
         }
 
-
-        private void Run()
-        {
-
-            //get inputs
-            float walkZ = _Move.ReadValue<Vector2>().y;
-            float walkX = _Move.ReadValue<Vector2>().x;
-
-            walkZ *= 2;
-            //walkX *= 2;
-            _animatorController.SetFloat("walkZ", walkZ);
-            _animatorController.SetFloat("walkX", walkX);
-
-            //rotate to camra
-            float _mouseX = _Look.ReadValue<Vector2>().x;
-            transform.Rotate(Vector3.up, _mouseX);
-
-            
-
-            _rb.MovePosition(_rb.position + _rb.transform.forward * walkZ * _Speed * Time.deltaTime);
-            //move along left and wright
-            //_rb.MovePosition(_rb.position + _rb.transform.right * walkX * _Speed * Time.deltaTime);
-
-        }
-
         private void Walk()
         {
+            float walkZ;
+            float walkX;
+            if (_currentState == PlayerState.walk)
+            {
+                //get inputs
+                walkZ = _Move.ReadValue<Vector2>().y;
+                walkX = _Move.ReadValue<Vector2>().x;
+            }
+            else
+            {
+                //run
 
-            //get inputs
-            float walkZ = _Move.ReadValue<Vector2>().y;
-            float walkX = _Move.ReadValue<Vector2>().x;
+                //get inputs
+                walkZ = _Move.ReadValue<Vector2>().y * _runMult;
+                walkX = _Move.ReadValue<Vector2>().x * _runMult;
+
+            }
+
+
 
             float _mag = new Vector2(walkZ, walkX).magnitude;
             if (_mag > 0.1f)
             {
                 //gets direction of input
-                Vector3 _moveDirections = new Vector3(walkX, 0, walkZ).normalized;
+                Vector3 _moveDirections = new Vector3(walkX, 0, walkZ);
 
                 //turns it into an agle from the perspective of the camra
-                float targetAngle = MathF.Atan2(_moveDirections.x, _moveDirections.z) * Mathf.Rad2Deg + _camWalk.transform.eulerAngles.y;
+                float targetAngle = MathF.Atan2(_moveDirections.normalized.x, _moveDirections.normalized.z) * Mathf.Rad2Deg + _camWalk.transform.eulerAngles.y;
                 //gives you the agile with nice smoth truning dampaning that the player needs to 
                 float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _turnSmothVelocity, _turnSmoothTime);
                 transform.rotation = Quaternion.Euler(0f, angle, 0f);
@@ -312,10 +275,10 @@ namespace MMA505
                 //the directions player is moving
                 Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
                 // Debug.DrawRay(transform.position, moveDir.normalized * 2, Color.red, 0.1f);
-                _rb.MovePosition(_rb.position + moveDir.normalized * _Speed * Time.deltaTime);
+                _rb.MovePosition(_rb.position + moveDir.normalized * _moveDirections.magnitude * _Speed * Time.deltaTime);
 
                 //sets animation so they walk foard
-                _animatorController.SetFloat("walkZ", moveDir.magnitude);
+                _animatorController.SetFloat("walkZ", _moveDirections.magnitude);
 
             }
             else
@@ -324,5 +287,9 @@ namespace MMA505
                 _animatorController.SetFloat("walkX", walkX);
             }
         }
+
+        #endregion
+
     }
+    
 }
