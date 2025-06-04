@@ -285,7 +285,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2162392592714279984}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f9dfa5b682dcd46bda6128250e975f58, type: 3}
   m_Name: 
@@ -385,6 +385,7 @@ Transform:
   - {fileID: 1180314878735746306}
   - {fileID: 4236931287538861171}
   - {fileID: 3554535875832053184}
+  - {fileID: 6783635287993640290}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6683694098048103966
@@ -405,70 +406,12 @@ MonoBehaviour:
   _camFps: {fileID: 4729228039966628376}
   _PhotoCam: {fileID: 982053740001957485}
   _CamHolder: {fileID: 4332598360461971729}
-  _PhotoCamDist: 0
-  _Sprint:
-    m_Name: Sprint
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: dc248fd6-83ec-44c2-aafd-ce65fa289350
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
-  _fight:
-    m_Name: Fight
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: afc53891-9404-4a20-8dd5-8d0b8164c068
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
-  _Jump:
-    m_Name: Jump
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: f53c6d4f-438a-4a2a-a88c-809fb65c2436
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
-  _action1:
-    m_Name: Action 1
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 15d351a6-7c4c-43a9-83d7-8fa37c3b66c2
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
-  _Fps:
-    m_Name: Fps
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: c90376ff-d5a0-45d6-9e86-e94c8f7cbbff
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
-  _Move:
-    m_Name: Move
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: fa7c44d8-40e1-4d82-8b7d-a9ea9dea6fee
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
-  _Look:
-    m_Name: Look
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 79e82291-3c45-4648-ae77-d81bd6a62930
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
+  _groundLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  _gourndcheck: {fileID: 6196033108571389153}
+  _groundCheckDistance: 0.3
+  _jumpFource: 0.5
   _Speed: 10
   _runMult: 2
   _currentState: 1
@@ -530,7 +473,7 @@ Rigidbody:
   serializedVersion: 4
   m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: 9999
+  m_AngularDrag: 1
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -546,7 +489,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 80
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!136 &2014249400189877372
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -643,7 +586,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5109764354463173262}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f9dfa5b682dcd46bda6128250e975f58, type: 3}
   m_Name: 
@@ -758,6 +701,37 @@ MonoBehaviour:
         DecelTime: 0.2
   PlayerIndex: -1
   AutoEnableInputs: 1
+--- !u!1 &6196033108571389153
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6783635287993640290}
+  m_Layer: 0
+  m_Name: goundCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6783635287993640290
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6196033108571389153}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5259983368344898409}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1743896195027164826
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -24,19 +24,23 @@ namespace MMA505
 
         [SerializeField] private GameObject _PhotoCam;
         [SerializeField] private GameObject _CamHolder;
-        [SerializeField] private float _PhotoCamDist;
+        [SerializeField] private LayerMask _groundLayer;
+        [SerializeField] private GameObject _gourndcheck;
+        [SerializeField] private float _groundCheckDistance = 0.3f;
+        private bool _isGrounded;
+        [SerializeField] private float _jumpFource = 0.5f;
 
-        [SerializeField] private PlayerControlsInput _playerInputs;
-        [SerializeField] private InputAction _Sprint;
-        [SerializeField] private InputAction _fight;
-        [SerializeField] private InputAction _Jump;
-        [SerializeField] private InputAction _action1;
-        [SerializeField] private InputAction _Fps;
-        [SerializeField] private InputAction _Move;
-        [SerializeField] private InputAction _Look;
+        private PlayerControlsInput _playerInputs;
+        private InputAction _Sprint;
+        private InputAction _fight;
+        private InputAction _Jump;
+        private InputAction _action1;
+        private InputAction _Fps;
+        private InputAction _Move;
+        private InputAction _Look;
         [SerializeField] private float _Speed = 2.0f;
         [SerializeField] private float _runMult = 2.0f;
-        [SerializeField] public enum PlayerState { run, walk, fight, fps };
+        private enum PlayerState { run, walk, fight, fps };
         [SerializeField] private PlayerState _currentState;
         [SerializeField] private Rigidbody _rb;
 
@@ -93,17 +97,24 @@ namespace MMA505
         // Update is called once per frame
         void Update()
         {
-
+            CheckGrounded();
             Move();
+            
+            // Visual debug
+            Debug.DrawRay(_gourndcheck.transform.position, Vector3.down * _groundCheckDistance, _isGrounded ? Color.green : Color.red);
+
         }
 
         #region inputActions
 
         private void Jump(InputAction.CallbackContext context)
         {
-            if (_currentState != PlayerState.fight)
+            if (_currentState == PlayerState.walk && _isGrounded)
             {
+
                 _animatorController.SetTrigger("Jump");
+                _rb.AddForce(new Vector3(0.0f, _jumpFource , 0.0f), ForceMode.Impulse);
+
             }
         }
         private void Action1(InputAction.CallbackContext context)
@@ -142,7 +153,7 @@ namespace MMA505
                 float targetAngle = _camWalk.transform.rotation.eulerAngles.y;
                 //rotats player
                 transform.eulerAngles = new Vector3(0f, targetAngle, 0f);
-                
+
                 _animatorController.SetBool("fight", true);
                 _camRun.enabled = true;
                 _camWalk.enabled = false;
@@ -181,6 +192,17 @@ namespace MMA505
         }
 
         #endregion
+
+        private void CheckGrounded()
+        {
+            
+            _isGrounded = Physics.Raycast(
+                _gourndcheck.transform.position,
+                Vector3.down,
+                _groundCheckDistance,
+                _groundLayer
+            );
+        }
 
         #region movemnts
 
