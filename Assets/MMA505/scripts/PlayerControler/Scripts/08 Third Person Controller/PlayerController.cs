@@ -109,7 +109,7 @@ namespace MMA505
 
         private void Jump(InputAction.CallbackContext context)
         {
-            if (_currentState == PlayerState.walk && _isGrounded)
+            if (_currentState != PlayerState.fight && _currentState != PlayerState.fps && _isGrounded)
             {
 
                 _animatorController.SetTrigger("Jump");
