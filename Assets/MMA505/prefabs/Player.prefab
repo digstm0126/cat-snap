@@ -411,7 +411,7 @@ MonoBehaviour:
     m_Bits: 128
   _gourndcheck: {fileID: 6196033108571389153}
   _groundCheckDistance: 0.3
-  _jumpFource: 0.5
+  _jumpFource: 5
   _Speed: 10
   _runMult: 2
   _currentState: 1
@@ -471,9 +471,9 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2469089291262881524}
   serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 1
+  m_Mass: 10
+  m_Drag: 0.1
+  m_AngularDrag: 0.1
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
