@@ -236,8 +236,11 @@ namespace MMA505
 
             float _SpeedFight = 2f;
 
-            _rb.MovePosition(_rb.position + _rb.transform.forward * walkZ * _SpeedFight * Time.deltaTime);
-            _rb.MovePosition(_rb.position + _rb.transform.right * walkX * _SpeedFight * Time.deltaTime);
+            _rb.linearVelocity = new Vector3(
+                _rb.transform.forward.x * walkZ * _SpeedFight + _rb.transform.right.x * walkX * _SpeedFight,
+                _rb.linearVelocity.y,
+                _rb.transform.forward.z * walkZ * _SpeedFight + _rb.transform.right.z * walkX * _SpeedFight
+            );
 
         }
 
@@ -260,9 +263,11 @@ namespace MMA505
 
             _CamHolder.transform.eulerAngles = new Vector3(_camFps.GetComponent<CinemachinePanTilt>().TiltAxis.Value, _CamHolder.transform.eulerAngles.y, _CamHolder.transform.eulerAngles.z);
 
-
-            _rb.MovePosition(_rb.position + _rb.transform.forward * walkZ * _SpeedFps * Time.deltaTime);
-            _rb.MovePosition(_rb.position + _rb.transform.right * walkX * _SpeedFps * Time.deltaTime);
+            _rb.linearVelocity = new Vector3(
+                _rb.transform.forward.x * walkZ * _SpeedFps + _rb.transform.right.x * walkX * _SpeedFps,
+                _rb.linearVelocity.y,
+                _rb.transform.forward.z * walkZ * _SpeedFps + _rb.transform.right.z * walkX * _SpeedFps
+            );
         }
 
         private void Walk()
@@ -286,7 +291,6 @@ namespace MMA505
             }
 
 
-
             float _mag = new Vector2(walkZ, walkX).magnitude;
             if (_mag > 0.1f)
             {
@@ -302,7 +306,10 @@ namespace MMA505
                 //the directions player is moving
                 Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
                 // Debug.DrawRay(transform.position, moveDir.normalized * 2, Color.red, 0.1f);
-                _rb.MovePosition(_rb.position + moveDir.normalized * _moveDirections.magnitude * _Speed * Time.deltaTime);
+                //_rb.MovePosition(_rb.position + moveDir.normalized * _moveDirections.magnitude * _Speed * Time.deltaTime);
+                
+                // Option 1: Using velocity (more direct control)
+                _rb.linearVelocity = new Vector3(moveDir.x * _Speed * _moveDirections.magnitude, _rb.linearVelocity.y, moveDir.z * _Speed * _moveDirections.magnitude);
 
                 //sets animation so they walk foard
                 _animatorController.SetFloat("walkZ", _moveDirections.magnitude);
@@ -310,6 +317,7 @@ namespace MMA505
             }
             else
             {
+                _rb.linearVelocity = new Vector3(0, _rb.linearVelocity.y, 0);
                 _animatorController.SetFloat("walkZ", walkZ);
                 _animatorController.SetFloat("walkX", walkX);
             }
