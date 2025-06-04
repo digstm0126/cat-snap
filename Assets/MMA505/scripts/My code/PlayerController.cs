@@ -237,7 +237,7 @@ namespace MMA505
             float _SpeedFight = 2f;
 
             _rb.linearVelocity = new Vector3(
-                _rb.transform.forward.x * walkZ * _SpeedFight + _rb.transform.right.x * walkX * _SpeedFight,
+                _rb.transform.forward.x * walkX * _SpeedFight + _rb.transform.right.x * walkX * _SpeedFight,
                 _rb.linearVelocity.y,
                 _rb.transform.forward.z * walkZ * _SpeedFight + _rb.transform.right.z * walkX * _SpeedFight
             );

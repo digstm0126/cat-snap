@@ -1198,6 +1198,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 4339928072897430690, guid: 1017a065d1b9945b480e4316142ef279, type: 3}
+      propertyPath: _currentState
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4706557852071235411, guid: 1017a065d1b9945b480e4316142ef279, type: 3}
       propertyPath: HorizontalAxis.Center
       value: 0
