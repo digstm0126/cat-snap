@@ -1194,6 +1194,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 341980329887371295, guid: 1017a065d1b9945b480e4316142ef279, type: 3}
+      propertyPath: m_ControllerManager.Controllers.Array.data[0].Input.Gain
+      value: 200
+      objectReference: {fileID: 0}
     - target: {fileID: 2183742872414375865, guid: 1017a065d1b9945b480e4316142ef279, type: 3}
       propertyPath: RecenterTarget
       value: 2
@@ -1207,7 +1211,19 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2183742872414375865, guid: 1017a065d1b9945b480e4316142ef279, type: 3}
+      propertyPath: PanAxis.Range.y
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 2183742872414375865, guid: 1017a065d1b9945b480e4316142ef279, type: 3}
+      propertyPath: TiltAxis.Range.y
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 2183742872414375865, guid: 1017a065d1b9945b480e4316142ef279, type: 3}
       propertyPath: PanAxis.Recentering.Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2183742872414375865, guid: 1017a065d1b9945b480e4316142ef279, type: 3}
+      propertyPath: TiltAxis.Recentering.Enabled
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2469089291262881524, guid: 1017a065d1b9945b480e4316142ef279, type: 3}

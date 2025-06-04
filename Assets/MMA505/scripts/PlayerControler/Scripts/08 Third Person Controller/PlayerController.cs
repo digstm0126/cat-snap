@@ -161,12 +161,19 @@ namespace MMA505
 
                 //turns it into an agle from the perspective of the camra
                 float targetAngle = _camWalk.transform.rotation.eulerAngles.y;
+                //rotats player
                 transform.eulerAngles = new Vector3(0f, targetAngle, 0f);
+                //rotates camra this was a pain to figure out
                 _camFps.GetComponent<CinemachinePanTilt>().PanAxis.Value = targetAngle;
-                _camFps.enabled = true;
-            
-                _animatorController.SetBool("fps", true);
+                //reset holders
+                _CamHolder.transform.eulerAngles = new Vector3(0, _CamHolder.transform.eulerAngles.y, _CamHolder.transform.eulerAngles.z);
+                //switches cams
                 _camWalk.enabled = false;
+                _camFps.enabled = true;
+
+                //sets animation stuff   
+                _animatorController.SetBool("fps", true);
+                //changes state
                 _currentState = PlayerState.fps;
             }
             else if (_currentState == PlayerState.fps)
@@ -246,7 +253,7 @@ namespace MMA505
             //_PhotoCam.transform.position = _camFps.transform.position + _rb.transform.forward.normalized * _PhotoCamDist;
             //same but with angle form fps cam
 
-            //_CamHolder.transform.localRotation = Quaternion.Euler(0f, _camFps.GetComponent<CinemachinePanTilt>().TiltAxis.Value, 0f);
+            _CamHolder.transform.eulerAngles = new Vector3(_camFps.GetComponent<CinemachinePanTilt>().TiltAxis.Value, _CamHolder.transform.eulerAngles.y, _CamHolder.transform.eulerAngles.z);
             
             //with smoth turning
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _turnSmothVelocity, _turnSmoothTime);
