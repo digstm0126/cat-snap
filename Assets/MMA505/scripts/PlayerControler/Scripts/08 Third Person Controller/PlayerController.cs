@@ -138,6 +138,11 @@ namespace MMA505
             }
             else if (_currentState == PlayerState.walk)
             {
+                //turns it into an agle from the perspective of the camra
+                float targetAngle = _camWalk.transform.rotation.eulerAngles.y;
+                //rotats player
+                transform.eulerAngles = new Vector3(0f, targetAngle, 0f);
+                
                 _animatorController.SetBool("fight", true);
                 _camRun.enabled = true;
                 _camWalk.enabled = false;
