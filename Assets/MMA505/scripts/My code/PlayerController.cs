@@ -234,14 +234,14 @@ namespace MMA505
             _animatorController.SetFloat("walkZ", walkZ);
             _animatorController.SetFloat("walkX", walkX);
 
-            float _SpeedFight = 2f;
+            float _SpeedFight = 0.5f;
 
-            _rb.linearVelocity = new Vector3(
-                _rb.transform.forward.x * walkX * _SpeedFight + _rb.transform.right.x * walkX * _SpeedFight,
-                _rb.linearVelocity.y,
-                _rb.transform.forward.z * walkZ * _SpeedFight + _rb.transform.right.z * walkX * _SpeedFight
-            );
-
+            // Using transform.right for local X axis movement
+            _rb.AddForce(new Vector3(
+                transform.right.x * walkX * _SpeedFight,
+                0f,
+                transform.forward.z * walkZ * _SpeedFight     
+            ), ForceMode.VelocityChange);
         }
 
         private void Fpsmove()
@@ -252,7 +252,7 @@ namespace MMA505
             _animatorController.SetFloat("walkZ", walkZ);
             _animatorController.SetFloat("walkX", walkX);
 
-            float _SpeedFps = 3f;
+            float _SpeedFps = 0.5f;
 
             //rotate camra left to right pan
             float targetAngle = _camFps.transform.eulerAngles.y;
@@ -263,11 +263,11 @@ namespace MMA505
 
             _CamHolder.transform.eulerAngles = new Vector3(_camFps.GetComponent<CinemachinePanTilt>().TiltAxis.Value, _CamHolder.transform.eulerAngles.y, _CamHolder.transform.eulerAngles.z);
 
-            _rb.linearVelocity = new Vector3(
-                _rb.transform.forward.x * walkZ * _SpeedFps + _rb.transform.right.x * walkX * _SpeedFps,
-                _rb.linearVelocity.y,
-                _rb.transform.forward.z * walkZ * _SpeedFps + _rb.transform.right.z * walkX * _SpeedFps
-            );
+            _rb.AddForce(new Vector3(
+                transform.right.x * walkX * _SpeedFps,   
+                0f,                                         
+                transform.forward.z * walkZ * _SpeedFps     
+            ), ForceMode.VelocityChange);
         }
 
         private void Walk()
