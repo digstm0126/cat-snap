@@ -18,6 +18,7 @@ namespace MMA505
     public class PlayerController : MonoBehaviour
     {
         [SerializeField] private Animator _animatorController;
+        [SerializeField] private IkHandCam _ikHanderl;
         [SerializeField] private CinemachineCamera _camWalk;
         [SerializeField] private CinemachineCamera _camRun;
         [SerializeField] private CinemachineCamera _camFps;
@@ -29,6 +30,17 @@ namespace MMA505
         [SerializeField] private float _groundCheckDistance = 0.3f;
         private bool _isGrounded;
         [SerializeField] private float _jumpFource = 0.5f;
+        [SerializeField] private float _Speed = 2.0f;
+        [SerializeField] private float _runMult = 2.0f;
+        private enum PlayerState { run, walk, fight, fps };
+        [SerializeField] private PlayerState _currentState;
+        [SerializeField] private Rigidbody _rb;
+
+        [SerializeField] private float _turnSmoothTime;
+        [SerializeField] private float _turnSmothVelocity;
+
+#region inputactions
+    
 
         private PlayerControlsInput _playerInputs;
         private InputAction _Sprint;
@@ -38,14 +50,9 @@ namespace MMA505
         private InputAction _Fps;
         private InputAction _Move;
         private InputAction _Look;
-        [SerializeField] private float _Speed = 2.0f;
-        [SerializeField] private float _runMult = 2.0f;
-        private enum PlayerState { run, walk, fight, fps };
-        [SerializeField] private PlayerState _currentState;
-        [SerializeField] private Rigidbody _rb;
 
-        [SerializeField] private float _turnSmoothTime;
-        [SerializeField] private float _turnSmothVelocity;
+#endregion
+
 
         private void Awake()
         {
@@ -81,7 +88,6 @@ namespace MMA505
             _Jump.performed += Jump;
 
         }
-
         private void ODisable()
         {
             _Move.Disable();
@@ -93,27 +99,24 @@ namespace MMA505
             _Jump.Disable();
 
         }
-
-        // Update is called once per frame
         void Update()
         {
             CheckGrounded();
             Move();
-            
+
             // Visual debug
             Debug.DrawRay(_gourndcheck.transform.position, Vector3.down * _groundCheckDistance, _isGrounded ? Color.green : Color.red);
 
         }
 
         #region inputActions
-
         private void Jump(InputAction.CallbackContext context)
         {
             if (_currentState != PlayerState.fight && _currentState != PlayerState.fps && _isGrounded)
             {
 
                 _animatorController.SetTrigger("Jump");
-                _rb.AddForce(new Vector3(0.0f, _jumpFource , 0.0f), ForceMode.Impulse);
+                _rb.AddForce(new Vector3(0.0f, _jumpFource, 0.0f), ForceMode.Impulse);
 
             }
         }
@@ -177,6 +180,9 @@ namespace MMA505
                 _camWalk.enabled = false;
                 _camFps.enabled = true;
 
+                //set ik
+                _ikHanderl.SwapIK();
+
                 //sets animation stuff   
                 _animatorController.SetBool("fps", true);
                 //changes state
@@ -187,6 +193,10 @@ namespace MMA505
                 _animatorController.SetBool("fps", false);
                 _camWalk.enabled = true;
                 _camFps.enabled = false;
+
+                //set ik
+                _ikHanderl.SwapIK();
+                
                 _currentState = PlayerState.walk;
             }
         }
@@ -195,7 +205,7 @@ namespace MMA505
 
         private void CheckGrounded()
         {
-            
+
             _isGrounded = Physics.Raycast(
                 _gourndcheck.transform.position,
                 Vector3.down,
@@ -240,7 +250,7 @@ namespace MMA505
             _rb.AddForce(new Vector3(
                 transform.right.x * walkX * _SpeedFight,
                 0f,
-                transform.forward.z * walkZ * _SpeedFight     
+                transform.forward.z * walkZ * _SpeedFight
             ), ForceMode.VelocityChange);
         }
 
@@ -264,11 +274,13 @@ namespace MMA505
             _CamHolder.transform.eulerAngles = new Vector3(_camFps.GetComponent<CinemachinePanTilt>().TiltAxis.Value, _CamHolder.transform.eulerAngles.y, _CamHolder.transform.eulerAngles.z);
 
             _rb.AddForce(new Vector3(
-                transform.right.x * walkX * _SpeedFps,   
-                0f,                                         
-                transform.forward.z * walkZ * _SpeedFps     
+                transform.right.x * walkX * _SpeedFps,
+                0f,
+                transform.forward.z * walkZ * _SpeedFps
             ), ForceMode.VelocityChange);
+
         }
+
 
         private void Walk()
         {
@@ -307,7 +319,7 @@ namespace MMA505
                 Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
                 // Debug.DrawRay(transform.position, moveDir.normalized * 2, Color.red, 0.1f);
                 //_rb.MovePosition(_rb.position + moveDir.normalized * _moveDirections.magnitude * _Speed * Time.deltaTime);
-                
+
                 // Option 1: Using velocity (more direct control)
                 _rb.linearVelocity = new Vector3(moveDir.x * _Speed * _moveDirections.magnitude, _rb.linearVelocity.y, moveDir.z * _Speed * _moveDirections.magnitude);
 
@@ -324,6 +336,7 @@ namespace MMA505
         }
 
         #endregion
+        
 
     }
     
