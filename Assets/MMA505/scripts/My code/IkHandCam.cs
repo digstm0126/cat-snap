@@ -37,9 +37,8 @@ namespace MMA505
                         _animatorController.SetIKPosition(AvatarIKGoal.RightHand, _CamRgihtHand.transform.position);
                         _animatorController.SetIKRotation(AvatarIKGoal.RightHand, _CamRgihtHand.transform.rotation);
                     }
-
-
                 }
+
                 //if the IK is not active, set the position and rotation of the hand and head back to the original position
                 else
                 {

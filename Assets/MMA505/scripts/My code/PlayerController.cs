@@ -22,7 +22,6 @@ namespace MMA505
         [SerializeField] private CinemachineCamera _camWalk;
         [SerializeField] private CinemachineCamera _camRun;
         [SerializeField] private CinemachineCamera _camFps;
-
         [SerializeField] private GameObject _PhotoCam;
         [SerializeField] private GameObject _CamHolder;
         [SerializeField] private LayerMask _groundLayer;
@@ -35,12 +34,13 @@ namespace MMA505
         private enum PlayerState { run, walk, fight, fps };
         [SerializeField] private PlayerState _currentState;
         [SerializeField] private Rigidbody _rb;
-
         [SerializeField] private float _turnSmoothTime;
         [SerializeField] private float _turnSmothVelocity;
 
-#region inputactions
-    
+        [SerializeField] private List<GameObject> _visableObjects = new List<GameObject>();
+
+        #region inputactions
+
 
         private PlayerControlsInput _playerInputs;
         private InputAction _Sprint;
@@ -51,7 +51,7 @@ namespace MMA505
         private InputAction _Move;
         private InputAction _Look;
 
-#endregion
+        #endregion
 
 
         private void Awake()
@@ -126,6 +126,10 @@ namespace MMA505
             {
                 _animatorController.SetTrigger("uperAtack");
             }
+            else if (_currentState == PlayerState.fps)
+            {
+                TakePhoto();
+            }
         }
         private void Sprint(InputAction.CallbackContext context)
         {
@@ -196,7 +200,7 @@ namespace MMA505
 
                 //set ik
                 _ikHanderl.SwapIK();
-                
+
                 _currentState = PlayerState.walk;
             }
         }
@@ -336,8 +340,16 @@ namespace MMA505
         }
 
         #endregion
-        
 
+        private void TakePhoto()
+        {
+            _visableObjects.Clear();
+            _visableObjects.AddRange(_PhotoCam.GetComponent<CombinedFrustums>().GetVisableObjects());
+            foreach (GameObject visableObj in _visableObjects)
+            {
+                Debug.Log(visableObj.name);
+            }
+            
+        }
     }
-    
 }

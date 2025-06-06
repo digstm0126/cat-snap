@@ -19,7 +19,7 @@ namespace MMA505
 
         //game manager
         [SerializeField] private GameManager _GameManager;
-        
+
         // The camera we will be generating portal frustums from
         [SerializeField] private Camera portalCamera;
 
@@ -37,7 +37,7 @@ namespace MMA505
         void Start()
         {
             // this and update are like this if i want to set them up with a manger latter.
-            SetupSite(); 
+            SetupSite();
         }
 
 
@@ -52,7 +52,7 @@ namespace MMA505
             {
                 portalCamera = Camera.main;
             }
-            
+
             // Create a new GameObject for our camera frustum
             GameObject cameraFrustumGO = new GameObject("Camera Frustum");
             // Set it's layer to this layher
@@ -60,7 +60,7 @@ namespace MMA505
             // Set it's parent to this gameobject (so it updates with the camera)
             cameraFrustumGO.transform.SetParent(transform, false);
             // Create the frustum for this camera
-            _CameraFrustum = Frustum.CreateFrustumFromCamera(portalCamera, cameraFrustumGO, _GameManager.getFrustumMaterial() , Color.blue);
+            _CameraFrustum = Frustum.CreateFrustumFromCamera(portalCamera, cameraFrustumGO, _GameManager.getFrustumMaterial(), Color.blue);
 
         }
 
@@ -230,8 +230,8 @@ namespace MMA505
         }
 
 
-       // Find visible objects in a region, based on a frustum and all portal frustums
-       List<GameObject> FindVisibleObjects(Region region, Frustum frustum)
+        // Find visible objects in a region, based on a frustum and all portal frustums
+        List<GameObject> FindVisibleObjects(Region region, Frustum frustum)
         {
             // Get the list of potentially visible objects in the region
             // (i.e. all the objects in the region which are tested for visibility)
@@ -287,8 +287,13 @@ namespace MMA505
             }
 
             // return the list of visible objects in this region, and all
-                // other portal linked regions
-                return visibleObjects;
+            // other portal linked regions
+            return visibleObjects;
+        }
+
+        public List<GameObject> GetVisableObjects()
+        {
+            return gameObjectsInFrustum;
         }
 
     }
