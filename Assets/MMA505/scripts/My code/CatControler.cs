@@ -7,6 +7,16 @@ namespace MMA505
     public class CatControler : MonoBehaviour
     {
         [SerializeField] private CombinedFrustums _combinedFrustum;
+        [SerializeField] private Vector3 _secrrySpot;
+        [SerializeField] private Vector3 _target;
+        [SerializeField] private float _scearTime = 3;
+        [SerializeField] private float _scearTimer;
+        [SerializeField] private float _distAhead = 2;
+        [SerializeField] private float _switchDist = 1;
+        [SerializeField] private float _randomRadice = 5f;
+        [SerializeField] private float _walkSpeed = 1f;
+        [SerializeField] private float _runSpeed = 2f;
+        [SerializeField] private Rigidbody _rb;
 
         public enum CatStates { run, walk };
         [SerializeField] private CatStates _currentState = CatStates.walk;
@@ -17,12 +27,24 @@ namespace MMA505
         // Update is called once per frame
         void Update()
         {
-            CheckForPlayer();
+
+            Move();
+            DeBugTarget();
+
         }
 
         private void Move()
         {
+            switch (_currentState)
+            {
+                case CatStates.run:
+                    Run();
+                    break;
+                case CatStates.walk:
+                    Walk();
+                    break;
 
+            }
         }
 
         private void CheckForPlayer()
@@ -33,9 +55,75 @@ namespace MMA505
                 if (obj.tag == "Player")
                 {
                     _currentState = CatStates.run;
+                    _secrrySpot = new Vector3(obj.transform.position.x, transform.position.y, obj.transform.position.z);
+                    
+                    SetRandomTarget(transform.position + (transform.position - _secrrySpot).normalized * _distAhead);
+                    _scearTimer = _scearTime;
                     Debug.Log("player");
                 }
+            }
+        }
+
+        private void Run()
+        {
+            if (_scearTimer > 0)
+            {
+                if (Vector3.Distance(_target, transform.position) <= _switchDist)
+                {
+                    SetRandomTarget(_target + ((_target - transform.position).normalized * _distAhead ));
+                }
+                _scearTimer -= Time.deltaTime;
+                Vector3 direction = _target - transform.position;
+                direction.y = 0; // Ignore y-axis rotation
+                _rb.transform.rotation = Quaternion.LookRotation(direction);
+                _rb.AddForce(_rb.transform.forward * _runSpeed, ForceMode.VelocityChange);
+            }
+            else
+            {
+                _scearTimer = 0;
                 _currentState = CatStates.walk;
+            }
+        }
+
+        private void Walk()
+        {
+
+            if (Vector3.Distance(_target, transform.position) <= _switchDist)
+            {
+                SetRandomTarget(_target + ((_target - transform.position).normalized * _distAhead ));
+            }
+
+            Vector3 direction = _target - transform.position;
+            direction.y = 0; // Ignore y-axis rotation
+            _rb.transform.rotation = Quaternion.LookRotation(direction);
+            _rb.AddForce(_rb.transform.forward * _walkSpeed, ForceMode.VelocityChange);
+            CheckForPlayer();
+
+        }
+
+        private void SetRandomTarget(Vector3 basespot)
+        {
+
+            float angle = Random.Range(0f, Mathf.PI * 2);
+            float x = basespot.x + Mathf.Cos(angle) * _randomRadice;
+            float z = basespot.z + Mathf.Sin(angle) * _randomRadice;
+            float y = transform.position.y; // Assuming the same height as basespot
+
+            _target = new Vector3(x, y, z);
+            
+        }
+
+        private void DeBugTarget()
+        {
+            // Debug solid sphere at target position
+            Debug.DrawLine(_target, _target + Vector3.up * 0.1f, Color.red, 0.1f); // Small solid sphere representation
+
+            // Debug transparent sphere with radius of _randomRadice
+            for (float angle = 0; angle < Mathf.PI * 2; angle += Mathf.PI / 16)
+            {
+                Vector3 point1 = _target + new Vector3(Mathf.Cos(angle) * _randomRadice, 0, Mathf.Sin(angle) * _randomRadice);
+                Vector3 point2 = _target + new Vector3(Mathf.Cos(angle + Mathf.PI / 16) * _randomRadice, 0, Mathf.Sin(angle + Mathf.PI / 16) * _randomRadice);
+                Debug.DrawLine(point1, point2, Color.blue, 0.1f); // Transparent sphere representation
             }
         }
     }
