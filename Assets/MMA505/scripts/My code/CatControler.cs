@@ -32,8 +32,10 @@ namespace MMA505
             {
                 if (obj.tag == "Player")
                 {
+                    _currentState = CatStates.run;
                     Debug.Log("player");
                 }
+                _currentState = CatStates.walk;
             }
         }
     }
