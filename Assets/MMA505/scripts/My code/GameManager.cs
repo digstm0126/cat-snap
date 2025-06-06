@@ -198,7 +198,7 @@ namespace MMA505
             {
                 GameObject _cat = _Cats[UnityEngine.Random.Range(0, _Cats.Length - 1)];
                 int _dist = UnityEngine.Random.Range(_distMin, _distMax);
-                string _state = "cool";
+                CatControler.CatStates _state = (CatControler.CatStates)UnityEngine.Random.Range(0, Enum.GetValues(typeof(CatControler.CatStates)).Length);
 
                 _phtoGoals.Add(new Photo(_cat, _dist, _state));
             }

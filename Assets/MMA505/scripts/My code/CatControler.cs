@@ -18,8 +18,8 @@ namespace MMA505
         [SerializeField] private float _runSpeed = 2f;
         [SerializeField] private Rigidbody _rb;
 
-        public enum CatStates { run, walk };
-        [SerializeField] private CatStates _currentState = CatStates.walk;
+        public enum CatStates { runing, walking };
+        [SerializeField] private CatStates _currentState = CatStates.walking;
 
 
 
@@ -37,10 +37,10 @@ namespace MMA505
         {
             switch (_currentState)
             {
-                case CatStates.run:
+                case CatStates.runing:
                     Run();
                     break;
-                case CatStates.walk:
+                case CatStates.walking:
                     Walk();
                     break;
 
@@ -54,7 +54,7 @@ namespace MMA505
             {
                 if (obj.tag == "Player")
                 {
-                    _currentState = CatStates.run;
+                    _currentState = CatStates.runing;
                     _secrrySpot = new Vector3(obj.transform.position.x, transform.position.y, obj.transform.position.z);
                     
                     SetRandomTarget(transform.position + (transform.position - _secrrySpot).normalized * _distAhead);
@@ -81,7 +81,7 @@ namespace MMA505
             else
             {
                 _scearTimer = 0;
-                _currentState = CatStates.walk;
+                _currentState = CatStates.walking;
             }
         }
 
@@ -111,6 +111,11 @@ namespace MMA505
 
             _target = new Vector3(x, y, z);
             
+        }
+
+        public CatStates getState()
+        {
+            return _currentState;
         }
 
         private void DeBugTarget()

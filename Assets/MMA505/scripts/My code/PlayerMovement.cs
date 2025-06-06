@@ -277,12 +277,8 @@ namespace MMA505
 
             float _SpeedFight = 0.5f;
 
-            // Using transform.right for local X axis movement
-            _rb.AddForce(new Vector3(
-                transform.right.x * walkX * _SpeedFight,
-                0f,
-                transform.forward.z * walkZ * _SpeedFight
-            ), ForceMode.VelocityChange);
+            _rb.AddForce(_rb.transform.forward * (walkZ * _SpeedFight), ForceMode.VelocityChange);
+            _rb.AddForce(_rb.transform.right * (walkX * _SpeedFight), ForceMode.VelocityChange);
         }
 
         private void Fpsmove()

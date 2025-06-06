@@ -18,7 +18,7 @@ namespace MMA505
             _visableObjects.AddRange(_PhotoCam.GetComponent<CombinedFrustums>().GetVisableObjects());
             foreach (GameObject visableObj in _visableObjects)
             {
-                string _state = "cool";
+                CatControler.CatStates _state = visableObj.GetComponent<CatControler>().getState();
                 int _dist = (int) Vector3.Distance(visableObj.transform.position, _PhotoCam.transform.position);
                 Photo _newPhoto = new Photo(visableObj, _dist, _state);
                 OnPhotoTake?.Invoke(_newPhoto);
@@ -29,10 +29,10 @@ namespace MMA505
     {
         [SerializeField] private GameObject _obj;
         [SerializeField] private int _dist;
-        [SerializeField] private string _state;
+        [SerializeField] private CatControler.CatStates _state;
         [SerializeField] private Photo _foundPhoto;
 
-        public Photo(GameObject obj, int dist, string state)
+        public Photo(GameObject obj, int dist, CatControler.CatStates state)
         {
             _obj = obj;
             _dist = dist;
@@ -54,7 +54,7 @@ namespace MMA505
             return _dist;
         }
 
-        public string GetState()
+        public CatControler.CatStates GetState()
         {
             return _state;
         }

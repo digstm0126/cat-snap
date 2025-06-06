@@ -51,7 +51,7 @@ namespace MMA505
 
         public void UpdateLastPhoto(Photo photo)
         {
-            string text = $"Last photo \nSubject: {photo.GetObject().name}\nDistences from camra: {photo.GetDist()}\nThey where {photo.GetState()}";
+            string text = $"Last photo \nSubject: {photo.GetObject().name}\nDistences from camra: {photo.GetDist()}\nThey where are {photo.GetState()}";
             _text2.text = text;
         }
     }
