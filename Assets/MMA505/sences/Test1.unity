@@ -1186,6 +1186,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 704174795}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &706111812 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 982053740001957485, guid: 1017a065d1b9945b480e4316142ef279, type: 3}
+  m_PrefabInstance: {fileID: 707987821}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &707987821
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1200,11 +1205,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4706557852071235411, guid: 1017a065d1b9945b480e4316142ef279, type: 3}
       propertyPath: HorizontalAxis.Center
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4706557852071235411, guid: 1017a065d1b9945b480e4316142ef279, type: 3}
-      propertyPath: HorizontalAxis.Recentering.Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5259983368344898409, guid: 1017a065d1b9945b480e4316142ef279, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1246,6 +1247,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7525144442754508023, guid: 1017a065d1b9945b480e4316142ef279, type: 3}
+      propertyPath: _groundLayer.m_Bits
+      value: 128
+      objectReference: {fileID: 0}
+    - target: {fileID: 8630951386416142537, guid: 1017a065d1b9945b480e4316142ef279, type: 3}
+      propertyPath: _PhotoCam
+      value: 
+      objectReference: {fileID: 706111812}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

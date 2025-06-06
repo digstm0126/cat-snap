@@ -329,7 +329,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5259983368344898409}
-  - component: {fileID: 4339928072897430690}
+  - component: {fileID: 294951153585279873}
+  - component: {fileID: 7525144442754508023}
+  - component: {fileID: 8630951386416142537}
   - component: {fileID: 3493992035314306114}
   - component: {fileID: 3456769024463380}
   - component: {fileID: 2014249400189877372}
@@ -361,7 +363,21 @@ Transform:
   - {fileID: 6783635287993640290}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4339928072897430690
+--- !u!114 &294951153585279873
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2469089291262881524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f00a6d2ce17b2434d84c503727a79452, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _MovementManager: {fileID: 7525144442754508023}
+  _camracontroler: {fileID: 8630951386416142537}
+--- !u!114 &7525144442754508023
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -378,7 +394,6 @@ MonoBehaviour:
   _camWalk: {fileID: 6566499930435462267}
   _camRun: {fileID: 1577585227654644167}
   _camFps: {fileID: 4729228039966628376}
-  _PhotoCam: {fileID: 982053740001957485}
   _CamHolder: {fileID: 4332598360461971729}
   _groundLayer:
     serializedVersion: 2
@@ -392,6 +407,20 @@ MonoBehaviour:
   _rb: {fileID: 3456769024463380}
   _turnSmoothTime: 0.1
   _turnSmothVelocity: 0
+--- !u!114 &8630951386416142537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2469089291262881524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ce9bf484d5c64b5696f11275a27794e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _PhotoCam: {fileID: 982053740001957485}
+  _visableObjects: []
 --- !u!23 &3493992035314306114
 MeshRenderer:
   m_ObjectHideFlags: 0
