@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using MMA505;
+using TMPro;
 using UnityEngine;
 
 namespace MMA505
@@ -16,6 +17,11 @@ namespace MMA505
         [SerializeField] private float _randomRadice = 5f;
         [SerializeField] private float _walkSpeed = 1f;
         [SerializeField] private float _runSpeed = 2f;
+        [SerializeField] private Color _collour;
+        private Camera _mainCam;
+        [SerializeField] private Canvas _canvice;
+        [SerializeField] private TextMeshProUGUI _text;
+
         [SerializeField] private Rigidbody _rb;
 
         public enum CatStates { runing, walking };
@@ -47,6 +53,24 @@ namespace MMA505
             }
         }
 
+        public void SetupCat(Camera mainCam)
+        {
+            _mainCam = mainCam;
+            SetupCanvice();
+        }
+
+        private void SetupCanvice()
+        {
+            _canvice.worldCamera = _mainCam;
+            _text.color = _collour;
+            _text.text = $"{name} is {_currentState}";
+        }
+
+        private void UpdateCanvice()
+        {
+            _text.text = $"{name} is {_currentState}";
+        }
+
         private void CheckForPlayer()
         {
             List<GameObject> objects = _combinedFrustum.GetVisableObjects();
@@ -55,8 +79,9 @@ namespace MMA505
                 if (obj.tag == "Player")
                 {
                     _currentState = CatStates.runing;
+                    UpdateCanvice();
                     _secrrySpot = new Vector3(obj.transform.position.x, transform.position.y, obj.transform.position.z);
-                    
+
                     SetRandomTarget(transform.position + (transform.position - _secrrySpot).normalized * _distAhead);
                     _scearTimer = _scearTime;
                     Debug.Log("player");
@@ -70,7 +95,7 @@ namespace MMA505
             {
                 if (Vector3.Distance(_target, transform.position) <= _switchDist)
                 {
-                    SetRandomTarget(_target + ((_target - transform.position).normalized * _distAhead ));
+                    SetRandomTarget(_target + ((_target - transform.position).normalized * _distAhead));
                 }
                 _scearTimer -= Time.deltaTime;
                 Vector3 direction = _target - transform.position;
@@ -82,6 +107,7 @@ namespace MMA505
             {
                 _scearTimer = 0;
                 _currentState = CatStates.walking;
+                UpdateCanvice();
             }
         }
 

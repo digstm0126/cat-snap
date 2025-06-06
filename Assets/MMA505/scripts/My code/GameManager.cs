@@ -16,6 +16,7 @@ namespace MMA505
         [SerializeField] private Material visibilitySphereMaterial;
         [SerializeField] private int _frustumLayer;
         [SerializeField] private Material _frustumMaterial;
+        [SerializeField] private Camera _mainCam;
         [SerializeField] private GameObject _frustomTranform;
         [SerializeField] private GameObject[] _Cats;
         [SerializeField] private GameObject[] _Players;
@@ -24,9 +25,9 @@ namespace MMA505
         [SerializeField] private GameObject[] _RegionsIn;
         [SerializeField] private GameObject _RegionEx;
         [SerializeField] private List<Photo> _phtoGoals = new List<Photo>();
-        
+
         public static event Action<List<Photo>> UpdateUi;
-        
+
 
 
 
@@ -50,6 +51,7 @@ namespace MMA505
             populatObjects();
             RegionManager.UpdateVisabl(_Players, _Cats, _RegionsIn);
             RegionManager.UpdatePortals(_Portals, _RegionsIn);
+            SetupCats();
             GenGoals(3, 8, 20);
             UpdateUi?.Invoke(_phtoGoals);
         }
@@ -156,7 +158,7 @@ namespace MMA505
         public void CheckPhoto(Photo _photoIn)
         {
             int finished = 0;
-            
+
             foreach (Photo _Photo in _phtoGoals)
             {
                 // Check if the photo goal has not been found yet
@@ -201,6 +203,14 @@ namespace MMA505
                 CatControler.CatStates _state = (CatControler.CatStates)UnityEngine.Random.Range(0, Enum.GetValues(typeof(CatControler.CatStates)).Length);
 
                 _phtoGoals.Add(new Photo(_cat, _dist, _state));
+            }
+        }
+
+        public void SetupCats()
+        {
+            foreach (GameObject cat in _Cats)
+            {
+                cat.GetComponent<CatControler>().SetupCat(_mainCam);
             }
         }
     }
