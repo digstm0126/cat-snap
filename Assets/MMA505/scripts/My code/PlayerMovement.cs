@@ -97,10 +97,23 @@ namespace MMA505
             _Jump.Disable();
 
         }
+
+        void Start()
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
         void Update()
         {
             CheckGrounded();
             Move();
+
+            
+            if (Input.GetKeyDown(KeyCode.Escape) && _currentState == PlayerState.fps)
+            {
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+            }
 
             // Visual debug
             Debug.DrawRay(_gourndcheck.transform.position, Vector3.down * _groundCheckDistance, _isGrounded ? Color.green : Color.red);
@@ -324,10 +337,7 @@ namespace MMA505
 
                 //the directions player is moving
                 Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-                // Debug.DrawRay(transform.position, moveDir.normalized * 2, Color.red, 0.1f);
-                //_rb.MovePosition(_rb.position + moveDir.normalized * _moveDirections.magnitude * _Speed * Time.deltaTime);
 
-                // Option 1: Using velocity (more direct control)
                 _rb.linearVelocity = new Vector3(moveDir.x * _Speed * _moveDirections.magnitude, _rb.linearVelocity.y, moveDir.z * _Speed * _moveDirections.magnitude);
 
                 //sets animation so they walk foard
