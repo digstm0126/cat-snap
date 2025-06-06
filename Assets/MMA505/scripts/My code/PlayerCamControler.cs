@@ -10,7 +10,7 @@ namespace MMA505
 
         [SerializeField] private GameObject _PhotoCam;
         [SerializeField] private List<GameObject> _visableObjects = new List<GameObject>();
-        [SerializeField] public List<(GameObject obj, float distance, string state)> _photoResults = new List<(GameObject, float, string)>();
+        public static event Action<Photo> OnPhotoTake;
 
         public void TakePhoto()
         {
@@ -19,10 +19,54 @@ namespace MMA505
             foreach (GameObject visableObj in _visableObjects)
             {
                 string _state = "cool";
-                float _dist = Vector3.Distance(visableObj.transform.position, _PhotoCam.transform.position);
-                _photoResults.Add((visableObj, _dist, _state));
-                Debug.Log(visableObj.name);
+                int _dist = (int) Vector3.Distance(visableObj.transform.position, _PhotoCam.transform.position);
+                Photo _newPhoto = new Photo(visableObj, _dist, _state);
+                OnPhotoTake?.Invoke(_newPhoto);
             }
+        }
+    }
+    public class Photo
+    {
+        [SerializeField] private GameObject _obj;
+        [SerializeField] private int _dist;
+        [SerializeField] private string _state;
+        [SerializeField] private Photo _foundPhoto;
+
+        public Photo(GameObject obj, int dist, string state)
+        {
+            _obj = obj;
+            _dist = dist;
+            _state = state;
+        }
+
+        public override string ToString()
+        {
+            return $"Cat: {_obj.name}\nLess then {_dist} m away\nWhile they are {_state}\n\n";
+        }
+
+        public GameObject GetObject()
+        {
+            return _obj;
+        }
+
+        public float GetDist()
+        {
+            return _dist;
+        }
+
+        public string GetState()
+        {
+            return _state;
+        }
+
+        public Photo GetFoundPhoto()
+        {
+            return _foundPhoto;
+        }
+
+        public void SetFoundPhoto(Photo photo)
+        {
+            _foundPhoto = photo;
         }
     }
 }

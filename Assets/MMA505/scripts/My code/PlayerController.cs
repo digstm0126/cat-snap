@@ -17,10 +17,11 @@ namespace MMA505
 {
     public class PlayerController : MonoBehaviour
     {
-    
-    
+
+
         [SerializeField] private PlayerMovement _MovementManager;
         [SerializeField] private PlayerCamControler _camracontroler;
+
 
         #region inputactions
         private PlayerControlsInput _playerInputs;
@@ -64,7 +65,7 @@ namespace MMA505
 
             _Jump = _playerInputs.Player.Jump;
             _Jump.Enable();
-            
+
 
         }
         private void ODisable()
@@ -90,6 +91,8 @@ namespace MMA505
 
 
         #endregion
+
+
 
     }
 }
