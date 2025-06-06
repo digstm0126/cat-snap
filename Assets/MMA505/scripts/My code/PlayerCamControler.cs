@@ -10,7 +10,7 @@ namespace MMA505
 
         [SerializeField] private GameObject _PhotoCam;
         [SerializeField] private List<GameObject> _visableObjects = new List<GameObject>();
-        [SerializeField] private List<(GameObject obj, float distance, string state)> _photoResults = new List<(GameObject, float, string)>();
+        [SerializeField] public List<(GameObject obj, float distance, string state)> _photoResults = new List<(GameObject, float, string)>();
 
         public void TakePhoto()
         {
@@ -23,7 +23,6 @@ namespace MMA505
                 _photoResults.Add((visableObj, _dist, _state));
                 Debug.Log(visableObj.name);
             }
-
         }
     }
 }
