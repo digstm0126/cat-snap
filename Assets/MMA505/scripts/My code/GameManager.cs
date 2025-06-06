@@ -107,7 +107,7 @@ namespace MMA505
         public GameObject[] getAllRegions()
         {
             List<GameObject> allRegions = new List<GameObject>(_RegionsIn);
-            //allRegions.Add(_RegionEx);
+            allRegions.Add(_RegionEx);
             return allRegions.ToArray();
         }
 
