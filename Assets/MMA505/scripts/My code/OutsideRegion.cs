@@ -45,12 +45,12 @@ namespace MMA505
                         }
                     }
 
-                    foreach (GameObject player in region.GetComponent<Region>().getVisibGameObjects())
+                    foreach (GameObject obj in region.GetComponent<Region>().getVisibGameObjects())
                     {
                         //if region contanse play checks all items but if play is player kinda messy oh whell very messy
-                        if (visiblePlayers.Contains(player))
+                        if (visiblePlayers.Contains(obj))
                         {
-                            visiblePlayers.Add(player);
+                            visiblePlayers.Remove(obj);
                         }
                     }
                 }

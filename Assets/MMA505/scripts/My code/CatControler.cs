@@ -28,7 +28,10 @@ namespace MMA505
         [SerializeField] private CatStates _currentState = CatStates.walking;
 
 
-
+        void Start()
+        {
+            SetRandomTarget(transform.position + (transform.forward * _distAhead));
+        }
 
         // Update is called once per frame
         void Update()
