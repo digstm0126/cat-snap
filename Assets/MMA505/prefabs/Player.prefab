@@ -29,8 +29,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1730973169975169082}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.02409587, y: 0.000000011249521, z: -2.7114652e-10, w: 0.99970967}
-  m_LocalPosition: {x: 0, y: 3.0777345, z: -4.7029624}
+  m_LocalRotation: {x: -0.3384831, y: -0.0000000019029944, z: -0.0000000023526774, w: 0.9409725}
+  m_LocalPosition: {x: 0, y: 0.5, z: -2.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -123,7 +123,7 @@ MonoBehaviour:
       Time: 4
     Restrictions: 0
   VerticalAxis:
-    Value: 10
+    Value: -10
     Center: 0
     Range: {x: -10, y: 45}
     Wrap: 0
@@ -329,7 +329,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5259983368344898409}
-  - component: {fileID: 294951153585279873}
   - component: {fileID: 7525144442754508023}
   - component: {fileID: 8630951386416142537}
   - component: {fileID: 3493992035314306114}
@@ -363,20 +362,6 @@ Transform:
   - {fileID: 6783635287993640290}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &294951153585279873
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2469089291262881524}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f00a6d2ce17b2434d84c503727a79452, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _MovementManager: {fileID: 7525144442754508023}
-  _camracontroler: {fileID: 8630951386416142537}
 --- !u!114 &7525144442754508023
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -390,6 +375,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animatorController: {fileID: 2831328366865596314}
+  _camraControler: {fileID: 8630951386416142537}
   _ikHanderl: {fileID: 5917686057202368150}
   _camWalk: {fileID: 6566499930435462267}
   _camRun: {fileID: 1577585227654644167}
@@ -640,7 +626,7 @@ MonoBehaviour:
   ReferenceFrame: 1
   RecenterTarget: 2
   PanAxis:
-    Value: 0
+    Value: 359.60553
     Center: 0
     Range: {x: 0, y: 360}
     Wrap: 1
@@ -650,7 +636,7 @@ MonoBehaviour:
       Time: 2
     Restrictions: 0
   TiltAxis:
-    Value: 0
+    Value: -16.43931
     Center: 0
     Range: {x: -70, y: 40}
     Wrap: 0
@@ -698,7 +684,7 @@ MonoBehaviour:
         LegacyInput: 
         LegacyGain: 1
         CancelDeltaTime: 0
-      InputValue: 0
+      InputValue: -0
       Driver:
         AccelTime: 0.2
         DecelTime: 0.2
@@ -868,6 +854,7 @@ MonoBehaviour:
   _animatorController: {fileID: 2831328366865596314}
   _applyIK: 0
   _PhotoCam: {fileID: 982053740001957485}
+  _camModel: {fileID: 5738362740023647189}
   _CamRgihtHand: {fileID: 6422442406234771010}
 --- !u!1001 &7713604102343294509
 PrefabInstance:
@@ -881,6 +868,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2643323338559628792, guid: 174fbffbd7b67487598e570250c68efb, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6485417800523436460, guid: 174fbffbd7b67487598e570250c68efb, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -888,6 +879,10 @@ PrefabInstance:
     - target: {fileID: 7398515596473919552, guid: 174fbffbd7b67487598e570250c68efb, type: 3}
       propertyPath: m_Name
       value: camra
+      objectReference: {fileID: 0}
+    - target: {fileID: 7398515596473919552, guid: 174fbffbd7b67487598e570250c68efb, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7398515596473919552, guid: 174fbffbd7b67487598e570250c68efb, type: 3}
       propertyPath: m_TagString
@@ -977,5 +972,10 @@ Transform:
 --- !u!1 &982053740001957485 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7398515596473919552, guid: 174fbffbd7b67487598e570250c68efb, type: 3}
+  m_PrefabInstance: {fileID: 7713604102343294509}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5738362740023647189 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2643323338559628792, guid: 174fbffbd7b67487598e570250c68efb, type: 3}
   m_PrefabInstance: {fileID: 7713604102343294509}
   m_PrefabAsset: {fileID: 0}

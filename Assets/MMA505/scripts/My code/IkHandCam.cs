@@ -12,6 +12,7 @@ namespace MMA505
         [SerializeField] private Animator _animatorController;
         [SerializeField] private bool _applyIK;
         [SerializeField] private GameObject _PhotoCam;
+        [SerializeField] private GameObject _camModel;
         [SerializeField] private GameObject _CamRgihtHand;
 
 
@@ -54,10 +55,13 @@ namespace MMA505
             if (_applyIK == true)
             {
                 _applyIK = false;
+                _camModel.SetActive(false);
             }
             else
             {
                 _applyIK = true;
+                _camModel.SetActive(true);
+
             }
         }
     }

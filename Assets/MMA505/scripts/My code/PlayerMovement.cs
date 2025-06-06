@@ -18,6 +18,7 @@ namespace MMA505
     public class PlayerMovement : MonoBehaviour
     {
         [SerializeField] private Animator _animatorController;
+        [SerializeField] private PlayerCamControler _camraControler;
         [SerializeField] private IkHandCam _ikHanderl;
         [SerializeField] private CinemachineCamera _camWalk;
         [SerializeField] private CinemachineCamera _camRun;
@@ -141,7 +142,7 @@ namespace MMA505
             }
             else if (_currentState == PlayerState.fps)
             {
-                //
+                _camraControler.TakePhoto();
             }
         }
         private void Sprint(InputAction.CallbackContext context)
@@ -200,7 +201,6 @@ namespace MMA505
                 //switches cams
                 _camWalk.enabled = false;
                 _camFps.enabled = true;
-    
 
                 //set ik
                 _ikHanderl.SwapIK();
@@ -304,11 +304,8 @@ namespace MMA505
 
             _CamHolder.transform.eulerAngles = new Vector3(_camFps.GetComponent<CinemachinePanTilt>().TiltAxis.Value, _CamHolder.transform.eulerAngles.y, _CamHolder.transform.eulerAngles.z);
 
-            _rb.AddForce(new Vector3(
-                transform.right.x * walkX * _SpeedFps,
-                0f,
-                transform.forward.z * walkZ * _SpeedFps
-            ), ForceMode.VelocityChange);
+            _rb.AddForce(_rb.transform.forward * (walkZ * _SpeedFps), ForceMode.VelocityChange);
+            _rb.AddForce(_rb.transform.right * (walkX * _SpeedFps), ForceMode.VelocityChange);
 
         }
 
