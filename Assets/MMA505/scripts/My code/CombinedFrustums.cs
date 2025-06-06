@@ -145,8 +145,8 @@ namespace MMA505
 
                 float normalLength = 5;
                 // Draw the normals for our occlusion frustum planes
-                for (int j = 0; j < transformedFrustumCenters.Count; j++)
-                    Debug.DrawRay(transformedFrustumCenters[j], transformedFrustumNormals[j] * normalLength, Color.white);
+                // for (int j = 0; j < transformedFrustumCenters.Count; j++)
+                //     Debug.DrawRay(transformedFrustumCenters[j], transformedFrustumNormals[j] * normalLength, Color.white);
 
                 // Loop through all our visible objects and dose a test for visablity
                 for (int i = 0; i < visibleObjects.Count; i++)
