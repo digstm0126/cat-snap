@@ -28,25 +28,35 @@ namespace MMA505
 
         private void poplulatItemsEx(GameObject[] players, GameObject[] cats, GameObject[] regions)
         {
+
             List<GameObject> visiblePlayers = new List<GameObject>(players);
             List<GameObject> visibleCats = new List<GameObject>(cats);
 
-            foreach (GameObject obj in regions)
+            foreach (GameObject region in regions)
             {
-                if (obj != null)
+                if (region != null)
                 {
-                    if (visibleCats != null && visibleCats.Contains(obj))
+                    foreach (GameObject cat in region.GetComponent<Region>().getVisibGameObjects())
                     {
-                        visibleCats.Remove(obj);
+                        //if region contanse cat
+                        if (visibleCats.Contains(cat))
+                        {
+                            visibleCats.Remove(cat);   
+                        }
                     }
-                    if (visiblePlayers != null && visiblePlayers.Contains(obj))
+
+                    foreach (GameObject player in region.GetComponent<Region>().getVisibGameObjects())
                     {
-                        visiblePlayers.Remove(obj);
+                        //if region contanse play checks all items but if play is player kinda messy oh whell very messy
+                        if (visiblePlayers.Contains(player))
+                        {
+                            visiblePlayers.Add(player);
+                        }
                     }
                 }
             }
 
-            populatObjectsToTest(players.ToArray(), cats.ToArray());
+            populatObjectsToTest(visiblePlayers.ToArray(), visibleCats.ToArray());
 
         }
 
