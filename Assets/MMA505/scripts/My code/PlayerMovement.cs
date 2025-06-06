@@ -22,7 +22,6 @@ namespace MMA505
         [SerializeField] private CinemachineCamera _camWalk;
         [SerializeField] private CinemachineCamera _camRun;
         [SerializeField] private CinemachineCamera _camFps;
-        //[SerializeField] private GameObject _PhotoCam;
         [SerializeField] private GameObject _CamHolder;
         [SerializeField] private LayerMask _groundLayer;
         [SerializeField] private GameObject _gourndcheck;
@@ -153,7 +152,7 @@ namespace MMA505
             }
             else if (_currentState == PlayerState.fight)
             {
-                _animatorController.SetTrigger("uperAtack");
+                _animatorController.SetTrigger("lowAtack");
             }
         }
         private void SprintCanceled(InputAction.CallbackContext context)
@@ -201,6 +200,7 @@ namespace MMA505
                 //switches cams
                 _camWalk.enabled = false;
                 _camFps.enabled = true;
+    
 
                 //set ik
                 _ikHanderl.SwapIK();
@@ -220,6 +220,10 @@ namespace MMA505
                 _ikHanderl.SwapIK();
 
                 _currentState = PlayerState.walk;
+            }
+            else if (_currentState == PlayerState.fight)
+            {
+                _animatorController.SetTrigger("tount");
             }
         }
 
