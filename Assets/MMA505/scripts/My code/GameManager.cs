@@ -27,6 +27,7 @@ namespace MMA505
         [SerializeField] private List<Photo> _phtoGoals = new List<Photo>();
 
         public static event Action<List<Photo>> UpdateUi;
+        public static event Action<bool> finishGame;
 
 
 
@@ -190,6 +191,8 @@ namespace MMA505
             {
                 Debug.Log("All photo goals completed!");
                 //regen goals?
+                finishGame?.Invoke(true);
+                
             }
         }
 

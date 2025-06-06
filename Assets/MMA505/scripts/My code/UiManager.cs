@@ -10,18 +10,21 @@ namespace MMA505
 
         [SerializeField] private TextMeshProUGUI _text1;
         [SerializeField] private TextMeshProUGUI _text2;
+        [SerializeField] private TextMeshProUGUI _finished;
 
         #region Initialisation & Destruction
 
         private void Awake()
         {
             GameManager.UpdateUi += UpdateUi;
+            GameManager.finishGame += Finish;
             PlayerCamControler.OnPhotoTake += UpdateLastPhoto;
         }
 
         private void OnDestroy()
         {
             GameManager.UpdateUi -= UpdateUi;
+            GameManager.finishGame -= Finish;
             PlayerCamControler.OnPhotoTake -= UpdateLastPhoto;
 
         }
@@ -46,6 +49,7 @@ namespace MMA505
             }
 
             _text1.text = text;
+            
 
         }
 
@@ -53,6 +57,15 @@ namespace MMA505
         {
             string text = $"Last photo \nSubject: {photo.GetObject().name}\nDistences from camra: {photo.GetDist()}\nThey where are {photo.GetState()}";
             _text2.text = text;
+        }
+
+        public void Finish(bool finished)
+        {
+            //redundint but dont cear 
+            if (finished)
+            {
+                _finished.text = "you win yay";
+            }
         }
     }
 }
