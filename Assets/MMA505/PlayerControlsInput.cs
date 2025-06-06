@@ -573,7 +573,7 @@ namespace MMA505
                 {
                     ""name"": """",
                     ""id"": ""756f0c99-c75d-46f5-9d65-4e8f6d4571ee"",
-                    ""path"": ""<Keyboard>/v"",
+                    ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",

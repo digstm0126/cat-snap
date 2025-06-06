@@ -100,8 +100,7 @@ namespace MMA505
 
         void Start()
         {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
+
         }
         void Update()
         {
@@ -133,6 +132,10 @@ namespace MMA505
         }
         private void Action1(InputAction.CallbackContext context)
         {
+
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+
             if (_currentState == PlayerState.fight)
             {
                 _animatorController.SetTrigger("uperAtack");
@@ -147,6 +150,10 @@ namespace MMA505
             if (_currentState == PlayerState.walk)
             {
                 _currentState = PlayerState.run;
+            }
+            else if (_currentState == PlayerState.fight)
+            {
+                _animatorController.SetTrigger("uperAtack");
             }
         }
         private void SprintCanceled(InputAction.CallbackContext context)
