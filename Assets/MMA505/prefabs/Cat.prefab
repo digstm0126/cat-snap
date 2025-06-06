@@ -123,8 +123,8 @@ MonoBehaviour:
   _distAhead: 8
   _switchDist: 4
   _randomRadice: 3
-  _walkSpeed: 0.1
-  _runSpeed: 0.2
+  _walkSpeed: 0.2
+  _runSpeed: 0.4
   _collour: {r: 1, g: 1, b: 1, a: 1}
   _canvice: {fileID: 6599469774197851662}
   _text: {fileID: 7220230531962946226}
