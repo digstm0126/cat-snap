@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using MMA505;
 using TMPro;
 using UnityEngine;
 
@@ -21,7 +20,6 @@ namespace MMA505
         private Camera _mainCam;
         [SerializeField] private Canvas _canvice;
         [SerializeField] private TextMeshProUGUI _text;
-
         [SerializeField] private Rigidbody _rb;
 
         public enum CatStates { runing, walking };
