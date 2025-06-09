@@ -10,6 +10,7 @@ namespace MMA505
         [SerializeField] private CombinedFrustums _combinedFrustum;
         [SerializeField] private Animator _catAnimator;
         [SerializeField] private NavMeshAgent _catAgint;
+        [SerializeField] private IkCatHead _catIk;
         [SerializeField] private Color _collour;
         private Camera _mainCam;
         [SerializeField] private Canvas _canvice;
@@ -18,8 +19,10 @@ namespace MMA505
 
 
         [SerializeField] private List<GameObject> _intristingTings;
-        [SerializeField] private float _bordemLimt;
-        [SerializeField] private float _bordemCurrent;
+        [SerializeField] private int _bordemLimt = 10;
+        [SerializeField] private int _bordemCurrent;
+        [SerializeField] private float _bordemSecsTill = 1;
+        [SerializeField] private float _bordTimer;
         [SerializeField] private GameObject _sceryThing;
         [SerializeField] private Vector3 _target;
         [SerializeField] private float _scearTime = 3;
@@ -29,14 +32,20 @@ namespace MMA505
 
 
 
-        public enum CatStates {runing, interacting, moving};
-        [SerializeField] private CatStates _currentState = CatStates.moving;
+        public enum CatStates {runing, interacting, moving, wondering};
+        [SerializeField] private CatStates _currentState = CatStates.interacting;
+
+        public enum CatIdelStat {mowing, siting, looking};
+        [SerializeField] private CatIdelStat _idelCurrent;
 
 
+
+
+        
         void Start()
         {
             _catAgint = GetComponent<NavMeshAgent>();
-            SetTargeint(transform.position + (transform.forward * _distAhead));
+            SetNewIntrist();
             SetDestination();
         }
 
@@ -44,7 +53,7 @@ namespace MMA505
         void Update()
         {
 
-            //Move();
+            Move();
             //SetRandomTarget(transform.position);
             _catAnimator.SetFloat("speed", _catAgint.velocity.magnitude);
 
@@ -58,9 +67,10 @@ namespace MMA505
                     Run();
                     break;
                 case CatStates.moving:
-                    Walk();
+                    moving();
                     break;
                 case CatStates.interacting:
+                    Intract();
                     break;
             }
         }
@@ -101,6 +111,88 @@ namespace MMA505
             }
         }
 
+        private void Intract()
+        {
+
+            if (_catAgint.velocity.magnitude <= 0.1f)
+            {
+                transform.LookAt(_target);
+                _bordTimer += Time.deltaTime;
+                if (_bordTimer >= _bordemSecsTill)
+                {
+                    _bordTimer = 0;
+                    _bordemCurrent += Random.Range(1, 2);
+                    SwitchIdel();
+                }
+                IdelAnimation();
+            }
+            
+        }
+
+
+        private void IdelAnimation()
+        {
+            switch (_idelCurrent)
+            {
+                case CatIdelStat.siting:
+                    Sit();
+                    break;
+                case CatIdelStat.mowing:
+                    Mowing();
+                    break;
+                case CatIdelStat.looking:
+                    Looking();
+                    break;
+                default:
+                    Idel();
+                    break;
+            }
+        }
+
+        private void Looking()
+        {
+            _catAnimator.SetBool("siting", false);
+            _catAnimator.SetBool("Looking", false);
+            _catAnimator.SetBool("mowing", false);
+        }
+
+        private void Sit()
+        {
+            _catAnimator.SetBool("siting", true);
+            _catAnimator.SetBool("Looking", false);
+            _catAnimator.SetBool("mowing", false);
+
+        }
+
+        private void Mowing()
+        {
+            _catAnimator.SetBool("siting", false);
+            _catAnimator.SetBool("Looking", false);
+            _catAnimator.SetBool("mowing", true);
+        }
+
+        private void Idel()
+        {
+            _catAnimator.SetBool("siting", false);
+            _catAnimator.SetBool("Looking", false);
+            _catAnimator.SetBool("mowing", false);
+        }
+
+        private void SwitchIdel()
+        {
+            if (Random.Range(_bordemCurrent, _bordemLimt) >= _bordemLimt)
+            {
+                //new intersting thing
+                SetNewIntrist();
+                SetDestination();
+                Idel();
+                _bordemCurrent = 0;
+                _currentState = CatStates.moving;
+            }
+            int random = Random.Range(0, System.Enum.GetValues(typeof(CatIdelStat)).Length);
+            _idelCurrent = (CatIdelStat)random;
+        }
+
         private void Run()
         {
             if (_scearTimer > 0)
@@ -109,7 +201,7 @@ namespace MMA505
                 SetTargeint(_target + ((_target - transform.position).normalized * _distAhead));
                 SetDestination();
                 _scearTimer -= Time.deltaTime;
-            
+
             }
             else
             {
@@ -119,8 +211,22 @@ namespace MMA505
             }
         }
 
-        private void Walk()
+        private void moving()
         {
+
+            if (_catAgint.pathPending || !_catAgint.isOnNavMesh || _catAgint.remainingDistance > 0.1f)
+            {
+                //if there
+                _currentState = CatStates.interacting;
+            }
+            else
+            {
+                
+                if (Vector3.Distance(transform.position, _target) <= _randomRadice)
+                {
+                    _catIk.SwapIK(true);
+                }
+            }
             
             CheckForPlayer();
 
@@ -134,7 +240,7 @@ namespace MMA505
             if (_catAgint.pathPending || !_catAgint.isOnNavMesh || _catAgint.remainingDistance > 0.1f)
                 return;
             
-            _catAgint.destination = _target + (_randomRadice * Random.insideUnitSphere);;
+            _catAgint.destination = _target + (_randomRadice * Random.insideUnitSphere);
 
         }
 
@@ -145,6 +251,7 @@ namespace MMA505
             float y = transform.position.y; // Assuming the same height as basespot
 
             _target = new Vector3(x, y, z);
+            _catIk.SetTarget(_target);
         }
         
         [ContextMenu("newIntrist")]
