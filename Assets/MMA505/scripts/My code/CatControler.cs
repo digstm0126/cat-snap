@@ -35,7 +35,7 @@ namespace MMA505
         public enum CatStates {runing, interacting, moving, wondering};
         [SerializeField] private CatStates _currentState = CatStates.interacting;
 
-        public enum CatIdelStat {mowing, siting, looking};
+        public enum CatIdelStat {mowing, siting, looking, Idel};
         [SerializeField] private CatIdelStat _idelCurrent;
 
 
@@ -143,6 +143,9 @@ namespace MMA505
                 case CatIdelStat.looking:
                     Looking();
                     break;
+                case CatIdelStat.Idel:
+                    Idel();
+                    break;
                 default:
                     Idel();
                     break;
@@ -185,6 +188,7 @@ namespace MMA505
                 //new intersting thing
                 SetNewIntrist();
                 SetDestination();
+                _idelCurrent = CatIdelStat.Idel;
                 Idel();
                 _bordemCurrent = 0;
                 _currentState = CatStates.moving;
