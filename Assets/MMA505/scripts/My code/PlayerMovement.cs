@@ -263,6 +263,8 @@ namespace MMA505
                 case PlayerState.fps:
                     Fpsmove();
                     break;
+                default:
+                    break;
             }
         }
 

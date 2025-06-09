@@ -143,11 +143,7 @@ namespace MMA505
                 // Get the frustum plane's centers and normals and store them in our lists
                 occlusionObj.GetComponent<OcclusionFrustum>().CalcFrustum(portalCamera, ref transformedFrustumCenters, ref transformedFrustumNormals);
 
-                float normalLength = 5;
-                // Draw the normals for our occlusion frustum planes
-                // for (int j = 0; j < transformedFrustumCenters.Count; j++)
-                //     Debug.DrawRay(transformedFrustumCenters[j], transformedFrustumNormals[j] * normalLength, Color.white);
-
+                
                 // Loop through all our visible objects and dose a test for visablity
                 for (int i = 0; i < visibleObjects.Count; i++)
                 {
