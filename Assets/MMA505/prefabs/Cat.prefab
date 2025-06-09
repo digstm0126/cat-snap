@@ -119,6 +119,7 @@ MonoBehaviour:
   _distAhead: 8
   _randomRadice: 5
   _currentState: 1
+  _idelCurrent: 0
 --- !u!54 &8072624280371438058
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -205,6 +206,7 @@ MonoBehaviour:
   _animatorController: {fileID: 3555955374787733319}
   _applyIK: 0
   _target: {x: 0, y: 0, z: 0}
+  _headBone: {fileID: 1535986887234763974}
 --- !u!1 &3046896694395594704
 GameObject:
   m_ObjectHideFlags: 0
@@ -717,6 +719,11 @@ PrefabInstance:
       addedObject: {fileID: 5340940746270190223}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6a3a32201370b498780d5c78d3612540, type: 3}
+--- !u!4 &1535986887234763974 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3610657825431217701, guid: 6a3a32201370b498780d5c78d3612540, type: 3}
+  m_PrefabInstance: {fileID: 2831437905938275043}
+  m_PrefabAsset: {fileID: 0}
 --- !u!95 &3555955374787733319 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 1590337280619052452, guid: 6a3a32201370b498780d5c78d3612540, type: 3}

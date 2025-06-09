@@ -12,36 +12,41 @@ namespace MMA505
         [SerializeField] private Animator _animatorController;
         [SerializeField] private bool _applyIK;
         [SerializeField] private Vector3 _target;
-       
+        [SerializeField] private Transform _headBone;
+        [SerializeField] private float rotationSpeed = 5f;
+        private Quaternion _initialRotation;
 
-
-        private void OnAnimatorIK()
+        private void Start()
         {
-            //ik hands
-            if (_animatorController)
+            if (_headBone != null)
             {
-                if (_applyIK)
-                {
-                    // Set the look target position, if one has been assigned
-                    if (_target != null)
-                    {
-                        _animatorController.SetLookAtWeight(1);
-                        _animatorController.SetLookAtPosition(_target);
-                    }
-
-                }
-                //if the IK is not active, set the position and rotation of the hand and head back to the original position
-                else
-                {
-                    _animatorController.SetLookAtWeight(0);
-                }
+                _initialRotation = _headBone.localRotation;
             }
+        }
+
+        /// <summary>
+        /// LateUpdate is called every frame, if the Behaviour is enabled.
+        /// It is called after all Update functions have been called.
+        /// </summary>
+        private void LateUpdate()
+        {
+            if (_animatorController || _headBone || _applyIK)
+            {
+                _headBone.transform.LookAt(_target);
+
+            }
+            else
+            {
+                _headBone.transform.rotation = _initialRotation;
+            }
+
+            
         }
 
         public void SwapIK(bool state)
         {
            
-            _applyIK = state;
+            _applyIK = true;
         
         }
 

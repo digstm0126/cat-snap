@@ -8,4 +8,108 @@ AvatarMask:
   m_PrefabAsset: {fileID: 0}
   m_Name: CatHead
   m_Mask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-  m_Elements: []
+  m_Elements:
+  - m_Path: 
+    m_Weight: 1
+  - m_Path: cat
+    m_Weight: 1
+  - m_Path: cat_armature
+    m_Weight: 1
+  - m_Path: cat_armature/root
+    m_Weight: 1
+  - m_Path: cat_armature/root/CTRL_foot.L
+    m_Weight: 1
+  - m_Path: cat_armature/root/CTRL_foot.L/CTRL_leg.L
+    m_Weight: 1
+  - m_Path: cat_armature/root/CTRL_foot.L/CTRL_leg.L/CTRL_leg.L_end
+    m_Weight: 1
+  - m_Path: cat_armature/root/MCH_back.001
+    m_Weight: 1
+  - m_Path: cat_armature/root/MCH_back.001/DEF_back.001
+    m_Weight: 1
+  - m_Path: cat_armature/root/MCH_back.001/DEF_back.001/CTRL_tail
+    m_Weight: 1
+  - m_Path: cat_armature/root/MCH_back.001/DEF_back.001/CTRL_tail/DEF_tail.001
+    m_Weight: 1
+  - m_Path: cat_armature/root/MCH_back.001/DEF_back.001/CTRL_tail/DEF_tail.001/DEF_tail.002
+    m_Weight: 1
+  - m_Path: cat_armature/root/MCH_back.001/DEF_back.001/CTRL_tail/DEF_tail.001/DEF_tail.002/DEF_tail.003
+    m_Weight: 1
+  - m_Path: cat_armature/root/MCH_back.001/DEF_back.001/CTRL_tail/DEF_tail.001/DEF_tail.002/DEF_tail.003/DEF_tail.004
+    m_Weight: 1
+  - m_Path: cat_armature/root/MCH_back.001/DEF_back.001/CTRL_tail/DEF_tail.001/DEF_tail.002/DEF_tail.003/DEF_tail.004/DEF_tail.005
+    m_Weight: 1
+  - m_Path: cat_armature/root/MCH_back.001/DEF_back.001/CTRL_tail/DEF_tail.001/DEF_tail.002/DEF_tail.003/DEF_tail.004/DEF_tail.005/DEF_tail.005_end
+    m_Weight: 1
+  - m_Path: cat_armature/root/MCH_back.001/DEF_back.001/DEF_upperLeg.L
+    m_Weight: 1
+  - m_Path: cat_armature/root/MCH_back.001/DEF_back.001/DEF_upperLeg.L/DEF_lowerLeg.L
+    m_Weight: 1
+  - m_Path: cat_armature/root/MCH_back.001/DEF_back.001/DEF_upperLeg.L/DEF_lowerLeg.L/DEF_foot.L
+    m_Weight: 1
+  - m_Path: cat_armature/root/MCH_back.001/DEF_back.001/DEF_upperLeg.L/DEF_lowerLeg.L/DEF_foot.L/DEF_toe.L
+    m_Weight: 1
+  - m_Path: cat_armature/root/MCH_back.001/DEF_back.001/DEF_upperLeg.L/DEF_lowerLeg.L/DEF_foot.L/DEF_toe.L/DEF_toe.L_end
+    m_Weight: 1
+  - m_Path: cat_armature/root/MCH_back.001/DEF_back.001/DEF_upperLeg.R
+    m_Weight: 1
+  - m_Path: cat_armature/root/MCH_back.001/DEF_back.001/DEF_upperLeg.R/DEF_lowerLeg.R
+    m_Weight: 1
+  - m_Path: cat_armature/root/MCH_back.001/DEF_back.001/DEF_upperLeg.R/DEF_lowerLeg.R/DEF_foot.R
+    m_Weight: 1
+  - m_Path: cat_armature/root/MCH_back.001/DEF_back.001/DEF_upperLeg.R/DEF_lowerLeg.R/DEF_foot.R/DEF_toe.R
+    m_Weight: 1
+  - m_Path: cat_armature/root/MCH_back.001/DEF_back.001/DEF_upperLeg.R/DEF_lowerLeg.R/DEF_foot.R/DEF_toe.R/DEF_toe.R_end
+    m_Weight: 1
+  - m_Path: cat_armature/root/MCH_back.001/DEF_back.001/MCH_back.002
+    m_Weight: 1
+  - m_Path: cat_armature/root/MCH_back.001/DEF_back.001/MCH_back.002/DEF_back.002
+    m_Weight: 1
+  - m_Path: cat_armature/root/MCH_back.001/DEF_back.001/MCH_back.002/DEF_back.002/MCH_back.003
+    m_Weight: 1
+  - m_Path: cat_armature/root/MCH_back.001/DEF_back.001/MCH_back.002/DEF_back.002/MCH_back.003/DEF_back.003
+    m_Weight: 1
+  - m_Path: cat_armature/root/MCH_back.001/DEF_back.001/MCH_back.002/DEF_back.002/MCH_back.003/DEF_back.003/MCH_back.004
+    m_Weight: 1
+  - m_Path: cat_armature/root/MCH_back.001/DEF_back.001/MCH_back.002/DEF_back.002/MCH_back.003/DEF_back.003/MCH_back.004/DEF_back.004
+    m_Weight: 1
+  - m_Path: cat_armature/root/MCH_back.001/DEF_back.001/MCH_back.002/DEF_back.002/MCH_back.003/DEF_back.003/MCH_back.004/DEF_back.004/DEF_shoulder.L
+    m_Weight: 1
+  - m_Path: cat_armature/root/MCH_back.001/DEF_back.001/MCH_back.002/DEF_back.002/MCH_back.003/DEF_back.003/MCH_back.004/DEF_back.004/DEF_shoulder.L/DEF_upperArm.L
+    m_Weight: 1
+  - m_Path: cat_armature/root/MCH_back.001/DEF_back.001/MCH_back.002/DEF_back.002/MCH_back.003/DEF_back.003/MCH_back.004/DEF_back.004/DEF_shoulder.L/DEF_upperArm.L/DEF_lowerArm.L
+    m_Weight: 1
+  - m_Path: cat_armature/root/MCH_back.001/DEF_back.001/MCH_back.002/DEF_back.002/MCH_back.003/DEF_back.003/MCH_back.004/DEF_back.004/DEF_shoulder.L/DEF_upperArm.L/DEF_lowerArm.L/DEF_hand.L
+    m_Weight: 1
+  - m_Path: cat_armature/root/MCH_back.001/DEF_back.001/MCH_back.002/DEF_back.002/MCH_back.003/DEF_back.003/MCH_back.004/DEF_back.004/DEF_shoulder.L/DEF_upperArm.L/DEF_lowerArm.L/DEF_hand.L/DEF_hand.L_end
+    m_Weight: 1
+  - m_Path: cat_armature/root/MCH_back.001/DEF_back.001/MCH_back.002/DEF_back.002/MCH_back.003/DEF_back.003/MCH_back.004/DEF_back.004/DEF_shoulder.R
+    m_Weight: 1
+  - m_Path: cat_armature/root/MCH_back.001/DEF_back.001/MCH_back.002/DEF_back.002/MCH_back.003/DEF_back.003/MCH_back.004/DEF_back.004/DEF_shoulder.R/DEF_upperArm.R
+    m_Weight: 1
+  - m_Path: cat_armature/root/MCH_back.001/DEF_back.001/MCH_back.002/DEF_back.002/MCH_back.003/DEF_back.003/MCH_back.004/DEF_back.004/DEF_shoulder.R/DEF_upperArm.R/DEF_lowerArm.R
+    m_Weight: 1
+  - m_Path: cat_armature/root/MCH_back.001/DEF_back.001/MCH_back.002/DEF_back.002/MCH_back.003/DEF_back.003/MCH_back.004/DEF_back.004/DEF_shoulder.R/DEF_upperArm.R/DEF_lowerArm.R/DEF_hand.R
+    m_Weight: 1
+  - m_Path: cat_armature/root/MCH_back.001/DEF_back.001/MCH_back.002/DEF_back.002/MCH_back.003/DEF_back.003/MCH_back.004/DEF_back.004/DEF_shoulder.R/DEF_upperArm.R/DEF_lowerArm.R/DEF_hand.R/DEF_hand.R_end
+    m_Weight: 1
+  - m_Path: cat_armature/root/MCH_back.001/DEF_back.001/MCH_back.002/DEF_back.002/MCH_back.003/DEF_back.003/MCH_back.004/DEF_back.004/MCH_neck
+    m_Weight: 0
+  - m_Path: cat_armature/root/MCH_back.001/DEF_back.001/MCH_back.002/DEF_back.002/MCH_back.003/DEF_back.003/MCH_back.004/DEF_back.004/MCH_neck/DEF_neck.001
+    m_Weight: 0
+  - m_Path: cat_armature/root/MCH_back.001/DEF_back.001/MCH_back.002/DEF_back.002/MCH_back.003/DEF_back.003/MCH_back.004/DEF_back.004/MCH_neck/DEF_neck.001/MCH_head
+    m_Weight: 0
+  - m_Path: cat_armature/root/MCH_back.001/DEF_back.001/MCH_back.002/DEF_back.002/MCH_back.003/DEF_back.003/MCH_back.004/DEF_back.004/MCH_neck/DEF_neck.001/MCH_head/DEF_head
+    m_Weight: 0
+  - m_Path: cat_armature/root/MCH_back.001/DEF_back.001/MCH_back.002/DEF_back.002/MCH_back.003/DEF_back.003/MCH_back.004/DEF_back.004/MCH_neck/DEF_neck.001/MCH_head/DEF_head/DEF_ear.L
+    m_Weight: 0
+  - m_Path: cat_armature/root/MCH_back.001/DEF_back.001/MCH_back.002/DEF_back.002/MCH_back.003/DEF_back.003/MCH_back.004/DEF_back.004/MCH_neck/DEF_neck.001/MCH_head/DEF_head/DEF_ear.L/DEF_ear.L_end
+    m_Weight: 0
+  - m_Path: cat_armature/root/MCH_back.001/DEF_back.001/MCH_back.002/DEF_back.002/MCH_back.003/DEF_back.003/MCH_back.004/DEF_back.004/MCH_neck/DEF_neck.001/MCH_head/DEF_head/DEF_ear.R
+    m_Weight: 0
+  - m_Path: cat_armature/root/MCH_back.001/DEF_back.001/MCH_back.002/DEF_back.002/MCH_back.003/DEF_back.003/MCH_back.004/DEF_back.004/MCH_neck/DEF_neck.001/MCH_head/DEF_head/DEF_ear.R/DEF_ear.R_end
+    m_Weight: 0
+  - m_Path: cat_armature/root/MCH_back.001/DEF_back.001/MCH_back.002/DEF_back.002/MCH_back.003/DEF_back.003/MCH_back.004/DEF_back.004/MCH_neck/DEF_neck.001/MCH_head/DEF_head/DEF_mooth
+    m_Weight: 0
+  - m_Path: cat_armature/root/MCH_back.001/DEF_back.001/MCH_back.002/DEF_back.002/MCH_back.003/DEF_back.003/MCH_back.004/DEF_back.004/MCH_neck/DEF_neck.001/MCH_head/DEF_head/DEF_mooth/DEF_mooth_end
+    m_Weight: 0

@@ -451,6 +451,14 @@ PrefabInstance:
       value: catcool
       objectReference: {fileID: 0}
     - target: {fileID: 3655039374484473587, guid: 001cc16858e93476d8b9cfdf3590606f, type: 3}
+      propertyPath: _bordemLimt
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3655039374484473587, guid: 001cc16858e93476d8b9cfdf3590606f, type: 3}
+      propertyPath: _bordemSecsTill
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3655039374484473587, guid: 001cc16858e93476d8b9cfdf3590606f, type: 3}
       propertyPath: '_intristingTings.Array.data[0]'
       value: 
       objectReference: {fileID: 1988091601}

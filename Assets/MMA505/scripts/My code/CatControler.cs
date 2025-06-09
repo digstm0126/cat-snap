@@ -52,7 +52,7 @@ namespace MMA505
         // Update is called once per frame
         void Update()
         {
-
+            CheckForPlayer();
             Move();
             //SetRandomTarget(transform.position);
             _catAnimator.SetFloat("speed", _catAgint.velocity.magnitude);
