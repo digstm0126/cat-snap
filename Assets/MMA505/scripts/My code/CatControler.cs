@@ -28,6 +28,8 @@ namespace MMA505
         [SerializeField] private float _scearTimer;
         [SerializeField] private float _distAhead = 2;
         [SerializeField] private float _randomRadice = 5f;
+        [SerializeField] private float _intristUpdatTime = 1f;
+        [SerializeField] private float _intristUpdatTimer;
 
         [SerializeField] private float _speed = 3.5f;
         [SerializeField] private float _runSpeed = 7f;
@@ -61,6 +63,16 @@ namespace MMA505
             Move();
             UpdateCanvice();
             _catAnimator.SetFloat("speed", _catAgint.velocity.magnitude);
+
+            if (_intristUpdatTimer <= 0)
+            {
+                _intristUpdatTimer = _intristUpdatTime;
+                UpdateIntrists();
+            }
+            else
+            {
+                _intristUpdatTimer -= Time.deltaTime;
+            }
 
         }
 
@@ -98,28 +110,28 @@ namespace MMA505
             _text.text = $"{name} is {_currentState}";
         }
 
-        private void CheckForPlayer()
-        {
-            List<GameObject> objects = _combinedFrustum.GetVisableObjects();
-            foreach (GameObject obj in objects)
-            {
-                if (obj.tag == "Player")
-                {
-                    _currentState = CatStates.runing;
-                    UpdateCanvice();
-                    // _sceryThing = new Vector3(obj.transform.position.x, transform.position.y, obj.transform.position.z);
+        // private void CheckForPlayer()
+        // {
+        //     List<GameObject> objects = _combinedFrustum.GetVisableObjects();
+        //     foreach (GameObject obj in objects)
+        //     {
+        //         if (obj.tag == "Player")
+        //         {
+        //             _currentState = CatStates.runing;
+        //             UpdateCanvice();
+        //             // _sceryThing = new Vector3(obj.transform.position.x, transform.position.y, obj.transform.position.z);
 
-                    //SetRandomTarget(transform.position + (transform.position - _sceryThing).normalized * _distAhead);
-                    _scearTimer = _scearTime;
+        //             //SetRandomTarget(transform.position + (transform.position - _sceryThing).normalized * _distAhead);
+        //             _scearTimer = _scearTime;
 
-                }
-            }
-        }
+        //         }
+        //     }
+        // }
 
         private void Intract()
         {
 
-            UpdateIntrists();
+            
             if (_catAgint.velocity.magnitude <= 0.1f)
             {
                 transform.LookAt(_target.GetLastLocation());
@@ -263,7 +275,6 @@ namespace MMA505
 
         private void moving()
         {
-            UpdateIntrists();
             if (_catAgint.pathPending || !_catAgint.isOnNavMesh || _catAgint.remainingDistance > 0.1f)
             {
                 //if there
@@ -278,7 +289,7 @@ namespace MMA505
                 }
             }
 
-            CheckForPlayer();
+            
 
         }
 

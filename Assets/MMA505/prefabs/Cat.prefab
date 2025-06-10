@@ -104,20 +104,19 @@ MonoBehaviour:
   _canvice: {fileID: 6599469774197851662}
   _text: {fileID: 7220230531962946226}
   _rb: {fileID: 8072624280371438058}
-  _intristingTings:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  _bordemLimt: 10
+  _bravery: 1
+  _bordemLimt: 5
   _bordemCurrent: 0
-  _bordemSecsTill: 1
+  _bordemSecsTill: 5
   _bordTimer: 0
-  _sceryThing: {fileID: 0}
-  _target: {x: 0, y: 0, z: 0}
   _scearTime: 4
   _scearTimer: 0
   _distAhead: 8
   _randomRadice: 5
+  _intristUpdatTime: 1
+  _intristUpdatTimer: 0
+  _speed: 4
+  _runSpeed: 10
   _currentState: 1
   _idelCurrent: 0
 --- !u!54 &8072624280371438058
@@ -207,6 +206,7 @@ MonoBehaviour:
   _applyIK: 0
   _target: {x: 0, y: 0, z: 0}
   _headBone: {fileID: 1535986887234763974}
+  rotationSpeed: 5
 --- !u!1 &3046896694395594704
 GameObject:
   m_ObjectHideFlags: 0

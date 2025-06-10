@@ -34,7 +34,9 @@ namespace MMA505
             Rigidbody rb = _obj.GetComponent<Rigidbody>();
             if (!rb || rb.linearVelocity.magnitude >= bravery)
             {
-                _fearVal = Mathf.Clamp(_fearVal + 1, 0, 10);
+                _fearVal = Mathf.Clamp(_fearVal + Mathf.RoundToInt(rb.linearVelocity.magnitude), 0, 10);
+                Debug.Log($"fare: {_fearVal}");
+                Debug.Log($"mag: {Mathf.RoundToInt(rb.linearVelocity.magnitude)} ");
             }
             else
             {
