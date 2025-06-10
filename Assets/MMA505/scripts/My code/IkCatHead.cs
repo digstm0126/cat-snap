@@ -5,8 +5,6 @@ using MMA505;
 
 namespace MMA505
 {
-
-    [RequireComponent(typeof(Animator))]
     public class IkCatHead : MonoBehaviour
     {
         [SerializeField] private Animator _animatorController;
