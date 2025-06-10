@@ -450,6 +450,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: catcool
       objectReference: {fileID: 0}
+    - target: {fileID: 906967344692813266, guid: 001cc16858e93476d8b9cfdf3590606f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3655039374484473587, guid: 001cc16858e93476d8b9cfdf3590606f, type: 3}
       propertyPath: _bordemLimt
       value: 5
@@ -470,6 +474,10 @@ PrefabInstance:
       propertyPath: '_intristingTings.Array.data[2]'
       value: 
       objectReference: {fileID: 1314849221}
+    - target: {fileID: 4979008685266695796, guid: 001cc16858e93476d8b9cfdf3590606f, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6405359812091397209, guid: 001cc16858e93476d8b9cfdf3590606f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 27.82

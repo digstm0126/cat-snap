@@ -26,6 +26,8 @@ namespace MMA505
         Vector3[] transformedFrustumCenters = new Vector3[6];
         Vector3[] transformedFrustumNormals = new Vector3[6];
 
+        [SerializeField] private Mesh _Mesh;
+
         // This function creates a frustum based on a camera c, makes
         // it a child of the GameObject container, uses the material material
         // for the debug rendering, using the color color on the material
@@ -341,7 +343,7 @@ namespace MMA505
         // When we destroy our frustum
         private void OnDestroy()
         {
-            // Also destroy the mesh filter and mesh renderer (if they exist)
+            // Also destroy the mesh filter and mesh renderer (if they exist) 
             if (GetComponent<MeshFilter>()) Destroy(GetComponent<MeshFilter>());
             if (GetComponent<MeshRenderer>()) Destroy(GetComponent<MeshRenderer>());
         }

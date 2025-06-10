@@ -16,45 +16,50 @@ namespace MMA505
         [SerializeField] private Canvas _canvice;
         [SerializeField] private TextMeshProUGUI _text;
         [SerializeField] private Rigidbody _rb;
-
-
-        [SerializeField] private List<GameObject> _intristingTings;
+        [SerializeField] public List<Intrist> _intristingTings = new List<Intrist>();
+        [SerializeField] private int _bravery;
         [SerializeField] private int _bordemLimt = 10;
         [SerializeField] private int _bordemCurrent;
         [SerializeField] private float _bordemSecsTill = 1;
         [SerializeField] private float _bordTimer;
-        [SerializeField] private GameObject _sceryThing;
-        [SerializeField] private Vector3 _target;
+        [SerializeField] private Intrist _sceryThing;
+        [SerializeField] private Intrist _target;
         [SerializeField] private float _scearTime = 3;
         [SerializeField] private float _scearTimer;
         [SerializeField] private float _distAhead = 2;
         [SerializeField] private float _randomRadice = 5f;
 
+        [SerializeField] private float _speed = 3.5f;
+        [SerializeField] private float _runSpeed = 7f;
 
 
-        public enum CatStates {runing, interacting, moving, wondering};
+
+        public enum CatStates { runing, interacting, moving, wondering };
         [SerializeField] private CatStates _currentState = CatStates.interacting;
 
-        public enum CatIdelStat {mowing, siting, looking, Idel};
+        public enum CatIdelStat { mowing, siting, looking, Idel };
         [SerializeField] private CatIdelStat _idelCurrent;
 
 
 
-
-        
         void Start()
         {
+            GameObject Home = new GameObject("Home");
+            Home.transform.position = transform.position;
+            _intristingTings.Add(new Intrist(Home, this));
             _catAgint = GetComponent<NavMeshAgent>();
             SetNewIntrist();
             SetDestination();
+            _catAgint.speed = _speed;
+
         }
 
         // Update is called once per frame
         void Update()
         {
-            CheckForPlayer();
+
             Move();
-            //SetRandomTarget(transform.position);
+            UpdateCanvice();
             _catAnimator.SetFloat("speed", _catAgint.velocity.magnitude);
 
         }
@@ -114,9 +119,10 @@ namespace MMA505
         private void Intract()
         {
 
+            UpdateIntrists();
             if (_catAgint.velocity.magnitude <= 0.1f)
             {
-                transform.LookAt(_target);
+                transform.LookAt(_target.GetLastLocation());
                 _bordTimer += Time.deltaTime;
                 if (_bordTimer >= _bordemSecsTill)
                 {
@@ -126,9 +132,44 @@ namespace MMA505
                 }
                 IdelAnimation();
             }
-            
+
         }
 
+        private void UpdateIntrists()
+        {
+            //gets all visable objects
+            List<GameObject> visable = _combinedFrustum.GetVisableObjects();
+
+            if (_intristingTings != null)
+            {
+
+                foreach (Intrist intrist in _intristingTings)
+                {
+                    //true if one of the viable objects are in frustom and in intrists
+                    GameObject obj = intrist.GetGameObject();
+                    if (visable.Contains(obj))
+                    {
+                        //remove if is already in intrists
+                        visable.Remove(obj);
+                        //updates intrist that are present
+                        intrist.UpdateState();
+                        if (intrist.GetFearValue() == 10)
+                        {
+                            Idel();
+                            _catIk.SwapIK(false);
+                            _scearTimer = _scearTime;
+                            _sceryThing = intrist;
+                            _currentState = CatStates.runing;
+                        }
+                    }
+                }
+            }
+            foreach (GameObject obj in visable)
+            {
+        
+                _intristingTings.Add(new Intrist(obj, this));
+            }
+        }
 
         private void IdelAnimation()
         {
@@ -201,14 +242,19 @@ namespace MMA505
         {
             if (_scearTimer > 0)
             {
-
-                SetTargeint(_target + ((_target - transform.position).normalized * _distAhead));
-                SetDestination();
+                
+                Vector3 target = transform.position + ((transform.position - _sceryThing.GetLastLocation()).normalized * _distAhead);
+                Debug.DrawLine(transform.position, target, Color.red, 0.1f);
+                Debug.DrawRay(target, Vector3.up * 0.5f, Color.blue, 0.1f);
+                _catAgint.destination = target; //+ (_randomRadice * Random.insideUnitSphere);
                 _scearTimer -= Time.deltaTime;
+                _catAgint.speed = _runSpeed;
 
             }
             else
             {
+                _catAgint.speed = _speed;
+                _sceryThing = null;
                 _scearTimer = 0;
                 _currentState = CatStates.moving;
                 UpdateCanvice();
@@ -217,7 +263,7 @@ namespace MMA505
 
         private void moving()
         {
-
+            UpdateIntrists();
             if (_catAgint.pathPending || !_catAgint.isOnNavMesh || _catAgint.remainingDistance > 0.1f)
             {
                 //if there
@@ -225,13 +271,13 @@ namespace MMA505
             }
             else
             {
-                
-                if (Vector3.Distance(transform.position, _target) <= _randomRadice)
+
+                if (Vector3.Distance(transform.position, _target.GetLastLocation()) <= _randomRadice)
                 {
                     _catIk.SwapIK(true);
                 }
             }
-            
+
             CheckForPlayer();
 
         }
@@ -243,35 +289,43 @@ namespace MMA505
 
             if (_catAgint.pathPending || !_catAgint.isOnNavMesh || _catAgint.remainingDistance > 0.1f)
                 return;
-            
-            _catAgint.destination = _target + (_randomRadice * Random.insideUnitSphere);
+
+            _catAgint.destination = _target.GetLastLocation() + (_randomRadice * Random.insideUnitSphere);
 
         }
 
-        private void SetTargeint(Vector3 targt)
-        {
-            float x = targt.x;
-            float z = targt.z;
-            float y = transform.position.y; // Assuming the same height as basespot
-
-            _target = new Vector3(x, y, z);
-            _catIk.SetTarget(_target);
-        }
-        
         [ContextMenu("newIntrist")]
         private void SetNewIntrist()
         {
             //chose a randome item form intrisintg things
             if (_intristingTings != null)
             {
-                GameObject randomItem = _intristingTings[Random.Range(0, _intristingTings.Count - 1)];
-                SetTargeint(randomItem.transform.position);
+                Intrist newIntrist = _intristingTings[Random.Range(0, _intristingTings.Count - 1)];
+                foreach (Intrist intrist in _intristingTings)
+                {
+                    if (intrist.GetIntristVal() > newIntrist.GetIntristVal())
+                    {
+                        newIntrist = intrist;
+                    }
+                }
+                _target = newIntrist;
+                _catIk.SetTarget(_target.GetLastLocation());
             }
         }
 
         public CatStates getState()
         {
             return _currentState;
+        }
+
+        public Intrist GetTarget()
+        {
+            return _target;
+        }
+
+        public int GetBravery()
+        {
+            return _bravery;
         }
 
     }

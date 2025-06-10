@@ -86,7 +86,7 @@ namespace MMA505
             _Jump.performed += Jump;
 
         }
-        private void ODisable()
+        private void OnDisable()
         {
             _Move.Disable();
             _fight.Disable();

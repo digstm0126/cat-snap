@@ -204,23 +204,6 @@ namespace MMA505
                 }
             }
 
-            // // Loop through each game object we're testing
-            // for (int i = 0; i < gameObjectsToTestForOcclusion.Length; i++)
-            // {
-            //     // Get its visibility sphere
-            //     SphereCollider sphereCollider = visibilitySpheres[i].GetComponent<SphereCollider>();
-
-            //     // Get the visibility sphere's mesh renderer
-            //     MeshRenderer mr = sphereCollider.GetComponent<MeshRenderer>();
-
-            //     // if the visiblity sphere is a visible object
-            //     if (visibleObjects.Contains(sphereCollider))
-            //     {
-            //         // Add this object to the game objects in frustum list
-            //         gameObjectsNotOccluded.Add(gameObjectsToTestForOcclusion[i].gameObject);
-            //     }
-            // }
-
             gameObjectsNotOccluded.AddRange(visibleObjects);
             return gameObjectsNotOccluded;
         }

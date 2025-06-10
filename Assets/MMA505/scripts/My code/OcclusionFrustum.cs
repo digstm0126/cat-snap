@@ -39,6 +39,8 @@ namespace MMA505
         // The center of mass of our object
         Vector3 centerOfMass = Vector3.zero;
 
+        [SerializeField] private Mesh _mesh;
+
         // A helper class which represents an edge and also
         // keeps a track of the normals and centers of all triangles
         // which share that edge
@@ -143,7 +145,9 @@ namespace MMA505
             // Add a mesh filer to our frustrum renderer GameObject
             frustumMeshFilter = frustumRenderer.AddComponent<MeshFilter>();
             // Set it's mesh to a new empty mesh
-            frustumMeshFilter.mesh = new Mesh();
+            _mesh = new Mesh();
+
+            frustumMeshFilter.mesh = _mesh;
 
             // If we haven't set our occluding objects mesh filter, grab the
             // mesh filter attached to the game object this script is attached to
@@ -393,6 +397,12 @@ namespace MMA505
             // and normals lists.
             transformedFrustumCenters.Add(frustumRenderer.transform.TransformPoint(planeCenter));
             transformedFrustumNormals.Add(frustumRenderer.transform.TransformDirection(planeNormal));
+        }
+        private void OnDestroy()
+        {
+            if (GetComponent<MeshFilter>()) Destroy(GetComponent<MeshFilter>());
+            if (GetComponent<MeshRenderer>()) Destroy(GetComponent<MeshRenderer>());
+            Destroy(_mesh);
         }
     }
 }
