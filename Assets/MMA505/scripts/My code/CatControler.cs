@@ -10,32 +10,32 @@ namespace MMA505
         [SerializeField] private CombinedFrustums _combinedFrustum;
         [SerializeField] private Animator _catAnimator;
         [SerializeField] private NavMeshAgent _catAgint;
-        [SerializeField] private Canvas _canvice;
         [SerializeField] private IkCatHead _catIk;
+        [SerializeField] private Color _collour;
+        private Camera _mainCam;
+        [SerializeField] private Canvas _canvice;
         [SerializeField] private TextMeshProUGUI _text;
         [SerializeField] private Rigidbody _rb;
-        private Camera _mainCam;
+        [SerializeField] private float _intristUpdatTime = 1f;
+        [SerializeField] private float _intristUpdatTimer;
 
-        [SerializeField] private Color _collour;
-        [SerializeField] private Intract _mostIntristing;
-        [SerializeField] private Intract _mostScerry;
-        [SerializeField] private int _bravery;
+
+
+        [SerializeField] private Intrist _mostIntristing;
+        [SerializeField] private Intrist _mostScerry;
         [SerializeField] public List<Intrist> _intristingTings = new List<Intrist>();
-        [SerializeField] private int _bordemLimt = 10;
-        [SerializeField] private int _bordemCurrent;
-        [SerializeField] private float _bordemSecsTill = 1;
-        [SerializeField] private float _bordTimer;
-        [SerializeField] private Intrist _sceryThing;
-        [SerializeField] private Intrist _target;
+        [SerializeField] private int _bravery;
+        [SerializeField] private int _cureosity;
+        [SerializeField] private int _bordem;
+        [SerializeField] private float _speed = 3.5f;
+        [SerializeField] private float _runSpeed = 7f;
+
+
+//debprectated
         [SerializeField] private float _scearTime = 3;
         [SerializeField] private float _scearTimer;
         [SerializeField] private float _distAhead = 2;
         [SerializeField] private float _randomRadice = 5f;
-        [SerializeField] private float _intristUpdatTime = 1f;
-        [SerializeField] private float _intristUpdatTimer;
-
-        [SerializeField] private float _speed = 3.5f;
-        [SerializeField] private float _runSpeed = 7f;
 
 
 
@@ -79,7 +79,7 @@ namespace MMA505
             Move();
             UpdateCanvice();
             _catAnimator.SetFloat("speed", _catAgint.velocity.magnitude);
-            
+
         }
 
         private void Move()
@@ -239,14 +239,14 @@ namespace MMA505
 
         private void SwitchIdel()
         {
-            if (Random.Range(_bordemCurrent, _bordemLimt) >= _bordemLimt)
+            if (Random.Range(_bordem, _cureosity) >= _cureosity)
             {
                 //new intersting thing
                 SetNewIntrist();
                 SetDestination();
                 _idelCurrent = CatIdelStat.Idel;
                 Idel();
-                _bordemCurrent = 0;
+                _bordem = 0;
                 _currentState = CatStates.moving;
             }
             int random = Random.Range(0, System.Enum.GetValues(typeof(CatIdelStat)).Length);
