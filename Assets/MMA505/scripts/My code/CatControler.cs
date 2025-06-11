@@ -10,17 +10,17 @@ namespace MMA505
         [SerializeField] private CombinedFrustums _combinedFrustum;
         [SerializeField] private Animator _catAnimator;
         [SerializeField] private NavMeshAgent _catAgint;
-        [SerializeField] private IkCatHead _catIk;
-        [SerializeField] private Color _collour;
-        private Camera _mainCam;
-
-        [SerializeField] private Intract _mostIntristing;
-        [SerializeField] private Intract _mostScerry;
         [SerializeField] private Canvas _canvice;
+        [SerializeField] private IkCatHead _catIk;
         [SerializeField] private TextMeshProUGUI _text;
         [SerializeField] private Rigidbody _rb;
-        [SerializeField] public List<Intrist> _intristingTings = new List<Intrist>();
+        private Camera _mainCam;
+
+        [SerializeField] private Color _collour;
+        [SerializeField] private Intract _mostIntristing;
+        [SerializeField] private Intract _mostScerry;
         [SerializeField] private int _bravery;
+        [SerializeField] public List<Intrist> _intristingTings = new List<Intrist>();
         [SerializeField] private int _bordemLimt = 10;
         [SerializeField] private int _bordemCurrent;
         [SerializeField] private float _bordemSecsTill = 1;
@@ -63,20 +63,23 @@ namespace MMA505
         void Update()
         {
 
-            Move();
-            UpdateCanvice();
-            _catAnimator.SetFloat("speed", _catAgint.velocity.magnitude);
-
             if (_intristUpdatTimer <= 0)
             {
                 _intristUpdatTimer = _intristUpdatTime;
+                AddIntristingThings();
                 UpdateIntrists();
+                UpdateMosts();
+
             }
             else
             {
                 _intristUpdatTimer -= Time.deltaTime;
             }
 
+            Move();
+            UpdateCanvice();
+            _catAnimator.SetFloat("speed", _catAgint.velocity.magnitude);
+            
         }
 
         private void Move()
@@ -111,26 +114,6 @@ namespace MMA505
         private void UpdateCanvice()
         {
             _text.text = $"{name} is {_currentState}";
-        }
-
-
-        private void Intract()
-        {
-
-            
-            if (_catAgint.velocity.magnitude <= 0.1f)
-            {
-                transform.LookAt(_target.GetLastLocation());
-                _bordTimer += Time.deltaTime;
-                if (_bordTimer >= _bordemSecsTill)
-                {
-                    _bordTimer = 0;
-                    _bordemCurrent += Random.Range(1, 2);
-                    SwitchIdel();
-                }
-                IdelAnimation();
-            }
-
         }
 
         private void AddIntristingThings()
@@ -184,6 +167,24 @@ namespace MMA505
         }
 
 
+        private void Intract()
+        {
+
+            
+            if (_catAgint.velocity.magnitude <= 0.1f)
+            {
+                transform.LookAt(_target.GetLastLocation());
+                _bordTimer += Time.deltaTime;
+                if (_bordTimer >= _bordemSecsTill)
+                {
+                    _bordTimer = 0;
+                    _bordemCurrent += Random.Range(1, 2);
+                    SwitchIdel();
+                }
+                IdelAnimation();
+            }
+
+        }
 
         private void IdelAnimation()
         {
