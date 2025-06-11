@@ -13,6 +13,9 @@ namespace MMA505
         [SerializeField] private IkCatHead _catIk;
         [SerializeField] private Color _collour;
         private Camera _mainCam;
+
+        [SerializeField] private Intract _mostIntristing;
+        [SerializeField] private Intract _mostScerry;
         [SerializeField] private Canvas _canvice;
         [SerializeField] private TextMeshProUGUI _text;
         [SerializeField] private Rigidbody _rb;
@@ -110,23 +113,6 @@ namespace MMA505
             _text.text = $"{name} is {_currentState}";
         }
 
-        // private void CheckForPlayer()
-        // {
-        //     List<GameObject> objects = _combinedFrustum.GetVisableObjects();
-        //     foreach (GameObject obj in objects)
-        //     {
-        //         if (obj.tag == "Player")
-        //         {
-        //             _currentState = CatStates.runing;
-        //             UpdateCanvice();
-        //             // _sceryThing = new Vector3(obj.transform.position.x, transform.position.y, obj.transform.position.z);
-
-        //             //SetRandomTarget(transform.position + (transform.position - _sceryThing).normalized * _distAhead);
-        //             _scearTimer = _scearTime;
-
-        //         }
-        //     }
-        // }
 
         private void Intract()
         {
@@ -147,7 +133,7 @@ namespace MMA505
 
         }
 
-        private void UpdateIntrists()
+        private void AddIntristingThings()
         {
             //gets all visable objects
             List<GameObject> visable = _combinedFrustum.GetVisableObjects();
@@ -163,25 +149,41 @@ namespace MMA505
                     {
                         //remove if is already in intrists
                         visable.Remove(obj);
-                        //updates intrist that are present
-                        intrist.UpdateState();
-                        if (intrist.GetFearValue() == 10)
-                        {
-                            Idel();
-                            _catIk.SwapIK(false);
-                            _scearTimer = _scearTime;
-                            _sceryThing = intrist;
-                            _currentState = CatStates.runing;
-                        }
+
                     }
                 }
             }
             foreach (GameObject obj in visable)
             {
-        
-                _intristingTings.Add(new Intrist(obj, this));
+                //adds all objects not in intrists into intrists
+                _intristingTings.Add(new Intrist(obj, 5, 5));
             }
         }
+
+        private void UpdateIntrists()
+        {
+            foreach (Intrist intrist in _intristingTings)
+            {
+                intrist.UpdateState(_combinedFrustum.GetVisableObjects());
+            }
+        }
+
+        private void UpdateMosts()
+        {
+            foreach (Intrist intrist in _intristingTings)
+            {
+                if (intrist.GetFearValue() > _mostIntristing.GetIntristVal())
+                {
+                    _mostIntristing = intrist;
+                }
+                if (intrist.GetFearValue() > _mostScerry.GetFearValue())
+                {
+                    _mostScerry = intrist;
+                }
+            }
+        }
+
+
 
         private void IdelAnimation()
         {

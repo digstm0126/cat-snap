@@ -10,55 +10,51 @@ namespace MMA505
     public class Intrist
     {
         [SerializeField] private GameObject _obj;
-        [SerializeField] private CatControler _catIntristed;
         [SerializeField] private int _intristVal; // 0-10
         [SerializeField] private int _fearVal; //from 0-10
         [SerializeField] private Vector3 _lastLocation;
+        [SerializeField] private bool _inSite;
+
+        
 
 
-        public Intrist(GameObject obj, CatControler cat)
+        public Intrist(GameObject obj, int intristVal, int fareVal)
         {
 
             _obj = obj;
-            _intristVal = 5;
-            _catIntristed = cat;
+            _intristVal = intristVal;
+            _fearVal = fareVal;
 
+            
         }
 
-        public void UpdateState()
+        public void UpdateState(list<GameObject> objs)
         {
-            bool isTarget = this == _catIntristed.GetTarget();
-            int bravery = _catIntristed.GetComponent<CatControler>().GetBravery();
-
-            //if obj is moving faster then bravery then far gose up down if not moving fast
-            Rigidbody rb = _obj.GetComponent<Rigidbody>();
-            if (!rb || rb.linearVelocity.magnitude >= bravery)
+            _inSite = false;
+            foreach (var obj in objs)
             {
-                _fearVal = Mathf.Clamp(_fearVal + Mathf.RoundToInt(rb.linearVelocity.magnitude), 0, 10);
-                Debug.Log($"fare: {_fearVal}");
-                Debug.Log($"mag: {Mathf.RoundToInt(rb.linearVelocity.magnitude)} ");
+                if (obj == _obj)
+                {
+                    _inSite = true;
+                }
+            }
+
+            if (_inSite)
+            {
+                _intristVal = Clamp(_intristVal + 1, 0 , 10);
+                _lastLocation = _obj.transform.position;
             }
             else
             {
-                _fearVal = Mathf.Clamp(_fearVal - 1, 0, 10);
+                _fearVal = Clamp(_fearVal - 1, 0, 10)
             }
-
-            //if the target intrist gose down and if not gose up
-            if (isTarget)
-            {
-                _intristVal = Mathf.Clamp(_intristVal - 1, 0, 10);
-            }
-            else
-            {
-                _intristVal = Mathf.Clamp(_intristVal + 1, 0, 10);
-            }
-
-            _lastLocation = _obj.transform.position;
         }
 
-        public void ResetFare()
+
+
+        public void ResetFare(int fareVal)
         {
-            _fearVal = 5;
+            _fearVal = fareVal;
         }
 
         public int GetIntristVal()
@@ -75,10 +71,14 @@ namespace MMA505
             return _lastLocation;
         }
 
-
         public GameObject GetGameObject()
         {
             return _obj;
+        }
+
+        public bool GetInsite()
+        {
+            return _inSite;
         }
 
     }
