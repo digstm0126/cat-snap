@@ -31,6 +31,7 @@ namespace MMA505
         [SerializeField, Range(0, 5)] private int _cureosity;
         [SerializeField, Range(0, 5)] private int _consentration;
         [SerializeField] private int _bordem;
+        [SerializeField] private bool _bordemSwitch;
         [SerializeField] private float _speed = 3.5f;
         [SerializeField] private float _runSpeed = 7f;
         [SerializeField] private float _OcludingObjects;
@@ -67,7 +68,6 @@ namespace MMA505
 
         }
 
-        // Update is called once per frame
         void Update()
         {
 
@@ -90,9 +90,9 @@ namespace MMA505
 
         }
 
-        //make destion
         private void Desition()
         {
+            //make destion
 
             //get proritys
             int[] Proity = new int[3];
@@ -124,9 +124,8 @@ namespace MMA505
                     break;
                 //bordem
                 case 2:
-
                     //switch sub stare
-                    Debug.Log($"uniplamented wondering do this shit head");
+                    _bordemSwitch = true;
                     break;
                 //wonder
                 case 3:
@@ -150,7 +149,8 @@ namespace MMA505
                     Debug.Log($"ipliment dip shit wondering");
                     break;
                 case CatStates.moving:
-                    moving();
+                    //moving();
+                    Debug.Log($"no move anymore");
                     break;
             }
         }
@@ -235,15 +235,38 @@ namespace MMA505
             // 
             if (_catAgint.velocity.magnitude <= 0.1f)
             {
-                transform.LookAt(_target.GetLastLocation());
-                _bordTimer += Time.deltaTime;
-                if (_bordTimer >= _bordemSecsTill)
+                // do one of the intract ideels 
+                if (_bordemSwitch)
                 {
-                    _bordTimer = 0;
-                    _bordemCurrent += Random.Range(1, 2);
+                    _bordemSwitch = false;
+                    //switch intracty thing
                     SwitchIdel();
                 }
-                IdelAnimation();
+
+                //look at where it thinks it is 
+                transform.LookAt(_mostIntristing.GetLastLocation());
+                UpdateIntrists();
+
+                // if its in site reduce intrist and do idel 
+                if (_mostIntristing.GetInsite())
+                {
+                    // amount to reduce intrist by 2-10
+                    int intristReduction = 2;
+                    IdelAnimation();
+                    //stops all animations
+                    Idel();
+                    _mostIntristing.SetIntrist(_mostIntristing.GetIntristVal() - intristReduction);
+                }
+                else
+                {
+                    _mostIntristing.SetIntrist(0);
+                }
+
+            }
+            else
+            {
+                // set destionation and move with random lcation around it.
+                _catAgint.destination = _mostIntristing.GetLastLocation();
             }
         }
 
@@ -300,23 +323,17 @@ namespace MMA505
 
         private void SwitchIdel()
         {
-            // if (Random.Range(_bordem, _cureosity) >= _cureosity)
-            // {
-            //     //new intersting thing
-            //     SetNewIntrist();
-            //     SetDestination();
-            //     _idelCurrent = CatIdelStat.Idel;
-            //     Idel();
-            //     _bordem = 0;
-            //     _currentState = CatStates.moving;
-            // }
-            // int random = Random.Range(0, System.Enum.GetValues(typeof(CatIdelStat)).Length);
-            // _idelCurrent = (CatIdelStat)random;
+            //switches to a random intract idel
+            int random = UnityEngine.Random.Range(0, System.Enum.GetValues(typeof(CatIdelStat)).Length);
+            _idelCurrent = (CatIdelStat)random;
+
         }
 
-        // runs away from target untill sceryist things fare value is less then cats bravery value
+
         private void Run()
         {
+            // runs away from target untill sceryist things fare value is less then cats bravery value
+
             //check if fare is below bravery of cat
             if (_mostScerry.GetFearValue() >= _bravery)
             {
@@ -339,27 +356,26 @@ namespace MMA505
             }
         }
 
-        private void moving()
-        {
-            // if (_catAgint.pathPending || !_catAgint.isOnNavMesh || _catAgint.remainingDistance > 0.1f)
-            // {
-            //     //if there
-            //     _currentState = CatStates.interacting;
-            // }
-            // else
-            // {
+        // private void moving()
+        // {
+        //     if (_catAgint.pathPending || !_catAgint.isOnNavMesh || _catAgint.remainingDistance > 0.1f)
+        //     {
+        //         //if there
+        //         _currentState = CatStates.interacting;
+        //     }
+        //     else
+        //     {
 
-            //     if (Vector3.Distance(transform.position, _target.GetLastLocation()) <= _randomRadice)
-            //     {
-            //         _catIk.SwapIK(true);
-            //     }
-            // }
-        }
+        //         if (Vector3.Distance(transform.position, _target.GetLastLocation()) <= _randomRadice)
+        //         {
+        //             _catIk.SwapIK(true);
+        //         }
+        //     }
+        // }
 
-        [ContextMenu("New Random destination")]
-]
+        // [ContextMenu("New Random destination")]
 
-        [ContextMenu("newIntrist")]
+        // [ContextMenu("newIntrist")]
         
 
         public CatStates getState()

@@ -58,6 +58,11 @@ namespace MMA505
             _fearVal = fareVal;
         }
 
+        public void SetIntrist(int intristVal)
+        {
+            _intristVal = math.clamp(intristVal, 0, 10);
+        }
+
         public int GetIntristVal()
         {
             return _intristVal;
