@@ -8,6 +8,7 @@ using Unity.Mathematics;
 
 namespace MMA505
 {
+    [System.Serializable]
     public class Intrist
     {
         [SerializeField] private GameObject _obj;
@@ -16,7 +17,7 @@ namespace MMA505
         [SerializeField] private Vector3 _lastLocation;
         [SerializeField] private bool _inSite;
 
-        
+
 
 
         public Intrist(GameObject obj, int intristVal, int fareVal)
@@ -26,7 +27,7 @@ namespace MMA505
             _intristVal = intristVal;
             _fearVal = fareVal;
 
-            
+
         }
 
         public void UpdateState(List<GameObject> objs)
@@ -42,7 +43,7 @@ namespace MMA505
 
             if (_inSite)
             {
-                _intristVal = math.clamp(_intristVal + 1, 0 , 10);
+                _intristVal = math.clamp(_intristVal + 1, 0, 10);
                 _lastLocation = _obj.transform.position;
             }
             else

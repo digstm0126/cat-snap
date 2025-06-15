@@ -35,14 +35,10 @@ namespace MMA505
         [SerializeField] private float _speed = 3.5f;
         [SerializeField] private float _runSpeed = 7f;
         [SerializeField] private float _OcludingObjects;
+        [SerializeField] private float _atentionDist = 2;
+        [SerializeField] private GameObject _wonderDestionation =  new GameObject("wonderDestionation");
         #endregion
 
-
-        //debprectated soon
-        [SerializeField] private float _scearTime = 3;
-        [SerializeField] private float _scearTimer;
-        [SerializeField] private float _distAhead = 2;
-        [SerializeField] private float _randomRadice = 5f;
 
 
 
@@ -56,16 +52,14 @@ namespace MMA505
 
         void Start()
         {
-            GameObject Home = new GameObject("Home");
-            Home.transform.position = transform.position;
-            _intristingTings.Add(new Intrist(Home, 5, 0));
+
+            //_wonderDestionation.transform.position = transform.position;
             _catAgint = GetComponent<NavMeshAgent>();
             _catAgint.speed = _speed;
             UpdateIntrists();
             UpdateMosts();
             Desition();
-
-
+            
         }
 
         void Update()
@@ -95,7 +89,7 @@ namespace MMA505
             //make destion
 
             //get proritys
-            int[] Proity = new int[3];
+            int[] Proity = new int[4];
             int intristPrority = _mostIntristing.GetIntristVal() - _cureosity;
             Proity[0] = intristPrority;
 
@@ -146,7 +140,7 @@ namespace MMA505
                     Intract();
                     break;
                 case CatStates.wondering:
-                    Debug.Log($"ipliment dip shit wondering");
+                    Wonder();
                     break;
                 case CatStates.moving:
                     //moving();
@@ -340,7 +334,7 @@ namespace MMA505
 
                 // do sub state stuff here
                 // state 1 runing
-                Vector3 target = transform.position + ((transform.position - _mostScerry.GetLastLocation()).normalized * _distAhead);
+                Vector3 target = transform.position + ((transform.position - _mostScerry.GetLastLocation()).normalized * _atentionDist);
                 Debug.DrawLine(transform.position, target, Color.red, 0.1f);
                 Debug.DrawRay(target, Vector3.up * 0.5f, Color.blue, 0.1f);
                 _catAgint.destination = target;
@@ -356,6 +350,33 @@ namespace MMA505
             }
         }
 
+        private void Wonder()
+        {
+            //Wonder around randomly
+
+            //sets ik to where its going 
+            if (Vector3.Distance(transform.position, _wonderDestionation.transform.position) <= _atentionDist)
+            {
+                _catIk.SwapIK(true);
+            }
+
+            // if at destination sett a new one
+            if (_catAgint.remainingDistance > 0.1f)
+            {
+                //set new destionation 
+                _wonderDestionation.transform.position = _wonderDestionation.transform.position + (_atentionDist * UnityEngine.Random.insideUnitSphere);
+                _catAgint.destination = _wonderDestionation.transform.position;
+            }
+
+            //checks for anything intristing and check if theres something better to do 
+            UpdateIntrists();
+            UpdateMosts();
+            Desition();
+
+            
+
+        }
+        
         // private void moving()
         // {
         //     if (_catAgint.pathPending || !_catAgint.isOnNavMesh || _catAgint.remainingDistance > 0.1f)
@@ -376,7 +397,7 @@ namespace MMA505
         // [ContextMenu("New Random destination")]
 
         // [ContextMenu("newIntrist")]
-        
+
 
         public CatStates getState()
         {

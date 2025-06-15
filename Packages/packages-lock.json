@@ -1,13 +1,5 @@
 {
   "dependencies": {
-    "com.soupday.cc3_unity_tools": {
-      "version": "file:/Users/digs/Library/CloudStorage/OneDrive-UniversityofCanterbury/Quick Dump/cc_unity_tools_HDRP-1.6.3.HDRP12",
-      "depth": 0,
-      "source": "local",
-      "dependencies": {
-        "com.unity.render-pipelines.high-definition": "12.0.0"
-      }
-    },
     "com.unity.ai.navigation": {
       "version": "2.0.8",
       "depth": 0,
