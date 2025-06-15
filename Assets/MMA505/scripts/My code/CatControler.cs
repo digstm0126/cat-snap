@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using TMPro;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -7,6 +8,7 @@ namespace MMA505
 {
     public class CatControler : MonoBehaviour
     {
+        #region baseThing
         [SerializeField] private CombinedFrustums _combinedFrustum;
         [SerializeField] private Animator _catAnimator;
         [SerializeField] private NavMeshAgent _catAgint;
@@ -18,20 +20,24 @@ namespace MMA505
         [SerializeField] private Rigidbody _rb;
         [SerializeField] private float _intristUpdatTime = 1f;
         [SerializeField] private float _intristUpdatTimer;
+        #endregion
 
 
-
+        #region funThings
         [SerializeField] private Intrist _mostIntristing;
         [SerializeField] private Intrist _mostScerry;
         [SerializeField] public List<Intrist> _intristingTings = new List<Intrist>();
-        [SerializeField] private int _bravery;
-        [SerializeField] private int _cureosity;
+        [SerializeField, Range(0, 5)] private int _bravery;
+        [SerializeField, Range(0, 5)] private int _cureosity;
+        [SerializeField, Range(0, 5)] private int _consentration;
         [SerializeField] private int _bordem;
         [SerializeField] private float _speed = 3.5f;
         [SerializeField] private float _runSpeed = 7f;
+        [SerializeField] private float _OcludingObjects;
+        #endregion
 
 
-//debprectated
+        //debprectated soon
         [SerializeField] private float _scearTime = 3;
         [SerializeField] private float _scearTimer;
         [SerializeField] private float _distAhead = 2;
@@ -51,11 +57,13 @@ namespace MMA505
         {
             GameObject Home = new GameObject("Home");
             Home.transform.position = transform.position;
-            _intristingTings.Add(new Intrist(Home, this));
+            _intristingTings.Add(new Intrist(Home, 5, 0));
             _catAgint = GetComponent<NavMeshAgent>();
-            SetNewIntrist();
-            SetDestination();
             _catAgint.speed = _speed;
+            UpdateIntrists();
+            UpdateMosts();
+            Desition();
+
 
         }
 
@@ -69,7 +77,7 @@ namespace MMA505
                 AddIntristingThings();
                 UpdateIntrists();
                 UpdateMosts();
-
+                
             }
             else
             {
@@ -82,6 +90,52 @@ namespace MMA505
 
         }
 
+        //make destion
+        private void Desition()
+        {
+
+            //get proritys
+            int[] Proity = new int[3];
+            int intristPrority = _mostIntristing.GetIntristVal() - _cureosity;
+            Proity[0] = intristPrority;
+
+            int fareProity = _mostScerry.GetFearValue() - _bravery;
+            Proity[1] = fareProity;
+
+            int bordemProity = _bordem - _cureosity;
+            Proity[2] = bordemProity;
+
+            int wonderProity = 2; // Default priority for wondering
+            Proity[3] = wonderProity;
+
+            // Determine the highest priority
+            int maxPriorityIndex = System.Array.IndexOf(Proity, Mathf.Max(Proity));
+
+            // Set the state based on the highest priority
+            switch (maxPriorityIndex)
+            {
+                //intrist
+                case 0:
+                    _currentState = CatStates.interacting;
+                    break;
+                //fare
+                case 1:
+                    _currentState = CatStates.runing;
+                    break;
+                //bordem
+                case 2:
+
+                    //switch sub stare
+                    Debug.Log($"uniplamented wondering do this shit head");
+                    break;
+                //wonder
+                case 3:
+                    _currentState = CatStates.wondering;
+                    break;
+            }
+            
+        }
+
         private void Move()
         {
             switch (_currentState)
@@ -89,11 +143,14 @@ namespace MMA505
                 case CatStates.runing:
                     Run();
                     break;
-                case CatStates.moving:
-                    moving();
-                    break;
                 case CatStates.interacting:
                     Intract();
+                    break;
+                case CatStates.wondering:
+                    Debug.Log($"ipliment dip shit wondering");
+                    break;
+                case CatStates.moving:
+                    moving();
                     break;
             }
         }
@@ -116,6 +173,7 @@ namespace MMA505
             _text.text = $"{name} is {_currentState}";
         }
 
+        //adds any items in viwe to intrint things if not already there
         private void AddIntristingThings()
         {
             //gets all visable objects
@@ -143,14 +201,17 @@ namespace MMA505
             }
         }
 
+        //updates the info each intrist holds
         private void UpdateIntrists()
         {
             foreach (Intrist intrist in _intristingTings)
             {
-                intrist.UpdateState(_combinedFrustum.GetVisableObjects());
+                List<GameObject> visableThings = _combinedFrustum.GetVisableObjects();
+                intrist.UpdateState(visableThings);
             }
         }
 
+        //updates the intrist that is the most intristing and the most scerry one
         private void UpdateMosts()
         {
             foreach (Intrist intrist in _intristingTings)
@@ -169,8 +230,9 @@ namespace MMA505
 
         private void Intract()
         {
-
-            
+            // moves to most intristing thing random location around it
+            // once there will intract with it each time this happens its intrist in it gose down 
+            // 
             if (_catAgint.velocity.magnitude <= 0.1f)
             {
                 transform.LookAt(_target.GetLastLocation());
@@ -183,7 +245,6 @@ namespace MMA505
                 }
                 IdelAnimation();
             }
-
         }
 
         private void IdelAnimation()
@@ -239,93 +300,67 @@ namespace MMA505
 
         private void SwitchIdel()
         {
-            if (Random.Range(_bordem, _cureosity) >= _cureosity)
-            {
-                //new intersting thing
-                SetNewIntrist();
-                SetDestination();
-                _idelCurrent = CatIdelStat.Idel;
-                Idel();
-                _bordem = 0;
-                _currentState = CatStates.moving;
-            }
-            int random = Random.Range(0, System.Enum.GetValues(typeof(CatIdelStat)).Length);
-            _idelCurrent = (CatIdelStat)random;
+            // if (Random.Range(_bordem, _cureosity) >= _cureosity)
+            // {
+            //     //new intersting thing
+            //     SetNewIntrist();
+            //     SetDestination();
+            //     _idelCurrent = CatIdelStat.Idel;
+            //     Idel();
+            //     _bordem = 0;
+            //     _currentState = CatStates.moving;
+            // }
+            // int random = Random.Range(0, System.Enum.GetValues(typeof(CatIdelStat)).Length);
+            // _idelCurrent = (CatIdelStat)random;
         }
 
+        // runs away from target untill sceryist things fare value is less then cats bravery value
         private void Run()
         {
-            if (_scearTimer > 0)
+            //check if fare is below bravery of cat
+            if (_mostScerry.GetFearValue() >= _bravery)
             {
-                
-                Vector3 target = transform.position + ((transform.position - _sceryThing.GetLastLocation()).normalized * _distAhead);
+
+                // do sub state stuff here
+                // state 1 runing
+                Vector3 target = transform.position + ((transform.position - _mostScerry.GetLastLocation()).normalized * _distAhead);
                 Debug.DrawLine(transform.position, target, Color.red, 0.1f);
                 Debug.DrawRay(target, Vector3.up * 0.5f, Color.blue, 0.1f);
-                _catAgint.destination = target; //+ (_randomRadice * Random.insideUnitSphere);
-                _scearTimer -= Time.deltaTime;
+                _catAgint.destination = target;
                 _catAgint.speed = _runSpeed;
+
+                //stare 2 looking for scery things
+
 
             }
             else
             {
-                _catAgint.speed = _speed;
-                _sceryThing = null;
-                _scearTimer = 0;
-                _currentState = CatStates.moving;
-                UpdateCanvice();
+                Desition();
             }
         }
 
         private void moving()
         {
-            if (_catAgint.pathPending || !_catAgint.isOnNavMesh || _catAgint.remainingDistance > 0.1f)
-            {
-                //if there
-                _currentState = CatStates.interacting;
-            }
-            else
-            {
+            // if (_catAgint.pathPending || !_catAgint.isOnNavMesh || _catAgint.remainingDistance > 0.1f)
+            // {
+            //     //if there
+            //     _currentState = CatStates.interacting;
+            // }
+            // else
+            // {
 
-                if (Vector3.Distance(transform.position, _target.GetLastLocation()) <= _randomRadice)
-                {
-                    _catIk.SwapIK(true);
-                }
-            }
-
-            
-
+            //     if (Vector3.Distance(transform.position, _target.GetLastLocation()) <= _randomRadice)
+            //     {
+            //         _catIk.SwapIK(true);
+            //     }
+            // }
         }
 
         [ContextMenu("New Random destination")]
-        private void SetDestination()
-        {
-
-
-            if (_catAgint.pathPending || !_catAgint.isOnNavMesh || _catAgint.remainingDistance > 0.1f)
-                return;
-
-            _catAgint.destination = _target.GetLastLocation() + (_randomRadice * Random.insideUnitSphere);
-
-        }
+]
 
         [ContextMenu("newIntrist")]
-        private void SetNewIntrist()
-        {
-            //chose a randome item form intrisintg things
-            if (_intristingTings != null)
-            {
-                Intrist newIntrist = _intristingTings[Random.Range(0, _intristingTings.Count - 1)];
-                foreach (Intrist intrist in _intristingTings)
-                {
-                    if (intrist.GetIntristVal() > newIntrist.GetIntristVal())
-                    {
-                        newIntrist = intrist;
-                    }
-                }
-                _target = newIntrist;
-                _catIk.SetTarget(_target.GetLastLocation());
-            }
-        }
+        
 
         public CatStates getState()
         {
@@ -334,7 +369,7 @@ namespace MMA505
 
         public Intrist GetTarget()
         {
-            return _target;
+            return _mostIntristing;
         }
 
         public int GetBravery()

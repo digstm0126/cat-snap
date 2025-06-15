@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
+using Unity.Mathematics;
 
 
 namespace MMA505
@@ -28,7 +29,7 @@ namespace MMA505
             
         }
 
-        public void UpdateState(list<GameObject> objs)
+        public void UpdateState(List<GameObject> objs)
         {
             _inSite = false;
             foreach (var obj in objs)
@@ -41,12 +42,12 @@ namespace MMA505
 
             if (_inSite)
             {
-                _intristVal = Clamp(_intristVal + 1, 0 , 10);
+                _intristVal = math.clamp(_intristVal + 1, 0 , 10);
                 _lastLocation = _obj.transform.position;
             }
             else
             {
-                _fearVal = Clamp(_fearVal - 1, 0, 10)
+                _fearVal = math.clamp(_fearVal - 1, 0, 10);
             }
         }
 
