@@ -127,7 +127,62 @@ ModelImporter:
     removeConstantScaleCurves: 0
     motionNodeName: 
     animationImportErrors: 
-    animationImportWarnings: 
+    animationImportWarnings: "\nClip 'DigsRightTurnBig_001' has import animation
+      warnings that might lower retargeting quality:\n\t'CC_Base_NeckTwist02' is
+      inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      'DigsRunForawrdJump_004' has import animation warnings that might lower retargeting
+      quality:\n\t'CC_Base_NeckTwist02' is inbetween humanoid transforms and has
+      rotation animation that will be discarded.\n\nClip 'DigsWR_001' has import
+      animation warnings that might lower retargeting quality:\n\t'CC_Base_NeckTwist02'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      'DigsWL_002' has import animation warnings that might lower retargeting quality:\n\t'CC_Base_NeckTwist02'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      'DigsWB_001' has import animation warnings that might lower retargeting quality:\n\t'CC_Base_NeckTwist02'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      'DigsWF_002' has import animation warnings that might lower retargeting quality:\n\t'CC_Base_NeckTwist02'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      'DigsSR_001' has import animation warnings that might lower retargeting quality:\n\t'CC_Base_NeckTwist02'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      'DigsSL_001' has import animation warnings that might lower retargeting quality:\n\t'CC_Base_NeckTwist02'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      'DigsRightTurnSmall_001' has import animation warnings that might lower retargeting
+      quality:\n\t'CC_Base_NeckTwist02' is inbetween humanoid transforms and has
+      rotation animation that will be discarded.\n\nClip 'DigsLeftTurnBig_001' has
+      import animation warnings that might lower retargeting quality:\n\t'CC_Base_NeckTwist02'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      'DigsLeftTurnSmall_001' has import animation warnings that might lower retargeting
+      quality:\n\t'CC_Base_NeckTwist02' is inbetween humanoid transforms and has
+      rotation animation that will be discarded.\n\t'CC_Base_R_Forearm' has scale
+      animation that will be discarded.\n\nClip 'DigsJump_004' has import animation
+      warnings that might lower retargeting quality:\n\t'CC_Base_NeckTwist02' is
+      inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      'DigsIdle_002' has import animation warnings that might lower retargeting quality:\n\t'CC_Base_NeckTwist02'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      'DigsFR_001' has import animation warnings that might lower retargeting quality:\n\t'CC_Base_NeckTwist02'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      'DigsFL_001' has import animation warnings that might lower retargeting quality:\n\t'CC_Base_NeckTwist02'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      'DigsBL_001' has import animation warnings that might lower retargeting quality:\n\t'CC_Base_NeckTwist02'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      'DigsBR_002' has import animation warnings that might lower retargeting quality:\n\t'CC_Base_NeckTwist02'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      'DigsWalkForawrdJump_003' has import animation warnings that might lower retargeting
+      quality:\n\t'CC_Base_NeckTwist02' is inbetween humanoid transforms and has
+      rotation animation that will be discarded.\n\nClip 'DigsUpperAttack_006' has
+      import animation warnings that might lower retargeting quality:\n\t'CC_Base_NeckTwist02'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      'DigsTaunt_020' has import animation warnings that might lower retargeting
+      quality:\n\t'CC_Base_NeckTwist02' is inbetween humanoid transforms and has
+      rotation animation that will be discarded.\n\t'CC_Base_R_Ring2' has scale animation
+      that will be discarded.\n\nClip 'DigsRightTurnBig_001(0)' has import animation
+      warnings that might lower retargeting quality:\n\t'CC_Base_NeckTwist02' is
+      inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      'DigsIdle_004' has import animation warnings that might lower retargeting quality:\n\t'CC_Base_NeckTwist02'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      'DigsFightIlde_002' has import animation warnings that might lower retargeting
+      quality:\n\t'CC_Base_NeckTwist02' is inbetween humanoid transforms and has
+      rotation animation that will be discarded.\n\t'CC_Base_L_Thumb3' has scale
+      animation that will be discarded.\n"
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0

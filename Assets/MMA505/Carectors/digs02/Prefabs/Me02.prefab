@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &2304733211434223426
+--- !u!1 &6838013986114747139
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,8 +8,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5954551502000341048}
-  - component: {fileID: 2200416973104338960}
+  - component: {fileID: 9089245701303732197}
+  - component: {fileID: 317537032256348178}
   m_Layer: 0
   m_Name: Classic_short_Extracted0
   m_TagString: Untagged
@@ -17,13 +17,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5954551502000341048
+--- !u!4 &9089245701303732197
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2304733211434223426}
+  m_GameObject: {fileID: 6838013986114747139}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: -0, y: 0, z: 0}
@@ -32,13 +32,13 @@ Transform:
   m_Children: []
   m_Father: {fileID: 7609212735993199482}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!137 &2200416973104338960
+--- !u!137 &317537032256348178
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2304733211434223426}
+  m_GameObject: {fileID: 6838013986114747139}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -174,7 +174,7 @@ PrefabInstance:
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 8284ce024b74945a5ae30631141d2396, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 5954551502000341048}
+      addedObject: {fileID: 9089245701303732197}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8284ce024b74945a5ae30631141d2396, type: 3}
 --- !u!4 &4809878774700479344 stripped
