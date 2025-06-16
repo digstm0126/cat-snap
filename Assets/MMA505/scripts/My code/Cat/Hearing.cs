@@ -23,14 +23,8 @@ namespace MMA505
             _gameManager = FindObjectOfType<GameManager>();
         }
 
-        // Update is called once per frame
-        void Update()
-        {
-            UpdateVisableObjects();
-        }
 
-
-        public void UpdateVisableObjects()
+        public void UpdateHearableObjects()
         {
             // Clear the list of game objects in the frustum
             _gameObjectsInSound.Clear();
@@ -52,7 +46,13 @@ namespace MMA505
             }
         }
 
-        public void findCurrentRegion(GameObject[] regionsIn)
+        public List<GameObject> GetGameObjects()
+        {
+            UpdateHearableObjects();
+            return _gameObjectsInSound;
+        }
+
+        private void findCurrentRegion(GameObject[] regionsIn)
         {
 
             // Calculate what region the camera is in
@@ -74,7 +74,7 @@ namespace MMA505
         }
 
         // Find visible objects in a region, based on a frustum and all portal frustums
-        List<GameObject> FindHearableObjects(Region region)
+        private List<GameObject> FindHearableObjects(Region region)
         {
             // Get the list of potentially visible objects in the region
             // (i.e. all the objects in the region which are tested for visibility)
@@ -96,7 +96,7 @@ namespace MMA505
                     // Get the position of this objects bounding sphere
                     Vector3 spherePos = visablityShpere.position;
 
-                    if (Vector3.Distance(spherePos, transform.position) >= _hearingRadius)
+                    if (Vector3.Distance(spherePos, transform.position) <= _hearingRadius)
                         visibleObjects.Add(visibleObject);
                 }
 

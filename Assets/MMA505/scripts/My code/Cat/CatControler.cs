@@ -10,6 +10,7 @@ namespace MMA505
     {
         #region baseThing
         [SerializeField] private CombinedFrustums _combinedFrustum;
+        [SerializeField] private Hearing _hearing;
         [SerializeField] private Animator _catAnimator;
         [SerializeField] private NavMeshAgent _catAgint;
         [SerializeField] private IkCatHead _catIk;
@@ -23,8 +24,9 @@ namespace MMA505
         [SerializeField] private List<GameObject> _visableThings;
         #endregion
 
-
         #region funThings
+        
+        [Header("Fun Attributes")]
         [SerializeField] private Intrist _mostIntristing;
         [SerializeField] private Intrist _mostScerry;
         [SerializeField] public List<Intrist> _intristingTings = new List<Intrist>();
@@ -70,6 +72,7 @@ namespace MMA505
             {
                 _intristUpdatTimer = _intristUpdatTime;
                 Move();
+                UpdateVisable();
                 AddIntristingThings();
                 UpdateIntrists();
                 UpdateMosts();
@@ -169,11 +172,17 @@ namespace MMA505
             _text.text = $"{name} is {_currentState}";
         }
 
+        private void UpdateVisable()
+        {
+            _visableThings.Clear();
+            _visableThings = _combinedFrustum.GetVisableObjects();
+
+            _visableThings.AddRange(_hearing.GetGameObjects());
+        }
+
         //adds any items in viwe to intrint things if not already there
         private void AddIntristingThings()
         {
-            //gets all visable objects
-            _visableThings = _combinedFrustum.GetVisableObjects();
 
             if (_intristingTings != null)
             {
@@ -195,42 +204,25 @@ namespace MMA505
                 //adds all objects not in intrists into intrists
                 if (!(obj == this))
                 {
-                    _intristingTings.Add(new Intrist(obj, 5, 5));  
+                    _intristingTings.Add(new Intrist(obj, 5, 5));
                 }
             }
         }
 
+
         //updates the info each intrist holds
         private void UpdateIntrists()
         {
-            try
+ 
+
+            foreach (Intrist intrist in _intristingTings)
             {
-                _visableThings = _combinedFrustum.GetVisableObjects();
-                if (_combinedFrustum == null)
+                if (intrist != null)
                 {
-                    Debug.LogError($"[{gameObject.name}] _combinedFrustum is null!");
-                    return;
-                }
-
-                //List<GameObject> visableThings = _combinedFrustum.GetVisableObjects();
-                if (_visableThings == null)
-                {
-                    Debug.LogError($"[{gameObject.name}] GetVisableObjects returned null!");
-                    return;
-                }
-
-                foreach (Intrist intrist in _intristingTings)
-                {
-                    if (intrist != null)
-                    {
-                        intrist.UpdateState(_visableThings);
-                    }
+                    intrist.UpdateState(_visableThings);
                 }
             }
-            catch (System.Exception e)
-            {
-                Debug.LogError($"[{gameObject.name}] Error in UpdateIntrists: {e.Message}");
-            }
+            
         }
 
         //updates the intrist that is the most intristing and the most scerry one

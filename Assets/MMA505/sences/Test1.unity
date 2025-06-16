@@ -459,12 +459,28 @@ PrefabInstance:
       value: 3.94
       objectReference: {fileID: 0}
     - target: {fileID: 3655039374484473587, guid: 001cc16858e93476d8b9cfdf3590606f, type: 3}
+      propertyPath: _bravery
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3655039374484473587, guid: 001cc16858e93476d8b9cfdf3590606f, type: 3}
+      propertyPath: _hearing
+      value: 
+      objectReference: {fileID: 757803152}
+    - target: {fileID: 3655039374484473587, guid: 001cc16858e93476d8b9cfdf3590606f, type: 3}
+      propertyPath: _cureosity
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3655039374484473587, guid: 001cc16858e93476d8b9cfdf3590606f, type: 3}
       propertyPath: _atentionDist
-      value: 20
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3655039374484473587, guid: 001cc16858e93476d8b9cfdf3590606f, type: 3}
       propertyPath: _currentState
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3655039374484473587, guid: 001cc16858e93476d8b9cfdf3590606f, type: 3}
+      propertyPath: _consentration
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6405359812091397209, guid: 001cc16858e93476d8b9cfdf3590606f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -513,7 +529,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 906967344692813266, guid: 001cc16858e93476d8b9cfdf3590606f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 757803152}
   m_SourcePrefab: {fileID: 100100000, guid: 001cc16858e93476d8b9cfdf3590606f, type: 3}
 --- !u!1001 &61542543
 PrefabInstance:
@@ -2136,6 +2155,27 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2404752596686792640, guid: 38d2c6b21bc72408a8988b18e1b37f7a, type: 3}
   m_PrefabInstance: {fileID: 747667573}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &757803151 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 906967344692813266, guid: 001cc16858e93476d8b9cfdf3590606f, type: 3}
+  m_PrefabInstance: {fileID: 53635468}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &757803152
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 757803151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79d1ab16ad26b417da00c5733b79de6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gameManager: {fileID: 0}
+  _currentRegion: {fileID: 0}
+  _gameObjectsInSound: []
+  _hearingRadius: 10
 --- !u!1 &763389039
 GameObject:
   m_ObjectHideFlags: 0
