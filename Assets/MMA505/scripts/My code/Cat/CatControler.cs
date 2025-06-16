@@ -35,7 +35,6 @@ namespace MMA505
         [SerializeField] private bool _bordemSwitch;
         [SerializeField] private float _speed = 3.5f;
         [SerializeField] private float _runSpeed = 7f;
-        [SerializeField] private float _OcludingObjects;
         [SerializeField] private float _atentionDist = 2;
         [SerializeField] private GameObject _wonderDestionation;
         #endregion
@@ -277,14 +276,13 @@ namespace MMA505
                         //case 2 switch ideal
                         Debug.Log($"switch idel");
                         SwitchIdel();
-                        
+
                     }
 
                 }
-                //set ik target
-                _catIk.SetTarget(_mostIntristing.GetLastLocation());
+
                 //look at where it thinks it is 
-                //transform.LookAt(_mostIntristing.GetLastLocation());
+                _catAgint.transform.LookAt(_mostIntristing.GetLastLocation());
 
 
                 // if its in site reduce intrist and do idel 
@@ -292,13 +290,14 @@ namespace MMA505
                 {
                     // amount to reduce intrist by 2-10
                     IdelAnimation();
-                    
+
                 }
                 else
                 {
+                    Debug.Log($"cant see set to 0 intrist");
                     _mostIntristing.SetIntrist(0);
                 }
-                
+
 
 
             }
@@ -309,6 +308,7 @@ namespace MMA505
                 randomOffset.y = 0; // Ensure the offset is only in the XZ plane
                 _catAgint.destination = _mostIntristing.GetLastLocation() + randomOffset;
             }
+            
             
         }
 
@@ -408,27 +408,6 @@ namespace MMA505
             }
         }
         
-        // private void moving()
-        // {
-        //     if (_catAgint.pathPending || !_catAgint.isOnNavMesh || _catAgint.remainingDistance > 0.1f)
-        //     {
-        //         //if there
-        //         _currentState = CatStates.interacting;
-        //     }
-        //     else
-        //     {
-
-        //         if (Vector3.Distance(transform.position, _target.GetLastLocation()) <= _randomRadice)
-        //         {
-        //             _catIk.SwapIK(true);
-        //         }
-        //     }
-        // }
-
-        // [ContextMenu("New Random destination")]
-
-        // [ContextMenu("newIntrist")]
-
 
         public CatStates getState()
         {
