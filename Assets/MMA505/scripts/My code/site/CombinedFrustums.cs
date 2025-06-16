@@ -69,13 +69,13 @@ namespace MMA505
         // Update is called once per frame
         void Update()
         {
-            updateVisableObjects();
+            UpdateVisableObjects();
         }
 
 
 
         //update visable objects
-        public void updateVisableObjects()
+        public void UpdateVisableObjects()
         {
             // Clear the list of game objects in the frustum
             gameObjectsInFrustum.Clear();
