@@ -36,7 +36,7 @@ namespace MMA505
         [SerializeField] private float _runSpeed = 7f;
         [SerializeField] private float _OcludingObjects;
         [SerializeField] private float _atentionDist = 2;
-        [SerializeField] private GameObject _wonderDestionation =  new GameObject("wonderDestionation");
+        [SerializeField] private GameObject _wonderDestionation;
         #endregion
 
 
@@ -53,32 +53,35 @@ namespace MMA505
         void Start()
         {
 
-            //_wonderDestionation.transform.position = transform.position;
+            
+            _wonderDestionation =  new GameObject("wonderDestionation");
+            _wonderDestionation.transform.position = transform.position;
             _catAgint = GetComponent<NavMeshAgent>();
             _catAgint.speed = _speed;
-            UpdateIntrists();
-            UpdateMosts();
-            Desition();
             
         }
 
         void Update()
         {
 
+
+            
             if (_intristUpdatTimer <= 0)
             {
                 _intristUpdatTimer = _intristUpdatTime;
                 AddIntristingThings();
+                Move();
+                AddIntristingThings();
                 UpdateIntrists();
                 UpdateMosts();
-                
+                Desition();
+
             }
             else
             {
                 _intristUpdatTimer -= Time.deltaTime;
             }
 
-            Move();
             UpdateCanvice();
             _catAnimator.SetFloat("speed", _catAgint.velocity.magnitude);
 
@@ -90,21 +93,21 @@ namespace MMA505
 
             //get proritys
             int[] Proity = new int[4];
-            int intristPrority = _mostIntristing.GetIntristVal() - _cureosity;
+            int intristPrority = Mathf.Clamp(_mostIntristing.GetIntristVal() - _cureosity, 0, 10);
             Proity[0] = intristPrority;
 
-            int fareProity = _mostScerry.GetFearValue() - _bravery;
+            int fareProity = Mathf.Clamp(_mostScerry.GetFearValue() - _bravery, 0, 10);
             Proity[1] = fareProity;
 
-            int bordemProity = _bordem - _cureosity;
+            int bordemProity = Mathf.Clamp(_bordem - _cureosity, 0, 10);
             Proity[2] = bordemProity;
 
-            int wonderProity = 2; // Default priority for wondering
+            int wonderProity = Mathf.Clamp(2, 0, 10); // Default priority for wondering
             Proity[3] = wonderProity;
-
+            
             // Determine the highest priority
             int maxPriorityIndex = System.Array.IndexOf(Proity, Mathf.Max(Proity));
-
+            Debug.Log($"intrist = {intristPrority} fare = {fareProity} bordem = {bordemProity} wonder = {wonderProity} maxproity = {maxPriorityIndex}");
             // Set the state based on the highest priority
             switch (maxPriorityIndex)
             {
@@ -191,16 +194,19 @@ namespace MMA505
             foreach (GameObject obj in visable)
             {
                 //adds all objects not in intrists into intrists
-                _intristingTings.Add(new Intrist(obj, 5, 5));
+                if (!(obj == this))
+                {
+                    _intristingTings.Add(new Intrist(obj, 5, 5));  
+                }
             }
         }
 
         //updates the info each intrist holds
         private void UpdateIntrists()
         {
+            List<GameObject> visableThings = _combinedFrustum.GetVisableObjects();
             foreach (Intrist intrist in _intristingTings)
             {
-                List<GameObject> visableThings = _combinedFrustum.GetVisableObjects();
                 intrist.UpdateState(visableThings);
             }
         }
@@ -210,7 +216,7 @@ namespace MMA505
         {
             foreach (Intrist intrist in _intristingTings)
             {
-                if (intrist.GetFearValue() > _mostIntristing.GetIntristVal())
+                if (intrist.GetIntristVal() > _mostIntristing.GetIntristVal())
                 {
                     _mostIntristing = intrist;
                 }
@@ -227,7 +233,7 @@ namespace MMA505
             // moves to most intristing thing random location around it
             // once there will intract with it each time this happens its intrist in it gose down 
             // 
-            if (_catAgint.velocity.magnitude <= 0.1f)
+            if (_catAgint.velocity.magnitude <= 0.1f && Vector3.Distance(_mostIntristing.GetLastLocation(), transform.position) < _atentionDist)
             {
                 // do one of the intract ideels 
                 if (_bordemSwitch)
@@ -239,7 +245,7 @@ namespace MMA505
 
                 //look at where it thinks it is 
                 transform.LookAt(_mostIntristing.GetLastLocation());
-                UpdateIntrists();
+
 
                 // if its in site reduce intrist and do idel 
                 if (_mostIntristing.GetInsite())
@@ -255,6 +261,7 @@ namespace MMA505
                 {
                     _mostIntristing.SetIntrist(0);
                 }
+                
 
             }
             else
@@ -262,6 +269,7 @@ namespace MMA505
                 // set destionation and move with random lcation around it.
                 _catAgint.destination = _mostIntristing.GetLastLocation();
             }
+            
         }
 
         private void IdelAnimation()
@@ -344,37 +352,23 @@ namespace MMA505
 
 
             }
-            else
-            {
-                Desition();
-            }
+
         }
 
         private void Wonder()
         {
-            //Wonder around randomly
 
-            //sets ik to where its going 
-            if (Vector3.Distance(transform.position, _wonderDestionation.transform.position) <= _atentionDist)
-            {
-                _catIk.SwapIK(true);
-            }
+
 
             // if at destination sett a new one
-            if (_catAgint.remainingDistance > 0.1f)
+            if (_catAgint.remainingDistance > 0.1f || !_catAgint.pathPending || !_catAgint.isOnNavMesh)
             {
                 //set new destionation 
                 _wonderDestionation.transform.position = _wonderDestionation.transform.position + (_atentionDist * UnityEngine.Random.insideUnitSphere);
+                _wonderDestionation.transform.position = new Vector3(_wonderDestionation.transform.position.x, transform.position.y, _wonderDestionation.transform.position.z);
                 _catAgint.destination = _wonderDestionation.transform.position;
             }
-
-            //checks for anything intristing and check if theres something better to do 
-            UpdateIntrists();
-            UpdateMosts();
-            Desition();
-
             
-
         }
         
         // private void moving()

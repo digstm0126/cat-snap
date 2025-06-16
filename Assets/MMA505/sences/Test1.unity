@@ -454,6 +454,10 @@ PrefabInstance:
       propertyPath: _speed
       value: 3.94
       objectReference: {fileID: 0}
+    - target: {fileID: 3655039374484473587, guid: 001cc16858e93476d8b9cfdf3590606f, type: 3}
+      propertyPath: _atentionDist
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 6405359812091397209, guid: 001cc16858e93476d8b9cfdf3590606f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 27.82
@@ -6110,6 +6114,7 @@ MonoBehaviour:
   _frustomTranform: {fileID: 329168531}
   _Cats: []
   _Players: []
+  _intrsitngThings: []
   _Portals: []
   _OcludingObjects: []
   _RegionsIn: []

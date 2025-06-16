@@ -9,6 +9,7 @@ TagManager:
   - region
   - ocluding
   - subCam
+  - Intristing
   layers:
   - Default
   - TransparentFX

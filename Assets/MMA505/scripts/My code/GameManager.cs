@@ -20,6 +20,7 @@ namespace MMA505
         [SerializeField] private GameObject _frustomTranform;
         [SerializeField] private GameObject[] _Cats;
         [SerializeField] private GameObject[] _Players;
+        [SerializeField] private GameObject[] _intrsitngThings;
         [SerializeField] private GameObject[] _Portals;
         [SerializeField] private GameObject[] _OcludingObjects;
         [SerializeField] private GameObject[] _RegionsIn;
@@ -83,6 +84,8 @@ namespace MMA505
             addVisibilitySphere(_Players);
             _Cats = GameObject.FindGameObjectsWithTag("Cat");
             addVisibilitySphere(_Cats);
+            _intrsitngThings = GameObject.FindGameObjectsWithTag("Intristing");
+            addVisibilitySphere(_intrsitngThings);
             _Portals = GameObject.FindGameObjectsWithTag("portal");
             _OcludingObjects = GameObject.FindGameObjectsWithTag("ocluding");
 
@@ -111,7 +114,7 @@ namespace MMA505
             return allRegions.ToArray();
         }
 
-        //add a sphere site colider to each object in objToTest for visablity
+        //add a sphere site more like colider to each object in objToTest for visablity
         public void addVisibilitySphere(GameObject[] siteObjectsToCheck)
         {
 

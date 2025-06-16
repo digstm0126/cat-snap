@@ -26,6 +26,7 @@ namespace MMA505
             _obj = obj;
             _intristVal = intristVal;
             _fearVal = fareVal;
+            _lastLocation = _obj.transform.position;
 
 
         }
