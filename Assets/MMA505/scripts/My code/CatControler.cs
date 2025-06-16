@@ -20,6 +20,7 @@ namespace MMA505
         [SerializeField] private Rigidbody _rb;
         [SerializeField] private float _intristUpdatTime = 1f;
         [SerializeField] private float _intristUpdatTimer;
+        [SerializeField] private List<GameObject> _visableThings;
         #endregion
 
 
@@ -69,7 +70,6 @@ namespace MMA505
             if (_intristUpdatTimer <= 0)
             {
                 _intristUpdatTimer = _intristUpdatTime;
-                AddIntristingThings();
                 Move();
                 AddIntristingThings();
                 UpdateIntrists();
@@ -104,7 +104,7 @@ namespace MMA505
 
             int wonderProity = Mathf.Clamp(2, 0, 10); // Default priority for wondering
             Proity[3] = wonderProity;
-            
+
             // Determine the highest priority
             int maxPriorityIndex = System.Array.IndexOf(Proity, Mathf.Max(Proity));
             Debug.Log($"intrist = {intristPrority} fare = {fareProity} bordem = {bordemProity} wonder = {wonderProity} maxproity = {maxPriorityIndex}");
@@ -174,7 +174,7 @@ namespace MMA505
         private void AddIntristingThings()
         {
             //gets all visable objects
-            List<GameObject> visable = _combinedFrustum.GetVisableObjects();
+            _visableThings = _combinedFrustum.GetVisableObjects();
 
             if (_intristingTings != null)
             {
@@ -183,15 +183,15 @@ namespace MMA505
                 {
                     //true if one of the viable objects are in frustom and in intrists
                     GameObject obj = intrist.GetGameObject();
-                    if (visable.Contains(obj))
+                    if (_visableThings.Contains(obj))
                     {
                         //remove if is already in intrists
-                        visable.Remove(obj);
+                        _visableThings.Remove(obj);
 
                     }
                 }
             }
-            foreach (GameObject obj in visable)
+            foreach (GameObject obj in _visableThings)
             {
                 //adds all objects not in intrists into intrists
                 if (!(obj == this))
@@ -204,10 +204,33 @@ namespace MMA505
         //updates the info each intrist holds
         private void UpdateIntrists()
         {
-            List<GameObject> visableThings = _combinedFrustum.GetVisableObjects();
-            foreach (Intrist intrist in _intristingTings)
+            try
             {
-                intrist.UpdateState(visableThings);
+                _visableThings = _combinedFrustum.GetVisableObjects();
+                if (_combinedFrustum == null)
+                {
+                    Debug.LogError($"[{gameObject.name}] _combinedFrustum is null!");
+                    return;
+                }
+
+                //List<GameObject> visableThings = _combinedFrustum.GetVisableObjects();
+                if (_visableThings == null)
+                {
+                    Debug.LogError($"[{gameObject.name}] GetVisableObjects returned null!");
+                    return;
+                }
+
+                foreach (Intrist intrist in _intristingTings)
+                {
+                    if (intrist != null)
+                    {
+                        intrist.UpdateState(_visableThings);
+                    }
+                }
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError($"[{gameObject.name}] Error in UpdateIntrists: {e.Message}");
             }
         }
 
@@ -232,30 +255,44 @@ namespace MMA505
         {
             // moves to most intristing thing random location around it
             // once there will intract with it each time this happens its intrist in it gose down 
-            // 
-            if (_catAgint.velocity.magnitude <= 0.1f && Vector3.Distance(_mostIntristing.GetLastLocation(), transform.position) < _atentionDist)
+
+            // if in range
+            if (Vector3.Distance(_mostIntristing.GetLastLocation(), transform.position) < _atentionDist)
             {
                 // do one of the intract ideels 
                 if (_bordemSwitch)
                 {
                     _bordemSwitch = false;
-                    //switch intracty thing
-                    SwitchIdel();
-                }
 
+                    if (UnityEngine.Random.Range(0, 1) == 0)
+                    {
+                        //case 1 reduce intrist of thing
+                        Debug.Log($"reduce intrist");
+                        int intristReduction = 2;
+                        _mostIntristing.SetIntrist(_mostIntristing.GetIntristVal() - intristReduction);
+
+                    }
+                    else
+                    {
+                        //case 2 switch ideal
+                        Debug.Log($"switch idel");
+                        SwitchIdel();
+                        
+                    }
+
+                }
+                //set ik target
+                _catIk.SetTarget(_mostIntristing.GetLastLocation());
                 //look at where it thinks it is 
-                transform.LookAt(_mostIntristing.GetLastLocation());
+                //transform.LookAt(_mostIntristing.GetLastLocation());
 
 
                 // if its in site reduce intrist and do idel 
                 if (_mostIntristing.GetInsite())
                 {
                     // amount to reduce intrist by 2-10
-                    int intristReduction = 2;
                     IdelAnimation();
-                    //stops all animations
-                    Idel();
-                    _mostIntristing.SetIntrist(_mostIntristing.GetIntristVal() - intristReduction);
+                    
                 }
                 else
                 {
@@ -263,11 +300,14 @@ namespace MMA505
                 }
                 
 
+
             }
-            else
+            else if (_catAgint.velocity.magnitude <= 0.1f) //if outside of distents and stoped
             {
                 // set destionation and move with random lcation around it.
-                _catAgint.destination = _mostIntristing.GetLastLocation();
+                Vector3 randomOffset = UnityEngine.Random.insideUnitSphere * (_atentionDist / 2);
+                randomOffset.y = 0; // Ensure the offset is only in the XZ plane
+                _catAgint.destination = _mostIntristing.GetLastLocation() + randomOffset;
             }
             
         }
@@ -358,17 +398,14 @@ namespace MMA505
         private void Wonder()
         {
 
-
-
             // if at destination sett a new one
-            if (_catAgint.remainingDistance > 0.1f || !_catAgint.pathPending || !_catAgint.isOnNavMesh)
+            if (_catAgint.remainingDistance > 0.1f || _catAgint.pathPending || !_catAgint.isOnNavMesh)
             {
                 //set new destionation 
                 _wonderDestionation.transform.position = _wonderDestionation.transform.position + (_atentionDist * UnityEngine.Random.insideUnitSphere);
                 _wonderDestionation.transform.position = new Vector3(_wonderDestionation.transform.position.x, transform.position.y, _wonderDestionation.transform.position.z);
                 _catAgint.destination = _wonderDestionation.transform.position;
             }
-            
         }
         
         // private void moving()

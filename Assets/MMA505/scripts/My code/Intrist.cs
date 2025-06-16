@@ -44,7 +44,7 @@ namespace MMA505
 
             if (_inSite)
             {
-                _intristVal = math.clamp(_intristVal + 1, 0, 10);
+                _intristVal = math.clamp(_intristVal + 2, 0, 10);
                 _lastLocation = _obj.transform.position;
             }
             else
