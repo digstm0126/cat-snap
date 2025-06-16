@@ -28,14 +28,10 @@ namespace MMA505
         /// </summary>
         private void LateUpdate()
         {
-            if (_animatorController || _headBone || _applyIK)
+            if (_animatorController && _headBone && _applyIK)
             {
                 _headBone.transform.LookAt(_target);
 
-            }
-            else
-            {
-                _headBone.transform.rotation = _initialRotation;
             }
 
             
