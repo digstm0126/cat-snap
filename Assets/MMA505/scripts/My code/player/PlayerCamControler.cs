@@ -11,6 +11,10 @@ namespace MMA505
         [SerializeField] private GameObject _PhotoCam;
         [SerializeField] private List<GameObject> _visableObjects = new List<GameObject>();
         public static event Action<Photo> OnPhotoTake;
+        
+        [SerializeField] private RenderTexture _camViwe;
+        [SerializeField] private RenderTexture _goal;
+        [SerializeField] private RenderTexture _Last;
 
         public void TakePhoto()
         {
@@ -19,8 +23,9 @@ namespace MMA505
             foreach (GameObject visableObj in _visableObjects)
             {
                 CatControler.CatStates _state = visableObj.GetComponent<CatControler>().getState();
-                int _dist = (int) Vector3.Distance(visableObj.transform.position, _PhotoCam.transform.position);
+                int _dist = (int)Vector3.Distance(visableObj.transform.position, _PhotoCam.transform.position);
                 Photo _newPhoto = new Photo(visableObj, _dist, _state);
+                Graphics.Blit(_camViwe, _Last);
                 OnPhotoTake?.Invoke(_newPhoto);
             }
         }
