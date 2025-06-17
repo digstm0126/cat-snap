@@ -54,7 +54,7 @@ namespace MMA505
             RegionManager.UpdateVisabl(_Players, _Cats, _RegionsIn);
             RegionManager.UpdatePortals(_Portals, _RegionsIn);
             SetupCats();
-            GenGoals(3, 8, 20);
+            GenGoals(1, 8, 20);
             UpdateUi?.Invoke(_phtoGoals);
         }
 

@@ -450,6 +450,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: catcool
       objectReference: {fileID: 0}
+    - target: {fileID: 3655039374484473587, guid: 001cc16858e93476d8b9cfdf3590606f, type: 3}
+      propertyPath: _intristUpdatTime
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6405359812091397209, guid: 001cc16858e93476d8b9cfdf3590606f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 27.82

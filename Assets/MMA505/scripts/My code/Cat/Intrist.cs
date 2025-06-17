@@ -51,7 +51,7 @@ namespace MMA505
                 Rigidbody rb = _obj.GetComponent<Rigidbody>();
                 if (rb != null)
                 {
-                    int maglimit = 5;
+                    int maglimit = 0;
                     Debug.Log($"manatued: {rb.linearVelocity.magnitude - maglimit}");
                     _fearVal = math.clamp(_fearVal + (int)(rb.linearVelocity.magnitude - maglimit), 2, 10);
                 }

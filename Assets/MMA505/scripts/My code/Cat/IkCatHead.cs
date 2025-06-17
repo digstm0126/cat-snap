@@ -33,14 +33,13 @@ namespace MMA505
                 _headBone.transform.LookAt(_target);
 
             }
-
             
         }
 
         public void SwapIK(bool state)
         {
            
-            _applyIK = true;
+            _applyIK = state;
         
         }
 
