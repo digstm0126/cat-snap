@@ -344,15 +344,16 @@ namespace MMA505
                 //the directions player is moving
                 Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
 
-                _rb.linearVelocity = new Vector3(moveDir.x * _Speed * _moveDirections.magnitude, _rb.linearVelocity.y, moveDir.z * _Speed * _moveDirections.magnitude);
-
+                //_rb.linearVelocity = new Vector3(moveDir.x * _Speed * _moveDirections.magnitude, _rb.linearVelocity.y, moveDir.z * _Speed * _moveDirections.magnitude);
+                _rb.AddForce(moveDir * _moveDirections.magnitude, ForceMode.VelocityChange);
+                //_rb.AddForce(_rb.transform.right * (moveDir.z * _Speed * _moveDirections.magnitude), ForceMode.VelocityChange);
                 //sets animation so they walk foard
                 _animatorController.SetFloat("walkZ", _moveDirections.magnitude);
 
             }
             else
             {
-                _rb.linearVelocity = new Vector3(0, _rb.linearVelocity.y, 0);
+                //_rb.linearVelocity = new Vector3(0, _rb.linearVelocity.y, 0);
                 _animatorController.SetFloat("walkZ", walkZ);
                 _animatorController.SetFloat("walkX", walkX);
             }
