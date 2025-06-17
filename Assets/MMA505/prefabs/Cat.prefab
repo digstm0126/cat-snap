@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8072624280371438058}
   - component: {fileID: 3118958383756626636}
   - component: {fileID: 523992982089248659}
+  - component: {fileID: 3694789672430549478}
   m_Layer: 0
   m_Name: cat
   m_TagString: Cat
@@ -96,6 +97,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _combinedFrustum: {fileID: 4092997950831486142}
+  _hearing: {fileID: 3694789672430549478}
   _catAnimator: {fileID: 3555955374787733319}
   _catAgint: {fileID: 3118958383756626636}
   _catIk: {fileID: 523992982089248659}
@@ -103,20 +105,33 @@ MonoBehaviour:
   _canvice: {fileID: 6599469774197851662}
   _text: {fileID: 7220230531962946226}
   _rb: {fileID: 8072624280371438058}
-  _bravery: 1
-  _bordemLimt: 5
-  _bordemCurrent: 0
-  _bordemSecsTill: 5
-  _bordTimer: 0
-  _scearTime: 4
-  _scearTimer: 0
-  _distAhead: 8
-  _randomRadice: 5
-  _intristUpdatTime: 1
+  _intristUpdatTime: 3
   _intristUpdatTimer: 0
-  _speed: 4
-  _runSpeed: 10
-  _currentState: 1
+  _visableThings: []
+  _mostIntristing:
+    _obj: {fileID: 0}
+    _intristVal: 0
+    _fearVal: 0
+    _lastLocation: {x: 0, y: 0, z: 0}
+    _inSite: 0
+  _mostScerry:
+    _obj: {fileID: 0}
+    _intristVal: 0
+    _fearVal: 0
+    _lastLocation: {x: 0, y: 0, z: 0}
+    _inSite: 0
+  _intristingTings: []
+  _bravery: 1
+  _cureosity: 2
+  _consentration: 0
+  _bordem: 0
+  _bordemSwitch: 0
+  _priority: 
+  _speed: 3.94
+  _runSpeed: 20
+  _atentionDist: 5
+  _wonderDestionation: {fileID: 0}
+  _currentState: 3
   _idelCurrent: 0
 --- !u!54 &8072624280371438058
 Rigidbody:
@@ -128,7 +143,7 @@ Rigidbody:
   serializedVersion: 4
   m_Mass: 1
   m_Drag: 1
-  m_AngularDrag: 0.1
+  m_AngularDrag: 10
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -156,9 +171,9 @@ NavMeshAgent:
   m_AgentTypeID: -1372625422
   m_Radius: 0.5
   m_Speed: 3.5
-  m_Acceleration: 8
+  m_Acceleration: 200
   avoidancePriority: 50
-  m_AngularSpeed: 120
+  m_AngularSpeed: 200
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
@@ -184,6 +199,22 @@ MonoBehaviour:
   _target: {x: 0, y: 0, z: 0}
   _headBone: {fileID: 1535986887234763974}
   rotationSpeed: 5
+--- !u!114 &3694789672430549478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 906967344692813266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79d1ab16ad26b417da00c5733b79de6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gameManager: {fileID: 0}
+  _currentRegion: {fileID: 0}
+  _gameObjectsInSound: []
+  _hearingRadius: 10
 --- !u!1 &3046896694395594704
 GameObject:
   m_ObjectHideFlags: 0

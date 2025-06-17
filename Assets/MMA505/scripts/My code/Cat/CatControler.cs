@@ -35,6 +35,7 @@ namespace MMA505
         [SerializeField, Range(0, 5)] private int _consentration;
         [SerializeField] private int _bordem;
         [SerializeField] private bool _bordemSwitch;
+        [SerializeField] private string _priority;
         [SerializeField] private float _speed = 3.5f;
         [SerializeField] private float _runSpeed = 7f;
         [SerializeField] private float _atentionDist = 2;
@@ -54,7 +55,6 @@ namespace MMA505
 
         void Start()
         {
-
             
             _wonderDestionation =  new GameObject("wonderDestionation");
             _wonderDestionation.transform.position = transform.position;
@@ -67,15 +67,19 @@ namespace MMA505
         {
 
 
-            
+            Move();
+            UpdateVisable();
+            AddIntristingThings();
+            UpdateIntristsFast();
+            UpdateMosts();
+            if (_mostScerry.GetFearValue() > _bravery)
+            {
+                Desition();
+            }
             if (_intristUpdatTimer <= 0)
             {
                 _intristUpdatTimer = _intristUpdatTime;
-                Move();
-                UpdateVisable();
-                AddIntristingThings();
-                UpdateIntrists();
-                UpdateMosts();
+                UpdateIntristsSlow();
                 Desition();
 
             }
@@ -101,7 +105,7 @@ namespace MMA505
             int fareProity = Mathf.Clamp(_mostScerry.GetFearValue() - _bravery, 0, 10);
             Proity[1] = fareProity;
 
-            int bordemProity = Mathf.Clamp(_bordem - _cureosity, 0, 10);
+            int bordemProity = Mathf.Clamp(_bordem - _consentration, 0, 10);
             Proity[2] = bordemProity;
 
             int wonderProity = Mathf.Clamp(2, 0, 10); // Default priority for wondering
@@ -109,25 +113,33 @@ namespace MMA505
 
             // Determine the highest priority
             int maxPriorityIndex = System.Array.IndexOf(Proity, Mathf.Max(Proity));
-            Debug.Log($"intrist = {intristPrority} fare = {fareProity} bordem = {bordemProity} wonder = {wonderProity} maxproity = {maxPriorityIndex}");
+
+            _priority = $"(intrist = {intristPrority}) (fare = {fareProity}) (bordem = {bordemProity}) (wonder = {wonderProity}) maxproity = {maxPriorityIndex}";
             // Set the state based on the highest priority
             switch (maxPriorityIndex)
             {
                 //intrist
                 case 0:
+                    _catIk.SwapIK(true);
+                    _catAgint.speed = _speed;
                     _currentState = CatStates.interacting;
                     break;
                 //fare
                 case 1:
+                    _catIk.SwapIK(false);
+                    _catAgint.speed = _runSpeed;
                     _currentState = CatStates.runing;
                     break;
                 //bordem
                 case 2:
                     //switch sub stare
+                    _bordem = 0;
                     _bordemSwitch = true;
                     break;
                 //wonder
                 case 3:
+                    _catIk.SwapIK(false);
+                    _catAgint.speed = _speed;
                     _currentState = CatStates.wondering;
                     break;
             }
@@ -176,7 +188,6 @@ namespace MMA505
         {
             _visableThings.Clear();
             _visableThings = _combinedFrustum.GetVisableObjects();
-
             _visableThings.AddRange(_hearing.GetGameObjects());
         }
 
@@ -202,16 +213,16 @@ namespace MMA505
             foreach (GameObject obj in _visableThings)
             {
                 //adds all objects not in intrists into intrists
-                if (!(obj == this))
+                if (obj != gameObject)
                 {
-                    _intristingTings.Add(new Intrist(obj, 5, 5));
+                    _intristingTings.Add(new Intrist(obj, 5, 0));
                 }
             }
         }
 
 
         //updates the info each intrist holds
-        private void UpdateIntrists()
+        private void UpdateIntristsFast()
         {
  
 
@@ -219,11 +230,29 @@ namespace MMA505
             {
                 if (intrist != null)
                 {
-                    intrist.UpdateState(_visableThings);
+                    UpdateVisable();
+                    intrist.UpdateStateFast(_visableThings);
                 }
             }
             
         }
+
+        private void UpdateIntristsSlow()
+        {
+ 
+
+            foreach (Intrist intrist in _intristingTings)
+            {
+                if (intrist != null)
+                {
+                    UpdateVisable();
+                    intrist.UpdateStateSlow();
+                }
+            }
+            
+        }
+
+
 
         //updates the intrist that is the most intristing and the most scerry one
         private void UpdateMosts()
@@ -248,18 +277,21 @@ namespace MMA505
             // once there will intract with it each time this happens its intrist in it gose down 
 
             // if in range
-            if (Vector3.Distance(_mostIntristing.GetLastLocation(), transform.position) < _atentionDist)
+            Vector3 posIntrist = _mostIntristing.GetLastLocation();
+            Vector3 posMe = transform.position;
+            float dist = Vector3.Distance(posIntrist, posMe);
+            if (dist < _atentionDist)
             {
+                Debug.Log($"in rage {_mostIntristing}");
                 // do one of the intract ideels 
                 if (_bordemSwitch)
                 {
                     _bordemSwitch = false;
-
-                    if (UnityEngine.Random.Range(0, 1) == 0)
+                    if (UnityEngine.Random.Range(0, 2) == 0)
                     {
                         //case 1 reduce intrist of thing
                         Debug.Log($"reduce intrist");
-                        int intristReduction = 2;
+                        int intristReduction = 10;
                         _mostIntristing.SetIntrist(_mostIntristing.GetIntristVal() - intristReduction);
 
                     }
@@ -273,21 +305,18 @@ namespace MMA505
 
                 }
 
-                //look at where it thinks it is 
-                _catAgint.transform.LookAt(_mostIntristing.GetLastLocation());
-
 
                 // if its in site reduce intrist and do idel 
                 if (_mostIntristing.GetInsite())
                 {
-                    // amount to reduce intrist by 2-10
+
                     IdelAnimation();
+                    _bordem++;
 
                 }
                 else
                 {
-                    Debug.Log($"cant see set to 0 intrist");
-                    _mostIntristing.SetIntrist(0);
+                    _bordem++;
                 }
 
 
@@ -295,10 +324,14 @@ namespace MMA505
             }
             else if (_catAgint.velocity.magnitude <= 0.1f) //if outside of distents and stoped
             {
+
                 // set destionation and move with random lcation around it.
                 Vector3 randomOffset = UnityEngine.Random.insideUnitSphere * (_atentionDist / 2);
                 randomOffset.y = 0; // Ensure the offset is only in the XZ plane
                 _catAgint.destination = _mostIntristing.GetLastLocation() + randomOffset;
+                //look at where next target
+                _catIk.SetTarget(_mostIntristing.GetLastLocation());
+
             }
             
             

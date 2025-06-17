@@ -31,7 +31,7 @@ namespace MMA505
 
         }
 
-        public void UpdateState(List<GameObject> objs)
+        public void UpdateStateFast(List<GameObject> objs)
         {
             _inSite = false;
             foreach (var obj in objs)
@@ -42,12 +42,30 @@ namespace MMA505
                 }
             }
 
+            //if insite update location
             if (_inSite)
             {
-                _intristVal = math.clamp(_intristVal + 2, 0, 10);
                 _lastLocation = _obj.transform.position;
             }
-            else
+
+            //incress fare if its moving
+            Rigidbody rb = _obj.GetComponent<Rigidbody>();
+            if (rb != null)
+            {
+                Debug.Log($"manatued: {rb.linearVelocity.magnitude - 1}");
+                _fearVal = math.clamp(_fearVal + (int)(rb.linearVelocity.magnitude - 1), 2, 10);
+            }
+
+        }
+
+        public void UpdateStateSlow()
+        {
+            // in site intrit up
+            if (_inSite)
+            {
+                _intristVal = math.clamp(_intristVal + 1, 0, 4);
+            }
+            else //fare down if not in site
             {
                 _fearVal = math.clamp(_fearVal - 1, 0, 10);
             }
