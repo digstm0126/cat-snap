@@ -105,7 +105,7 @@ MonoBehaviour:
   _canvice: {fileID: 6599469774197851662}
   _text: {fileID: 7220230531962946226}
   _rb: {fileID: 8072624280371438058}
-  _intristUpdatTime: 3
+  _intristUpdatTime: 1
   _intristUpdatTimer: 0
   _visableThings: []
   _mostIntristing:

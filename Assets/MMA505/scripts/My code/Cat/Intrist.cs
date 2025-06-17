@@ -46,14 +46,15 @@ namespace MMA505
             if (_inSite)
             {
                 _lastLocation = _obj.transform.position;
-            }
 
-            //incress fare if its moving
-            Rigidbody rb = _obj.GetComponent<Rigidbody>();
-            if (rb != null)
-            {
-                Debug.Log($"manatued: {rb.linearVelocity.magnitude - 1}");
-                _fearVal = math.clamp(_fearVal + (int)(rb.linearVelocity.magnitude - 1), 2, 10);
+                //incress fare if its moving
+                Rigidbody rb = _obj.GetComponent<Rigidbody>();
+                if (rb != null)
+                {
+                    int maglimit = 5;
+                    Debug.Log($"manatued: {rb.linearVelocity.magnitude - maglimit}");
+                    _fearVal = math.clamp(_fearVal + (int)(rb.linearVelocity.magnitude - maglimit), 2, 10);
+                }
             }
 
         }
