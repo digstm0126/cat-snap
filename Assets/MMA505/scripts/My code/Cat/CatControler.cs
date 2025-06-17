@@ -48,6 +48,9 @@ namespace MMA505
         public enum CatStates { runing, interacting, moving, wondering };
         [SerializeField] private CatStates _currentState = CatStates.interacting;
 
+        public enum CatRunState {backUp, Run};
+        [SerializeField] private CatRunState _runCurrent;
+
         public enum CatIdelStat { mowing, siting, looking, Idel };
         [SerializeField] private CatIdelStat _idelCurrent;
 
@@ -402,21 +405,29 @@ namespace MMA505
             // runs away from target untill sceryist things fare value is less then cats bravery value
 
             //check if fare is below bravery of cat
-            if (_mostScerry.GetFearValue() >= _bravery)
-            {
 
-                // do sub state stuff here
-                // state 1 runing
+
+            // do sub state stuff here
+            // state 1 runing
+
+            if (Vector3.Distance(transform.position, _mostScerry.GetLastLocation()) < 30)
+            {
                 Vector3 target = transform.position + ((transform.position - _mostScerry.GetLastLocation()).normalized * _atentionDist);
                 Debug.DrawLine(transform.position, target, Color.red, 0.1f);
                 Debug.DrawRay(target, Vector3.up * 0.5f, Color.blue, 0.1f);
                 _catAgint.destination = target;
                 _catAgint.speed = _runSpeed;
+            }
+            else
+            {
 
-                //stare 2 looking for scery things
-
+                _catAgint.transform.LookAt(_mostScerry.GetLastLocation());
+                _catAgint.speed = _speed;
 
             }
+            
+
+            
 
         }
 
