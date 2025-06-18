@@ -338,7 +338,7 @@ MonoBehaviour:
   availableMaterialQualityLevels: -1
   m_DefaultMaterialQualityLevel: 4
   diffusionProfileSettings: {fileID: 0}
-  m_VolumeProfile: {fileID: 0}
+  m_VolumeProfile: {fileID: 11400000, guid: ff072f5d98bdf4b9aa655246bc9b7d5b, type: 2}
   virtualTexturingSettings:
     streamingCpuCacheSizeInMegaBytes: 256
     streamingMipPreloadTexturesPerFrame: 0
@@ -349,7 +349,11 @@ MonoBehaviour:
   m_UseRenderGraph: 1
   m_CompositorCustomVolumeComponentsList:
     m_InjectionPoint: 1
-    m_CustomPostProcessTypesAsString: []
+    m_CustomPostProcessTypesAsString:
+    - UnityEngine.Rendering.HighDefinition.Compositor.ChromaKeying, Unity.RenderPipelines.HighDefinition.Runtime,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    - UnityEngine.Rendering.HighDefinition.Compositor.AlphaInjection, Unity.RenderPipelines.HighDefinition.Runtime,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Version: 25
   m_ObsoleteFrameSettings:
     overrides: 0

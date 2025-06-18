@@ -132,6 +132,7 @@ MonoBehaviour:
   _atentionDist: 5
   _wonderDestionation: {fileID: 0}
   _currentState: 3
+  _runCurrent: 0
   _idelCurrent: 0
 --- !u!54 &8072624280371438058
 Rigidbody:
@@ -233,7 +234,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8459472006372506555
 RectTransform:
   m_ObjectHideFlags: 0
